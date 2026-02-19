@@ -7,27 +7,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* 1. الأساسيات والخطوط */
         :root { 
             --dark-bg: #0a0f1a;
             --card-bg: #ffffff;
             --primary-blue: #2563eb; 
             --success-green: #10b981;
-            --text-main: #1e293b;
+            --text-dark: #1e293b; /* لون نص داكن وواضح */
+            --text-muted: #64748b; /* لون رمادي للنصوص الفرعية */
         }
 
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
             background-color: var(--dark-bg); 
             margin: 0; 
-            padding: 0;
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            color: var(--text-dark);
         }
 
-        /* 2. رأس الصفحة المتجاوب */
         header { 
             background: linear-gradient(180deg, #111827 0%, var(--dark-bg) 100%);
             padding: 120px 20px 80px; 
@@ -36,195 +31,121 @@
             position: relative;
         }
 
-        header h1 {
-            font-size: clamp(30px, 8vw, 65px); /* حجم خط مرن يتغير حسب الشاشة */
-            color: white;
-            margin: 0;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
+        header h1 { font-size: clamp(30px, 8vw, 65px); color: white; margin: 0; }
 
-        header p {
-            color: #94a3b8;
-            font-size: clamp(16px, 3vw, 28px);
-            margin-top: 15px;
-        }
+        .auth-bar { position: absolute; top: 20px; left: 20px; right: 20px; display: flex; gap: 15px; }
+        .btn-auth { padding: 12px 25px; font-weight: 800; border-radius: 12px; border: none; cursor: pointer; }
+        .btn-signup { background: var(--primary-blue); color: white; }
+        .btn-login { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); }
 
-        /* 3. أزرار الدخول (تتحول لمكان مناسب في كل جهاز) */
-        .auth-bar {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: flex-start; /* لليسار في الكمبيوتر */
-            gap: 15px;
-            z-index: 100;
-        }
-
-        .btn-auth {
-            padding: clamp(10px, 2vw, 18px) clamp(15px, 3vw, 35px);
-            font-size: clamp(14px, 2vw, 22px);
-            font-weight: 800;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-signup { background-color: var(--primary-blue); color: white; }
-        .btn-login { background-color: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255,255,255,0.3); }
-
-        /* 4. بطاقة الرصيد - تصميم مرن */
+        /* --- تعديل بطاقة الرصيد لظهور النصوص بوضوح --- */
         .balance-card { 
             background: var(--card-bg); 
             margin: -40px auto 40px; 
-            padding: clamp(20px, 5vw, 45px); 
+            padding: 35px; 
             width: 85%;
             max-width: 800px;
             border-radius: 30px; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.4); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); 
             display: flex; 
             justify-content: space-between; 
             align-items: center;
+            border: 2px solid #e2e8f0; /* إضافة إطار خفيف لتمييز البطاقة */
+            overflow: visible; /* لضمان عدم اختفاء النص */
         }
 
-        .balance-amount { font-size: clamp(30px, 6vw, 60px); font-weight: 900; }
+        .balance-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: right;
+        }
 
-        /* 5. القائمة الرئيسية (Grid الذكي) */
+        .balance-label { 
+            font-size: clamp(18px, 4vw, 24px); 
+            color: var(--text-muted); /* لون رمادي واضح */
+            font-weight: 700;
+            display: block; /* لضمان أخذ مساحة كاملة */
+        }
+
+        .balance-amount { 
+            font-size: clamp(35px, 7vw, 60px); 
+            font-weight: 900; 
+            color: var(--dark-bg); /* لون أسود داكن جداً للرقم */
+            line-height: 1.2;
+        }
+
+        .shield-container {
+            background: #f0fdf4;
+            padding: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* القائمة الرئيسية */
         .main-menu { 
             display: grid; 
-            /* عمود واحد في الهاتف، عمودين في الجهاز اللوحي، 4 أعمدة في التلفاز والكمبيوتر */
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 25px; 
-            padding: 40px; 
-            max-width: 1400px;
-            margin: auto;
-            width: 90%;
+            gap: 25px; padding: 40px; max-width: 1400px; margin: auto; width: 90%;
         }
 
         .menu-btn { 
-            background: var(--card-bg); 
-            border: none; 
-            padding: clamp(30px, 8vw, 60px) 20px; 
-            border-radius: 35px; 
-            font-weight: 900; 
-            font-size: clamp(20px, 3vw, 30px);
-            cursor: pointer; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            gap: 20px; 
-            transition: 0.4s ease;
+            background: var(--card-bg); border: none; padding: 50px 20px; border-radius: 35px; 
+            font-weight: 900; font-size: 26px; cursor: pointer; display: flex; 
+            flex-direction: column; align-items: center; gap: 20px; transition: 0.4s;
         }
 
         .menu-btn:hover { background: var(--primary-blue); color: white; transform: translateY(-10px); }
-
-        .menu-btn i { 
-            font-size: clamp(40px, 6vw, 70px); 
-            color: var(--primary-blue);
-            background: #eff6ff;
-            padding: 25px;
-            border-radius: 30px;
-        }
-
+        .menu-btn i { font-size: 60px; color: var(--primary-blue); background: #eff6ff; padding: 25px; border-radius: 30px; }
         .menu-btn:hover i { background: rgba(255,255,255,0.2); color: white; }
 
-        /* 6. استعلامات الوسائط (Media Queries) الخاصة بالهواتف وشاشات التلفاز */
-        
-        /* للهواتف الصغيرة */
         @media (max-width: 600px) {
-            header { padding-top: 100px; }
-            .auth-bar { justify-content: center; top: 20px; }
-            .balance-card { flex-direction: column; text-align: center; gap: 20px; }
-            .main-menu { padding: 20px; }
+            .balance-card { flex-direction: column; text-align: center; padding: 30px 20px; }
+            .balance-info { text-align: center; }
         }
-
-        /* لشاشات التلفاز والحواسيب الكبيرة جداً */
-        @media (min-width: 1800px) {
-            .main-menu { grid-template-columns: repeat(4, 1fr); }
-            header h1 { font-size: 80px; }
-            .balance-card { max-width: 1200px; }
-        }
-
-        /* 7. الأقسام (مخفية) */
-        .section-view { display: none; padding: 40px 20px; max-width: 900px; margin: auto; }
-        .form-box { background: white; padding: clamp(20px, 5vw, 50px); border-radius: 35px; }
-        input { width: 100%; padding: 20px; margin: 15px 0; font-size: 20px; border: 2px solid #eee; border-radius: 15px; box-sizing: border-box; }
-        .btn-confirm { width: 100%; padding: 20px; font-size: 24px; font-weight: bold; background: var(--primary-blue); color: white; border: none; border-radius: 15px; cursor: pointer; }
-
     </style>
 </head>
 <body>
 
     <header>
         <div class="auth-bar">
-            <button class="btn-auth btn-login" onclick="showSection('loginPage')">دخول</button>
-            <button class="btn-auth btn-signup" onclick="showSection('signupPage')">تسجيل جديد</button>
+            <button class="btn-auth btn-login" onclick="alert('دخول')">دخول</button>
+            <button class="btn-auth btn-signup" onclick="alert('تسجيل')">تسجيل جديد</button>
         </div>
         <h1>PRO EXCHANGER</h1>
         <p>المنصة الجزائرية الأولى للوساطة الرقمية</p>
     </header>
 
     <div class="balance-card">
-        <div>
-            <div style="font-size: 18px; color: #64748b; font-weight: bold;">الرصيد المتوفر</div>
+        <div class="balance-info">
+            <span class="balance-label">الرصيد المتوفر في حسابك:</span>
             <div class="balance-amount" id="userBalance">0.00 د.ج</div>
         </div>
-        <i class="fas fa-user-shield" style="font-size: clamp(40px, 6vw, 60px); color: var(--success-green);"></i>
+        <div class="shield-container">
+            <i class="fas fa-user-shield" style="font-size: 50px; color: var(--success-green);"></i>
+        </div>
     </div>
 
     <div class="main-menu" id="homePage">
-        <button class="menu-btn" onclick="alert('واجهة البيع قيد التجهيز')">
+        <button class="menu-btn">
             <i class="fas fa-hand-holding-dollar"></i>
             <span>عرض بيع</span>
         </button>
-        <button class="menu-btn" onclick="alert('واجهة الشراء قيد التجهيز')">
+        <button class="menu-btn">
             <i class="fas fa-shop"></i>
             <span>شراء حساب</span>
         </button>
-        <button class="menu-btn" onclick="alert('واجهة السحب قيد التجهيز')">
+        <button class="menu-btn">
             <i class="fas fa-money-bill-transfer"></i>
             <span>سحب أموال</span>
         </button>
-        <button class="menu-btn" onclick="alert('واجهة الإيداع قيد التجهيز')">
+        <button class="menu-btn">
             <i class="fas fa-vault"></i>
             <span>شحن رصيد</span>
         </button>
     </div>
-
-    <div id="signupPage" class="section-view">
-        <div class="form-box">
-            <button onclick="showSection('homePage')" style="background:none; border:none; color:var(--primary-blue); font-size:20px; cursor:pointer;">← عودة</button>
-            <h2 style="text-align: center; font-size: 32px;">إنشاء حساب جديد</h2>
-            <input type="text" placeholder="الاسم الكامل">
-            <input type="email" placeholder="البريد الإلكتروني">
-            <input type="password" placeholder="كلمة المرور">
-            <button class="btn-confirm">تأكيد وانضمام</button>
-        </div>
-    </div>
-
-    <div id="loginPage" class="section-view">
-        <div class="form-box">
-            <button onclick="showSection('homePage')" style="background:none; border:none; color:var(--primary-blue); font-size:20px; cursor:pointer;">← عودة</button>
-            <h2 style="text-align: center; font-size: 32px;">تسجيل الدخول</h2>
-            <input type="email" placeholder="البريد الإلكتروني">
-            <input type="password" placeholder="كلمة المرور">
-            <button class="btn-confirm" style="background: var(--dark-bg);">دخول</button>
-        </div>
-    </div>
-
-    <script>
-        function showSection(id) {
-            document.getElementById('homePage').style.display = 'none';
-            document.getElementById('signupPage').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'none';
-            
-            const target = document.getElementById(id);
-            if(id === 'homePage') target.style.display = 'grid';
-            else target.style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-    </script>
 
 </body>
 </html>
