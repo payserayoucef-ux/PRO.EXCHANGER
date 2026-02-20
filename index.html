@@ -128,17 +128,53 @@
     <div id="depBaridi" class="section-view"><div class="form-box"><h3>إيداع بريدي موب</h3><input type="number" placeholder="المبلغ"><br><br><input type="text" placeholder="رقم المعاملة"><button class="btn-submit" onclick="showSection('homePage')">إرسال الطلب</button></div></div>
     <div id="witBaridi" class="section-view"><div class="form-box"><h3>سحب بريدي موب</h3><input type="number" placeholder="المبلغ"><br><br><input type="text" placeholder="رقم الـ RIP"><button class="btn-submit" style="background:var(--withdraw-red)" onclick="showSection('homePage')">طلب سحب</button></div></div>
 
-    <div id="signupPage" class="section-view">
+        <div id="signupPage" class="section-view">
         <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
         <div class="form-box">
-            <h2>تسجيل جديد</h2>
-            <input type="text" placeholder="الاسم الكامل"><br><br>
-            <input type="email" placeholder="البريد الإلكتروني"><br><br>
-            <input type="password" placeholder="كلمة المرور"><br><br>
-            <div class="captcha-container"><span id="signupCapCode" class="captcha-display">----</span><i class="fas fa-sync" onclick="generateCaptcha('signup')" style="cursor:pointer"></i><br><input type="text" id="signupCapInput" placeholder="أدخل الرمز"></div>
-            <button class="btn-submit" onclick="validateSignup()">إنشاء الحساب</button>
+            <h2 style="text-align: center; color: var(--primary-blue);">إنشاء حساب جديد</h2>
+            
+            <div style="display: flex; gap: 10px;">
+                <div class="input-group" style="flex: 1;">
+                    <label>الاسم الشخصي</label>
+                    <input type="text" id="firstName" placeholder="مثال: يوسف">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>الاسم العائلي</label>
+                    <input type="text" id="lastName" placeholder="اللقب">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>تاريخ الميلاد</label>
+                <input type="date" id="birthDate">
+            </div>
+
+            <div class="input-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="userEmail" placeholder="example@mail.com">
+            </div>
+
+            <div class="input-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="userPass" placeholder="••••••••">
+            </div>
+
+            <div class="input-group">
+                <label>تأكيد كلمة المرور</label>
+                <input type="password" id="confirmPass" placeholder="••••••••">
+            </div>
+
+            <div class="captcha-container">
+                <span id="signupCapCode" class="captcha-display">----</span>
+                <i class="fas fa-sync" onclick="generateCaptcha('signup')" style="cursor:pointer; color: var(--primary-blue);"></i>
+                <br>
+                <input type="text" id="signupCapInput" placeholder="أدخل الرمز الظاهر أعلاه" style="margin-top: 10px;">
+            </div>
+
+            <button class="btn-submit" onclick="validateSignup()">إنشاء الحساب الآن</button>
         </div>
     </div>
+
 
     <div id="loginPage" class="section-view">
         <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
@@ -152,55 +188,98 @@
     </div>
 
     <script>
-        let codes = { signup: "", login: "" };
-        function initApp() { generateCaptcha('signup'); generateCaptcha('login'); }
-        
-        function showSection(id) {
-            document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
-            const target = document.getElementById(id);
-            if(target) target.style.display = 'block';
-            window.scrollTo(0, 0);
+    // تخزين رموز الكباتشا للتسجيل والدخول
+    let codes = { signup: "", login: "" };
+
+    // تشغيل الوظائف الأساسية عند فتح الموقع
+    function initApp() { 
+        generateCaptcha('signup'); 
+        generateCaptcha('login'); 
+    }
+
+    // وظيفة التنقل بين الصفحات والأقسام
+    function showSection(id) {
+        // إخفاء جميع الأقسام أولاً
+        document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
+        // إظهار القسم المطلوب
+        const target = document.getElementById(id);
+        if(target) target.style.display = 'block';
+        // العودة لأعلى الصفحة عند التنقل
+        window.scrollTo(0, 0);
+    }
+
+    // وظيفة توليد رمز كباتشا عشوائي
+    function generateCaptcha(type) {
+        const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+        codes[type] = code;
+        const element = document.getElementById(type + "CapCode");
+        if(element) element.innerText = code;
+    }
+
+    // وظيفة فتح نموذج بيع الحسابات وتغيير العنوان حسب النوع
+    function openSaleForm(name, type) {
+        const titleElement = document.getElementById('formTitle');
+        if(titleElement) titleElement.innerText = "تفاصيل بيع " + name;
+        showSection('saleForm');
+    }
+
+    // وظيفة التحقق من التسجيل الجديد (المحدثة)
+    function validateSignup() {
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const pass = document.getElementById('userPass').value;
+        const confirm = document.getElementById('confirmPass').value;
+        const captchaInput = document.getElementById('signupCapInput').value.toUpperCase();
+
+        // 1. التأكد من ملء الحقول الأساسية
+        if (!firstName || !lastName) {
+            alert("يرجى إدخال الاسم الشخصي والعائلي");
+            return;
         }
 
-        function generateCaptcha(type) {
-            const code = Math.random().toString(36).substring(2, 8).toUpperCase();
-            codes[type] = code;
-            document.getElementById(type + "CapCode").innerText = code;
+        // 2. التأكد من تطابق كلمات المرور
+        if (pass === "" || confirm === "") {
+            alert("يرجى إدخال كلمة المرور وتأكيدها");
+            return;
+        }
+        if (pass !== confirm) {
+            alert("خطأ: كلمات المرور غير متطابقة!");
+            return;
         }
 
-        function openSaleForm(name) {
-            document.getElementById('formTitle').innerText = "بيع حساب " + name;
-            showSection('saleForm');
+        // 3. التحقق من رمز الكباتشا
+        if (captchaInput === codes.signup) {
+            alert("أهلاً بك يا " + firstName + "! تم إنشاء حسابك بنجاح جاري المراجعة.");
+            showSection('homePage');
+        } else {
+            alert("رمز التحقق (الكباتشا) خاطئ، حاول مجدداً.");
+            generateCaptcha('signup');
+        }
+    }
+
+    // وظيفة التحقق من تسجيل الدخول
+    function validateLogin() {
+        const email = document.querySelector('#loginPage input[type="email"]').value;
+        const pass = document.querySelector('#loginPage input[type="password"]').value;
+        const captchaInput = document.getElementById('loginCapInput').value.toUpperCase();
+
+        if (!email || !pass) {
+            alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
+            return;
         }
 
-        function validateSignup() { 
-            if(document.getElementById('signupCapInput').value.toUpperCase() === codes.signup) {
-                alert("تم إنشاء الحساب بنجاح!"); 
-                showSection('homePage');
-            } else {
-                alert("رمز الكباتشا غير صحيح");
-                generateCaptcha('signup');
-            }
+        if (captchaInput === codes.login) {
+            alert("تم تسجيل الدخول بنجاح.");
+            showSection('homePage');
+        } else {
+            alert("رمز التحقق خاطئ.");
+            generateCaptcha('login');
         }
+    }
 
-        function validateLogin() { 
-            if(document.getElementById('loginCapInput').value.toUpperCase() === codes.login) {
-                alert("تم تسجيل الدخول بنجاح!"); 
-                showSection('homePage');
-            } else {
-                alert("رمز الكباتشا غير صحيح");
-                generateCaptcha('login');
-            }
-        }
+    // استدعاء وظيفة البدء عند تحميل الصفحة
+    window.onload = initApp;
     </script>
-</body>
-</html>
-            if(target) target.style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-        function initApp() {
-            // كود الكباتشا هنا
-        }
-    </script>
+    
 </body>
 </html>
