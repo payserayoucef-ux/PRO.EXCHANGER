@@ -38,8 +38,10 @@
             background: white; padding: 25px 10px; border-radius: 22px; font-weight: bold; color: #1e293b;
             display: flex; flex-direction: column; align-items: center; gap: 12px; cursor: pointer; border: none; transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
-        .menu-btn:active { transform: scale(0.95); }
-        .menu-btn i { font-size: 35px; }
+        
+        /* تصميم الأزرار المتوقفة */
+        .menu-btn.disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(0.8); }
+        .menu-btn.disabled:active { transform: none; }
 
         .btn-back-main { 
             background: rgba(255,255,255,0.1); color: white; padding: 12px 25px; border-radius: 15px; 
@@ -48,16 +50,14 @@
 
         .form-box { background: white; padding: 30px 20px; border-radius: 28px; max-width: 550px; margin: auto; color: #333; }
         .input-group { margin-bottom: 15px; text-align: right; }
-        .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #475569; }
-        input, select { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 14px; font-size: 16px; outline: none; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #475569; font-size: 14px; }
+        input { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; }
 
-        .actions-row { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-confirm { flex: 2; padding: 16px; background: var(--primary-blue); color: white; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; }
-        .btn-cancel { flex: 1; padding: 16px; background: #f1f5f9; color: #64748b; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; }
+        .btn-confirm { width: 100%; padding: 16px; background: var(--primary-blue); color: white; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; }
+        .captcha-container { background: #f8fafc; padding: 10px; border-radius: 15px; text-align: center; margin: 10px 0; border: 2px dashed #cbd5e1; }
+        .captcha-display { font-size: 24px; font-weight: 900; letter-spacing: 5px; color: var(--primary-blue); }
         
         .method-logo { width: 45px; height: 45px; object-fit: contain; }
-        .captcha-container { background: #f8fafc; padding: 15px; border-radius: 18px; text-align: center; margin: 15px 0; border: 2px dashed #cbd5e1; }
-        .captcha-display { font-size: 26px; font-weight: 900; letter-spacing: 6px; color: var(--primary-blue); }
     </style>
 </head>
 <body onload="initApp()">
@@ -72,7 +72,7 @@
 
     <div id="homePage" class="section-view" style="display: block;">
         <div class="balance-card">
-            <div><span style="color: #64748b; font-weight: bold;">الرصيد:</span><div style="font-size:32px; font-weight:900;">0.00 د.ج</div></div>
+            <div><span style="color: #64748b; font-weight: bold;">الرصيد الحالي:</span><div style="font-size:32px; font-weight:900;">0.00 د.ج</div></div>
             <i class="fas fa-wallet" style="font-size: 35px; color: var(--success-green);"></i>
         </div>
         <div class="grid-menu">
@@ -83,26 +83,104 @@
         </div>
     </div>
 
-    <div id="withdrawMethods" class="section-view">
-        <button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع للرئيسية</button>
-        <h3 style="text-align: center;">اختر وسيلة السحب</h3>
-        <div class="grid-menu">
-            <button class="menu-btn" onclick="showSection('witBaridiForm')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/1024px-Algerie_Poste_logo.svg.png" class="method-logo">
-                <span>بريدي موب</span>
-            </button>
-            <button class="menu-btn" onclick="showSection('witBinanceForm')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Binance_Logo.svg" class="method-logo">
-                <span>بينانس</span>
-            </button>
+    <div id="signupPage" class="section-view">
+        <button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <div class="form-box">
+            <h3 style="text-align:center;">إنشاء حساب جديد</h3>
+            <div class="input-group"><label>الاسم العائلي:</label><input type="text"></div>
+            <div class="input-group"><label>الاسم الشخصي:</label><input type="text"></div>
+            <div class="input-group"><label>تاريخ الميلاد:</label><input type="date"></div>
+            <div class="input-group"><label>البريد الإلكتروني:</label><input type="email"></div>
+            <div class="input-group"><label>كلمة المرور:</label><input type="password"></div>
+            <div class="input-group"><label>تأكيد كلمة المرور:</label><input type="password"></div>
+            <div class="captcha-container">
+                <span id="signupCapCode" class="captcha-display">----</span>
+                <i class="fas fa-sync-alt" onclick="generateCaptcha('signup')" style="cursor:pointer; margin-right:10px;"></i>
+                <input type="text" id="signupCapInput" placeholder="أدخل الرمز" style="margin-top:10px; text-align:center;">
+            </div>
+            <button class="btn-confirm" onclick="validateSignup()">تأكيد التسجيل</button>
         </div>
     </div>
 
-    <div id="witBaridiForm" class="section-view">
-        <button class="btn-back-main" onclick="showSection('withdrawMethods')"><i class="fas fa-arrow-right"></i> رجوع</button>
+    <div id="loginPage" class="section-view">
+        <button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع</button>
         <div class="form-box">
-            <h3 style="text-align:center;">سحب عبر بريدي موب</h3>
-            <div class="input-group"><label>المبلغ المراد سحبه (د.ج):</label><input type="number" placeholder="0.00"></div>
+            <h3 style="text-align:center;">تسجيل الدخول</h3>
+            <div class="input-group"><label>البريد الإلكتروني:</label><input type="email"></div>
+            <div class="input-group"><label>كلمة المرور:</label><input type="password"></div>
+            <div class="captcha-container">
+                <span id="loginCapCode" class="captcha-display">----</span>
+                <i class="fas fa-sync-alt" onclick="generateCaptcha('login')" style="cursor:pointer; margin-right:10px;"></i>
+                <input type="text" id="loginCapInput" placeholder="أدخل الرمز" style="margin-top:10px; text-align:center;">
+            </div>
+            <button class="btn-confirm" onclick="validateLogin()">دخول</button>
+        </div>
+    </div>
+
+    <div id="sellPage" class="section-view">
+        <button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <h3 style="text-align: center; color: #94a3b8;">قسم البيع (متوقف حالياً)</h3>
+        <div class="grid-menu">
+            <button class="menu-btn disabled"><i class="fab fa-youtube" style="color:var(--yt-red)"></i><span>يوتيوب</span></button>
+            <button class="menu-btn disabled"><i class="fab fa-tiktok" style="color:var(--tk-black)"></i><span>تيك توك</span></button>
+            <button class="menu-btn disabled"><i class="fas fa-flag" style="color:var(--fb-blue)"></i><span>صفحة فيسبوك</span></button>
+            <button class="menu-btn disabled"><i class="fas fa-users" style="color:var(--fb-blue)"></i><span>مجموعة فيسبوك</span></button>
+            <button class="menu-btn disabled"><i class="fab fa-instagram" style="color:var(--ig-pink)"></i><span>انستقرام</span></button>
+            <button class="menu-btn disabled"><i class="fab fa-blogger" style="color:var(--blogger-orange)"></i><span>مدونة بلوجر</span></button>
+            <button class="menu-btn disabled"><i class="fas fa-crosshairs" style="color:var(--pubg-gold)"></i><span>ببجي</span></button>
+            <button class="menu-btn disabled"><i class="fas fa-fire" style="color:var(--ff-red)"></i><span>فري فاير</span></button>
+        </div>
+    </div>
+
+    <div id="withdrawMethods" class="section-view">
+        <button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <div class="grid-menu">
+            <button class="menu-btn" onclick="showSection('witBaridi')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/1024px-Algerie_Poste_logo.svg.png" class="method-logo"><span>بريدي موب</span></button>
+            <button class="menu-btn" onclick="showSection('witBinance')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Binance_Logo.svg" class="method-logo"><span>بينانس</span></button>
+        </div>
+    </div>
+
+    <div id="witBaridi" class="section-view">
+        <button class="btn-back-main" onclick="showSection('withdrawMethods')">رجوع</button>
+        <div class="form-box"><h3>سحب بريدي موب</h3><input type="number" placeholder="المبلغ"><br><br><input type="text" placeholder="رقم RIP"><button class="btn-confirm" style="background:var(--withdraw-red)">تأكيد السحب</button></div>
+    </div>
+    <div id="witBinance" class="section-view">
+        <button class="btn-back-main" onclick="showSection('withdrawMethods')">رجوع</button>
+        <div class="form-box"><h3>سحب بينانس</h3><input type="number" placeholder="المبلغ"><br><br><input type="text" placeholder="عنوان المحفظة"><button class="btn-confirm" style="background:var(--withdraw-red)">تأكيد السحب</button></div>
+    </div>
+
+    <script>
+        let codes = { signup: "", login: "" };
+
+        function initApp() {
+            generateCaptcha('signup');
+            generateCaptcha('login');
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
+            const target = document.getElementById(id);
+            if(target) { target.style.display = 'block'; window.scrollTo(0, 0); }
+        }
+
+        function generateCaptcha(type) {
+            const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+            codes[type] = code;
+            document.getElementById(type + "CapCode").innerText = code;
+        }
+
+        function validateSignup() {
+            if(document.getElementById('signupCapInput').value.toUpperCase() === codes.signup) alert("تم إرسال طلب التسجيل");
+            else { alert("رمز خطأ"); generateCaptcha('signup'); }
+        }
+
+        function validateLogin() {
+            if(document.getElementById('loginCapInput').value.toUpperCase() === codes.login) alert("تم الدخول");
+            else { alert("رمز خطأ"); generateCaptcha('login'); }
+        }
+    </script>
+</body>
+</html>
             <div class="input-group"><label>رقم الحساب (RIP):</label><input type="text" placeholder="00799999..."></div>
             <div class="input-group"><label>اسم صاحب الحساب:</label><input type="text" placeholder="الاسم الكامل"></div>
             <div class="actions-row">
