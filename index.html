@@ -63,13 +63,13 @@
 
     <div id="homePage" class="section-view" style="display: block;">
         <div class="balance-card">
-            <div><span style="color: #64748b; font-weight: bold;">الرصيد:</span><div style="font-size:30px; font-weight:900; color:#1e293b;">0.00 د.ج</div></div>
+            <div><span style="color: #64748b; font-weight: bold;">الرصيد الحالي:</span><div style="font-size:30px; font-weight:900; color:#1e293b;">0.00 د.ج</div></div>
             <i class="fas fa-wallet" style="font-size: 40px; color: var(--success-green);"></i>
         </div>
         <div class="grid-menu">
             <button class="menu-btn" onclick="showSection('sellPage')"><i class="fas fa-tag" style="color:var(--primary-blue)"></i><span>عرض بيع</span></button>
             <button class="menu-btn" onclick="showSection('buyPage')"><i class="fas fa-shopping-bag" style="color:var(--success-green)"></i><span>شراء حساب</span></button>
-            <button class="menu-btn" onclick="showSection('withdrawMethods')"><i class="fas fa-hand-holding-usd" style="color:var(--pubg-gold)"></i><span>سحب الأموال</span></button>
+            <button class="menu-btn" onclick="showSection('depositMethods')"><i class="fas fa-file-import" style="color:var(--pubg-gold)"></i><span>إيداع الأموال</span></button>
         </div>
     </div>
 
@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <div id="withdrawMethods" class="section-view">
+    <div id="depositMethods" class="section-view">
         <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
         <div class="grid-menu">
             <button class="menu-btn" onclick="showSection('baridiForm')">
@@ -149,26 +149,26 @@
     </div>
 
     <div id="baridiForm" class="section-view">
-        <div style="text-align:center;"><button class="back-btn" onclick="showSection('withdrawMethods')">← رجوع</button></div>
+        <div style="text-align:center;"><button class="back-btn" onclick="showSection('depositMethods')">← رجوع</button></div>
         <div class="form-box">
-            <h3>سحب بريدي موب</h3>
+            <h3>إيداع عبر بريدي موب</h3>
             <div style="background:#f8fafc; padding:15px; border-radius:10px; font-weight:bold; color:var(--primary-blue); text-align:center; margin-bottom:15px;">0079999901644493295</div>
-            <div class="input-group"><label>المبلغ (د.ج):</label><input type="number"></div>
+            <div class="input-group"><label>المبلغ المراد إيداعه (د.ج):</label><input type="number"></div>
             <div class="input-group"><label>معرف العملية:</label><input type="text"></div>
-            <div class="input-group"><label>صورة الوصل:</label><input type="file"></div>
-            <button class="btn-submit">تأكيد العملية</button>
+            <div class="input-group"><label>صورة وصل الإيداع:</label><input type="file"></div>
+            <button class="btn-submit">تأكيد الإيداع</button>
         </div>
     </div>
 
     <div id="binanceForm" class="section-view">
-        <div style="text-align:center;"><button class="back-btn" onclick="showSection('withdrawMethods')">← رجوع</button></div>
+        <div style="text-align:center;"><button class="back-btn" onclick="showSection('depositMethods')">← رجوع</button></div>
         <div class="form-box">
-            <h3>سحب Binance (USDT)</h3>
+            <h3>إيداع عبر Binance (USDT)</h3>
             <div style="background:#f8fafc; padding:15px; border-radius:10px; font-weight:bold; color:var(--pubg-gold); text-align:center; margin-bottom:15px;">761600642</div>
-            <p style="text-align:center; font-size:12px;">1 USDT = 260 د.ج</p>
-            <div class="input-group"><label>المبلغ (د.ج):</label><input type="number"></div>
-            <div class="input-group"><label>صورة التحويل:</label><input type="file"></div>
-            <button class="btn-submit">تأكيد العملية</button>
+            <p style="text-align:center; font-size:12px; color:#666;">سعر الصرف: 1 USDT = 260 د.ج</p>
+            <div class="input-group"><label>المبلغ بالدينار الجزائري:</label><input type="number"></div>
+            <div class="input-group"><label>صورة تحويل USDT:</label><input type="file"></div>
+            <button class="btn-submit">تأكيد الإيداع</button>
         </div>
     </div>
 
@@ -187,11 +187,8 @@
         }
 
         function showSection(id) {
-            // إخفاء كل الأقسام أولاً
             const sections = document.querySelectorAll('.section-view');
             sections.forEach(s => s.style.display = 'none');
-            
-            // إظهار القسم المطلوب
             const target = document.getElementById(id);
             if(target) {
                 target.style.display = 'block';
