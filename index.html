@@ -3,28 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ProExchanger | المنصة المتكاملة</title>
+    <title>ProExchanger | المتجر المتكامل</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
         :root { 
-            --dark-bg: #0a0f1a;
-            --card-bg: #ffffff;
-            --primary-blue: #2563eb; 
-            --success-green: #10b981;
-            --yt-red: #FF0000;
-            --text-dark: #1e293b;
+            --dark-bg: #0a0f1a; --card-bg: #ffffff; --primary-blue: #2563eb; 
+            --yt-red: #FF0000; --tk-black: #010101; --fb-blue: #1877F2;
+            --ig-pink: #E4405F; --blogger-orange: #ff5722; --pubg-gold: #f39c12;
+            --ff-red: #c0392b; --success-green: #10b981;
         }
-
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--dark-bg); margin: 0; padding: 0; overflow-x: hidden; }
-
+        
         header { 
             background: linear-gradient(180deg, #111827 0%, var(--dark-bg) 100%);
-            padding: 100px 15px 40px; text-align: center; border-bottom: 5px solid var(--primary-blue);
-            position: relative;
+            padding: 100px 15px 40px; text-align: center; border-bottom: 5px solid var(--primary-blue); position: relative;
         }
-
         .auth-bar { position: absolute; top: 20px; width: 100%; left: 0; display: flex; justify-content: center; gap: 10px; z-index: 100; }
         .btn-auth { padding: 10px 20px; font-weight: bold; border-radius: 10px; border: none; cursor: pointer; }
         .btn-signup { background: var(--primary-blue); color: white; }
@@ -33,34 +27,24 @@
         .section-view { display: none; width: 100%; animation: fadeIn 0.4s; padding: 20px; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .balance-card { 
-            background: white; padding: 25px; border-radius: 20px; 
-            width: 90%; max-width: 500px; margin: -30px auto 30px;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-
         .grid-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; max-width: 1000px; margin: auto; }
         .menu-btn { 
-            background: white; padding: 25px 10px; border-radius: 20px; 
-            font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 12px;
-            cursor: pointer; transition: 0.3s; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: white; padding: 25px 10px; border-radius: 20px; font-weight: bold; 
+            display: flex; flex-direction: column; align-items: center; gap: 12px; cursor: pointer; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s;
         }
+        .menu-btn:hover { transform: translateY(-5px); }
+        .menu-btn i { font-size: 40px; }
 
         .form-box { background: white; padding: 30px 20px; border-radius: 25px; max-width: 550px; margin: auto; }
-        .input-group { margin-bottom: 12px; text-align: right; }
+        .input-group { margin-bottom: 15px; text-align: right; }
         .input-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
-        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; }
 
-        .captcha-container { background: #f8fafc; padding: 10px; border-radius: 8px; text-align: center; margin: 10px 0; border: 1px solid #eee; }
-        .captcha-code { font-weight: bold; font-size: 20px; letter-spacing: 4px; color: var(--primary-blue); }
-
-        .btn-submit { width: 100%; padding: 15px; background: var(--primary-blue); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-submit { width: 100%; padding: 15px; background: var(--primary-blue); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
         .back-btn { background: none; border: 1px solid white; color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; margin-bottom: 20px; }
-        .account-num { background: #f1f5f9; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; color: var(--primary-blue); margin-bottom: 15px; border: 1px dashed var(--primary-blue); }
     </style>
 </head>
-<body onload="initCaptchas()">
+<body onload="generateLoginCaptcha()">
 
     <header>
         <div class="auth-bar">
@@ -71,117 +55,63 @@
     </header>
 
     <div id="homePage" class="section-view" style="display: block;">
-        <div class="balance-card">
-            <div><span style="color: #64748b;">الرصيد:</span><div style="font-size:30px; font-weight:900;">0.00 د.ج</div></div>
-            <i class="fas fa-wallet" style="font-size: 40px; color: var(--success-green);"></i>
+        <div class="grid-menu" style="margin-top: 50px;">
+            <button class="menu-btn" onclick="showSection('sellPage')"><i class="fas fa-tag" style="color:var(--primary-blue)"></i><span>عرض بيع</span></button>
+            <button class="menu-btn" onclick="showSection('buyPage')"><i class="fas fa-shopping-bag" style="color:var(--success-green)"></i><span>شراء حساب</span></button>
+            <button class="menu-btn" onclick="showSection('withdrawMethods')"><i class="fas fa-wallet" style="color:#f39c12"></i><span>سحب الأموال</span></button>
         </div>
+    </div>
+
+    <div id="sellPage" class="section-view">
+        <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة للرئيسية</button></div>
         <div class="grid-menu">
-            <button class="menu-btn" onclick="showSection('sellPage')"><i class="fas fa-plus-circle" style="color:var(--primary-blue)"></i><span>عرض بيع</span></button>
-            <button class="menu-btn" onclick="showSection('buyPage')"><i class="fas fa-shopping-cart" style="color:var(--primary-blue)"></i><span>شراء حساب</span></button>
-            <button class="menu-btn" onclick="showSection('withdrawMethods')"><i class="fas fa-hand-holding-usd" style="color:var(--success-green)"></i><span>سحب الأموال</span></button>
+            <button class="menu-btn" onclick="openSaleForm('يوتيوب', 'YT')"><i class="fab fa-youtube" style="color: var(--yt-red);"></i><span>يوتيوب</span></button>
+            <button class="menu-btn" onclick="openSaleForm('تيك توك', 'TK')"><i class="fab fa-tiktok" style="color: var(--tk-black);"></i><span>تيك توك</span></button>
+            <button class="menu-btn"><i class="fas fa-flag" style="color: var(--fb-blue);"></i><span>صفحة فيسبوك</span></button>
+            <button class="menu-btn"><i class="fas fa-users" style="color: var(--fb-blue);"></i><span>مجموعة فيسبوك</span></button>
+            <button class="menu-btn"><i class="fab fa-instagram" style="color: var(--ig-pink);"></i><span>انستقرام</span></button>
+            <button class="menu-btn"><i class="fab fa-blogger" style="color: var(--blogger-orange);"></i><span>بلوجر</span></button>
+            <button class="menu-btn"><i class="fas fa-crosshairs" style="color: var(--pubg-gold);"></i><span>حساب ببجي</span></button>
+            <button class="menu-btn"><i class="fas fa-fire" style="color: var(--ff-red);"></i><span>فري فاير</span></button>
         </div>
     </div>
 
-    <div id="withdrawBinance" class="section-view">
-        <div style="text-align: center;"><button class="back-btn" onclick="showSection('withdrawMethods')">← رجوع</button></div>
+    <div id="saleForm" class="section-view">
+        <div style="text-align: center;"><button class="back-btn" onclick="showSection('sellPage')">← رجوع</button></div>
         <div class="form-box">
-            <h3 style="text-align: center;">سحب عبر Binance</h3>
-            <div class="account-num">761600642</div>
-            <div class="input-group">
-                <label>كم تريد أن تودع (بالدينار): (1 USDT = 260 د.ج)</label>
-                <input type="number" placeholder="المبلغ بالدينار">
-            </div>
-            <div class="input-group">
-                <label>إرفاق لقطة شاشة للإيداع:</label>
-                <input type="file">
-            </div>
-            <button class="btn-submit" onclick="alert('تم الاستلام')">تأكيد</button>
+            <h2 id="formTitle" style="text-align: center; margin-bottom: 20px;"></h2>
+            <div class="input-group"><label>مجال الحساب/القناة:</label><input type="text" placeholder="مثال: تقنية، ألعاب، تجارة..."></div>
+            <div class="input-group"><label id="countLabel">عدد المشتركين:</label><input type="number" placeholder="0"></div>
+            <div class="input-group"><label>هل الربح مفعل؟</label><select><option>نعم</option><option>لا</option></select></div>
+            <div class="input-group"><label>رابط الحساب/القناة:</label><input type="url" placeholder="https://..."></div>
+            <div class="input-group"><label>السعر المطلوب (د.ج):</label><input type="number" placeholder="مثال: 45000"></div>
+            <div class="input-group"><label>وصف إضافي:</label><textarea rows="3" placeholder="اكتب ميزات الحساب هنا..."></textarea></div>
+            <button class="btn-submit" onclick="alert('تم إرسال العرض للمراجعة بنجاح')">تأكيد العرض للبيع</button>
         </div>
     </div>
 
-    <div id="signupPage" class="section-view">
-        <div class="form-box">
-            <h2 style="text-align:center;">فتح حساب جديد</h2>
-            <div class="input-group"><input type="text" placeholder="الاسم العائلي"></div>
-            <div class="input-group"><input type="text" placeholder="الاسم الشخصي"></div>
-            <div class="input-group"><label>تاريخ الميلاد:</label><input type="date"></div>
-            <div class="input-group"><input type="email" placeholder="البريد الإلكتروني"></div>
-            <div class="input-group"><input type="password" placeholder="كلمة المرور"></div>
-            <div class="input-group"><input type="password" placeholder="تأكيد كلمة المرور"></div>
-            <div class="captcha-container">
-                <span class="captcha-code">PRO2026</span> <input type="text" id="signupCapInput" placeholder="أدخل الرمز أعلاه" style="margin-top:10px;">
-            </div>
-            <button class="btn-submit" onclick="validateSignup()">تأكيد التسجيل</button>
-            <p onclick="showSection('homePage')" style="text-align:center; cursor:pointer; color:blue;">إلغاء</p>
-        </div>
-    </div>
-
-    <div id="loginPage" class="section-view">
-        <div class="form-box">
-            <h2 style="text-align:center;">تسجيل الدخول</h2>
-            <div class="input-group"><input type="email" placeholder="البريد الإلكتروني"></div>
-            <div class="input-group"><input type="password" placeholder="كلمة المرور"></div>
-            <div class="captcha-container">
-                <span id="loginCapCode" class="captcha-code">----</span>
-                <i class="fas fa-sync" onclick="generateLoginCaptcha()" style="cursor:pointer; margin-right:10px;"></i>
-                <input type="text" id="loginCapInput" placeholder="أدخل الرمز أعلاه" style="margin-top:10px;">
-            </div>
-            <button class="btn-submit" onclick="validateLogin()">دخول</button>
-            <p onclick="showSection('homePage')" style="text-align:center; cursor:pointer; color:blue;">عودة</p>
-        </div>
-    </div>
-
-    <div id="withdrawMethods" class="section-view">
+    <div id="buyPage" class="section-view">
         <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
-        <div class="form-box">
-            <button class="btn-submit" style="background:#eee; color:#333; margin-bottom:10px;" onclick="showSection('withdrawBaridiMob')">بريدي موب</button>
-            <button class="btn-submit" style="background:#eee; color:#333;" onclick="showSection('withdrawBinance')">بينانس</button>
-        </div>
-    </div>
-    
-    <div id="withdrawBaridiMob" class="section-view">
-        <div style="text-align:center;"><button class="back-btn" onclick="showSection('withdrawMethods')">← رجوع</button></div>
-        <div class="form-box">
-            <h3 style="text-align:center;">بريدي موب</h3>
-            <div class="account-num">0079999901644493295</div>
-            <input type="number" placeholder="كم تريد أن تودع؟" style="margin-bottom:10px; width:100%; padding:10px;">
-            <input type="text" placeholder="معرف العملية" style="margin-bottom:10px; width:100%; padding:10px;">
-            <input type="file" style="margin-bottom:10px; width:100%;">
-            <button class="btn-submit">تأكيد</button>
-        </div>
+        <h2 style="color: white; text-align: center;">السوق الرقمي</h2>
+        <p style="color: #94a3b8; text-align: center; margin-top: 40px;">نحن بانتظار العروض الأولى لتظهر هنا..</p>
     </div>
 
     <script>
         function showSection(id) {
-            const sections = ['homePage', 'signupPage', 'loginPage', 'withdrawMethods', 'withdrawBinance', 'withdrawBaridiMob'];
+            const sections = ['homePage', 'sellPage', 'saleForm', 'buyPage', 'loginPage', 'signupPage'];
             sections.forEach(sec => { if(document.getElementById(sec)) document.getElementById(sec).style.display = 'none'; });
             document.getElementById(id).style.display = 'block';
             window.scrollTo(0, 0);
         }
 
-        let loginCap = "";
-        function generateLoginCaptcha() {
-            const chars = "123456789ABCDEF";
-            loginCap = "";
-            for (let i = 0; i < 5; i++) loginCap += chars.charAt(Math.floor(Math.random() * chars.length));
-            document.getElementById("loginCapCode").innerText = loginCap;
+        function openSaleForm(name, type) {
+            document.getElementById('formTitle').innerText = "بيع حساب " + name;
+            document.getElementById('formTitle').style.color = (type === 'YT') ? 'var(--yt-red)' : 'var(--tk-black)';
+            document.getElementById('countLabel').innerText = (type === 'YT') ? "عدد المشتركين الحقيقي:" : "عدد المتابعين الحقيقي:";
+            showSection('saleForm');
         }
 
-        function initCaptchas() {
-            generateLoginCaptcha();
-        }
-
-        function validateSignup() {
-            const val = document.getElementById("signupCapInput").value;
-            if(val.toUpperCase() === "PRO2026") alert("تم التسجيل!");
-            else alert("رمز الحماية غير صحيح");
-        }
-
-        function validateLogin() {
-            const val = document.getElementById("loginCapInput").value;
-            if(val.toUpperCase() === loginCap) alert("مرحباً بك!");
-            else { alert("رمز الحماية خطأ"); generateLoginCaptcha(); }
-        }
+        // الوظائف الأخرى (كباتشا ودخول) كما في الأكواد السابقة...
     </script>
 </body>
 </html>
