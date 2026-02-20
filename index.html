@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ProExchanger | المنصة الكاملة</title>
+    <title>ProExchanger | المنصة المتكاملة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -11,63 +11,81 @@
             --dark-bg: #0a0f1a;
             --card-bg: #ffffff;
             --primary-blue: #2563eb; 
-            --success-green: #10b981;
             --yt-red: #FF0000;
             --fb-blue: #1877F2;
             --ig-pink: #E4405F;
             --tk-black: #000000;
             --blogger-orange: #ff5722;
+            --success-green: #10b981;
             --text-dark: #1e293b;
         }
 
         * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--dark-bg); margin: 0; padding: 0; overflow-x: hidden; color: var(--text-dark); }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--dark-bg); margin: 0; padding: 0; overflow-x: hidden; }
 
-        /* الرأس والأزرار العلوية (تم إعادتها بالكامل) */
         header { 
             background: linear-gradient(180deg, #111827 0%, var(--dark-bg) 100%);
-            padding: 100px 15px 50px; text-align: center; border-bottom: 5px solid var(--primary-blue);
+            padding: 100px 15px 40px; text-align: center; border-bottom: 5px solid var(--primary-blue);
             position: relative;
         }
 
+        /* أزرار التسجيل والدخول في الأعلى */
         .auth-bar { position: absolute; top: 20px; width: 100%; left: 0; display: flex; justify-content: center; gap: 10px; z-index: 100; }
         .btn-auth { padding: 10px 20px; font-weight: bold; border-radius: 10px; border: none; cursor: pointer; transition: 0.3s; }
         .btn-signup { background: var(--primary-blue); color: white; }
         .btn-login { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); }
 
-        header h1 { color: white; font-size: 30px; margin: 0; }
+        header h1 { font-size: 28px; color: white; margin: 0; }
 
-        /* الأقسام */
         .section-view { display: none; width: 100%; animation: fadeIn 0.4s; padding: 20px; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* بطاقة الرصيد */
+        /* الرصيد */
         .balance-card { 
             background: white; padding: 25px; border-radius: 20px; 
             width: 90%; max-width: 500px; margin: -30px auto 30px;
             display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
-        .balance-amount { font-size: 35px; font-weight: 900; color: var(--dark-bg); }
+        .balance-amount { font-size: 35px; font-weight: 900; color: var(--text-dark); }
 
-        /* أزرار القوائم */
-        .grid-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; max-width: 1000px; margin: auto; }
+        /* القوائم */
+        .grid-menu { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
+            gap: 15px; max-width: 1000px; margin: auto;
+        }
+
         .menu-btn { 
-            background: white; padding: 25px 10px; border-radius: 20px; border: none; cursor: pointer; 
-            display: flex; flex-direction: column; align-items: center; gap: 12px; font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s;
+            background: var(--card-bg); padding: 25px 10px; border-radius: 20px; 
+            font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 12px;
+            cursor: pointer; transition: 0.3s; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         .menu-btn:hover { transform: translateY(-5px); }
         .menu-btn i { font-size: 35px; }
 
-        /* النماذج */
-        .form-box { background: white; padding: 30px 20px; border-radius: 25px; max-width: 500px; margin: auto; }
-        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; }
-        .btn-confirm { width: 100%; padding: 15px; background: var(--primary-blue); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        /* استمارة البيع */
+        .form-box { 
+            background: white; padding: 30px 20px; border-radius: 25px; 
+            max-width: 550px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .input-group { margin-bottom: 15px; text-align: right; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text-dark); }
+        
+        input, select, textarea { 
+            width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 12px; 
+            font-size: 16px; font-family: inherit;
+        }
 
         /* الكباتشا */
         .captcha-box { background: #f1f5f9; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center; }
-        #cap-text { font-weight: bold; letter-spacing: 5px; font-size: 22px; color: var(--primary-blue); background: #ddd; padding: 5px 15px; border-radius: 5px; }
+        #cap-text { font-weight: bold; letter-spacing: 5px; font-size: 22px; color: var(--primary-blue); }
+
+        .btn-submit { 
+            width: 100%; padding: 15px; font-size: 18px; font-weight: bold; 
+            background: var(--primary-blue); color: white; border: none; border-radius: 12px; 
+            cursor: pointer; margin-top: 10px;
+        }
 
         .back-btn { background: none; border: 1px solid white; color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; margin-bottom: 20px; }
     </style>
@@ -84,7 +102,7 @@
 
     <div id="homePage" class="section-view" style="display: block;">
         <div class="balance-card">
-            <div><span style="color: #64748b;">الرصيد:</span><div class="balance-amount">0.00 د.ج</div></div>
+            <div><span style="color: #64748b; font-weight: bold;">الرصيد:</span><div class="balance-amount">0.00 د.ج</div></div>
             <i class="fas fa-wallet" style="font-size: 40px; color: var(--success-green);"></i>
         </div>
         <div class="grid-menu">
@@ -94,37 +112,37 @@
     </div>
 
     <div id="sellPage" class="section-view">
-        <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
+        <div style="text-align: center;">
+            <button class="back-btn" onclick="showSection('homePage')">← العودة للرئيسية</button>
+            <h2 style="color: white; margin-bottom: 25px;">اختر المنصة التي تريد بيعها</h2>
+        </div>
         <div class="grid-menu">
-            <button class="menu-btn" onclick="showSection('ytSellForm')"><i class="fab fa-youtube" style="color:var(--yt-red)"></i><span>قناة يوتيوب</span></button>
-            <button class="menu-btn"><i class="fas fa-flag" style="color:var(--fb-blue)"></i><span>صفحة فيسبوك</span></button>
-            <button class="menu-btn"><i class="fas fa-users" style="color:var(--fb-blue)"></i><span>مجموعة فيسبوك</span></button>
-            <button class="menu-btn"><i class="fab fa-instagram" style="color:var(--ig-pink)"></i><span>انستقرام</span></button>
-            <button class="menu-btn"><i class="fab fa-tiktok" style="color:var(--tk-black)"></i><span>تيك توك</span></button>
-            <button class="menu-btn"><i class="fab fa-blogger" style="color:var(--blogger-orange)"></i><span>مدونة بلوجر</span></button>
+            <button class="menu-btn" onclick="showSection('ytForm')"><i class="fab fa-youtube" style="color: var(--yt-red);"></i><span>قناة يوتيوب</span></button>
+            <button class="menu-btn"><i class="fas fa-flag" style="color: var(--fb-blue);"></i><span>صفحة فيسبوك</span></button>
+            <button class="menu-btn"><i class="fas fa-users" style="color: var(--fb-blue);"></i><span>مجموعة فيسبوك</span></button>
+            <button class="menu-btn"><i class="fab fa-instagram" style="color: var(--ig-pink);"></i><span>انستقرام</span></button>
+            <button class="menu-btn"><i class="fab fa-tiktok" style="color: var(--tk-black);"></i><span>تيك توك</span></button>
+            <button class="menu-btn"><i class="fab fa-blogger" style="color: var(--blogger-orange);"></i><span>مدونة بلوجر</span></button>
         </div>
     </div>
 
-    <div id="ytSellForm" class="section-view">
-        <div style="text-align: center;"><button class="back-btn" onclick="showSection('sellPage')">← رجوع</button></div>
+    <div id="ytForm" class="section-view">
+        <div style="text-align: center;"><button class="back-btn" onclick="showSection('sellPage')">← العودة للخلف</button></div>
         <div class="form-box">
-            <h2>تفاصيل القناة</h2>
-            <input type="text" placeholder="مجال القناة">
-            <input type="number" placeholder="عدد المشتركين">
-            <select><option>هل الربح مفعل؟</option><option>نعم</option><option>لا</option></select>
-            <input type="url" placeholder="رابط القناة">
-            <input type="number" placeholder="السعر (د.ج)">
-            <button class="btn-confirm" onclick="alert('تم الإرسال للمراجعة')">تأكيد العرض</button>
+            <h2 style="color: var(--yt-red); text-align: center;"><i class="fab fa-youtube"></i> تفاصيل القناة</h2>
+            <div class="input-group"><label>المجال:</label><input type="text" placeholder="مثال: ألعاب، تقنية..."></div>
+            <div class="input-group"><label>عدد المشتركين:</label><input type="number" placeholder="0000"></div>
+            <div class="input-group"><label>هل الربح مفعل؟</label><select><option>نعم</option><option>لا</option></select></div>
+            <div class="input-group"><label>رابط القناة:</label><input type="url" placeholder="https://youtube.com/..."></div>
+            <div class="input-group"><label>السعر (د.ج):</label><input type="number" placeholder="5000"></div>
+            <button class="btn-submit" onclick="submitSale()">عرض للبيع الآن</button>
         </div>
     </div>
 
     <div id="buyPage" class="section-view">
         <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
-        <h2 style="color: white; text-align: center;">سوق الحسابات</h2>
-        <div class="grid-menu">
-            <button class="menu-btn"><i class="fab fa-youtube" style="color:red"></i><span>قنوات يوتيوب</span></button>
-            <button class="menu-btn"><i class="fab fa-tiktok"></i><span>تيك توك</span></button>
-        </div>
+        <h2 style="color: white; text-align: center;">سوق الحسابات المتوفرة</h2>
+        <div style="text-align: center; color: #94a3b8; padding: 40px;">لا توجد عروض متوفرة حالياً</div>
     </div>
 
     <div id="signupPage" class="section-view">
@@ -135,11 +153,11 @@
             <input type="password" placeholder="كلمة المرور">
             <div class="captcha-box">
                 <span id="cap-text">----</span>
-                <i class="fas fa-sync" onclick="generateCaptcha()" style="margin-right:15px; cursor:pointer; color:var(--primary-blue);"></i>
-                <input type="text" id="cap-input" placeholder="أدخل الرمز هنا" style="margin-top:10px;">
+                <i class="fas fa-sync" onclick="generateCaptcha()" style="margin-right:10px; cursor:pointer;"></i>
+                <input type="text" id="cap-input" placeholder="أدخل الرمز أعلاه" style="margin-top:10px;">
             </div>
-            <button class="btn-confirm" onclick="validateSignup()">تسجيل</button>
-            <p onclick="showSection('homePage')" style="text-align:center; cursor:pointer;">إلغاء</p>
+            <button class="btn-submit" onclick="validateSignup()">تأكيد التسجيل</button>
+            <p onclick="showSection('homePage')" style="text-align: center; cursor: pointer;">إلغاء</p>
         </div>
     </div>
 
@@ -148,17 +166,18 @@
             <h2 style="text-align: center;">تسجيل الدخول</h2>
             <input type="email" placeholder="البريد الإلكتروني">
             <input type="password" placeholder="كلمة المرور">
-            <button class="btn-confirm" onclick="showSection('homePage')">دخول</button>
-            <p onclick="showSection('homePage')" style="text-align:center; cursor:pointer;">إلغاء</p>
+            <button class="btn-submit" onclick="showSection('homePage')">دخول</button>
+            <p onclick="showSection('homePage')" style="text-align: center; cursor: pointer;">عودة</p>
         </div>
     </div>
 
     <script>
         function showSection(id) {
-            const sections = ['homePage', 'sellPage', 'ytSellForm', 'buyPage', 'signupPage', 'loginPage'];
+            const sections = ['homePage', 'sellPage', 'ytForm', 'buyPage', 'signupPage', 'loginPage'];
             sections.forEach(sec => document.getElementById(sec).style.display = 'none');
             document.getElementById(id).style.display = 'block';
             if(id === 'signupPage') generateCaptcha();
+            window.scrollTo(0, 0);
         }
 
         let capCode = "";
@@ -171,8 +190,13 @@
 
         function validateSignup() {
             const inp = document.getElementById("cap-input").value;
-            if(inp.toUpperCase() === capCode) alert("تم التسجيل!");
-            else { alert("رمز الحماية خطأ!"); generateCaptcha(); }
+            if(inp.toUpperCase() === capCode) alert("تم التسجيل بنجاح!");
+            else { alert("رمز الحماية خاطئ!"); generateCaptcha(); }
+        }
+
+        function submitSale() {
+            alert("تم إرسال طلب البيع للمراجعة!");
+            showSection('homePage');
         }
     </script>
 </body>
