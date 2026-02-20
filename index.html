@@ -15,6 +15,7 @@
             --ig-pink: #E4405F;
             --yt-red: #FF0000;
             --tk-black: #000000;
+            --blogger-orange: #ff5722;
             --success-green: #10b981;
         }
 
@@ -45,7 +46,6 @@
         .section-view { display: none; width: 100%; animation: fadeIn 0.4s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* القائمة الرئيسية وقسم البيع */
         .grid-menu { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
@@ -60,18 +60,17 @@
         .menu-btn:hover { transform: translateY(-5px); }
         .menu-btn i { font-size: 35px; }
 
-        /* ألوان أيقونات البيع */
+        /* ألوان الأيقونات */
         .btn-yt i { color: var(--yt-red); }
         .btn-fb i { color: var(--fb-blue); }
         .btn-ig i { color: var(--ig-pink); }
         .btn-tk i { color: var(--tk-black); }
-        .btn-fbg i { color: #05668D; } /* لون مميز للمجموعات */
+        .btn-blogger i { color: var(--blogger-orange); }
 
         .back-btn { background: none; border: 1px solid white; color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; margin-bottom: 20px; }
-
     </style>
 </head>
-<body onload="generateCaptcha()">
+<body>
 
     <header>
         <div class="auth-bar">
@@ -100,47 +99,37 @@
     <div id="sellPage" class="section-view">
         <div style="text-align: center; padding: 20px;">
             <button class="back-btn" onclick="showSection('homePage')">← العودة للرئيسية</button>
-            <h2 style="color: white;">اختر نوع الحساب/الخدمة للبيع:</h2>
+            <h2 style="color: white;">اختر نوع الحساب للبيع:</h2>
         </div>
         <div class="grid-menu">
-            <button class="menu-btn btn-yt" onclick="alert('بيع قناة يوتيوب')">
+            <button class="menu-btn btn-yt" onclick="alert('بدء بيع قناة يوتيوب')">
                 <i class="fab fa-youtube"></i><span>قناة يوتيوب</span>
             </button>
-            <button class="menu-btn btn-fb" onclick="alert('بيع حساب فيسبوك')">
-                <i class="fab fa-facebook"></i><span>حساب فيسبوك</span>
-            </button>
-            <button class="menu-btn btn-fb" onclick="alert('بيع صفحة فيسبوك')">
+            <button class="menu-btn btn-fb" onclick="alert('بدء بيع صفحة فيسبوك')">
                 <i class="fas fa-flag"></i><span>صفحة فيسبوك</span>
             </button>
-            <button class="menu-btn btn-fbg" onclick="alert('بيع مجموعة فيسبوك')">
+            <button class="menu-btn btn-fb" onclick="alert('بدء بيع مجموعة فيسبوك')">
                 <i class="fas fa-users"></i><span>مجموعة فيسبوك</span>
             </button>
-            <button class="menu-btn btn-ig" onclick="alert('بيع حساب انستقرام')">
+            <button class="menu-btn btn-ig" onclick="alert('بدء بيع حساب انستقرام')">
                 <i class="fab fa-instagram"></i><span>انستقرام</span>
             </button>
-            <button class="menu-btn btn-tk" onclick="alert('بيع حساب تيك توك')">
+            <button class="menu-btn btn-tk" onclick="alert('بدء بيع حساب تيك توك')">
                 <i class="fab fa-tiktok"></i><span>تيك توك</span>
             </button>
-            <button class="menu-btn" onclick="alert('بيع خدمة أخرى')">
-                <i class="fas fa-ellipsis-h"></i><span>خدمات أخرى</span>
+            <button class="menu-btn btn-blogger" onclick="alert('بدء بيع مدونة بلوجر')">
+                <i class="fab fa-blogger"></i><span>مدونة بلوجر</span>
             </button>
         </div>
     </div>
 
-    <div id="signupPage" class="section-view"> </div>
-    <div id="loginPage" class="section-view"> </div>
-
     <script>
         function showSection(id) {
-            const sections = ['homePage', 'signupPage', 'loginPage', 'sellPage'];
-            sections.forEach(sec => {
-                const el = document.getElementById(sec);
-                if(el) el.style.display = 'none';
-            });
+            const sections = ['homePage', 'sellPage'];
+            sections.forEach(sec => document.getElementById(sec).style.display = 'none');
             document.getElementById(id).style.display = 'block';
             window.scrollTo(0, 0);
         }
-        // ... بقية دوال الكباتشا ...
     </script>
 </body>
 </html>
