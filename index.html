@@ -46,8 +46,10 @@
         .captcha-display { font-size: 24px; font-weight: bold; letter-spacing: 5px; color: var(--primary-blue); }
 
         .btn-submit { width: 100%; padding: 15px; background: var(--primary-blue); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        .back-btn { background: none; border: 1px solid white; color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; margin-bottom: 20px; display: inline-block; }
-        .method-logo { width: 50px; height: 50px; object-fit: contain; }
+        .back-btn { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 10px 20px; border-radius: 12px; cursor: pointer; margin-bottom: 20px; display: inline-block; text-decoration: none; font-weight: bold; }
+        
+        /* تحسين مظهر الشعارات */
+        .method-logo { width: 60px; height: 35px; object-fit: contain; }
     </style>
 </head>
 <body onload="initApp()">
@@ -76,8 +78,46 @@
         </div>
     </div>
 
+    <div id="depositMethods" class="section-view">
+        <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع للرئيسية</button></div>
+        <div class="grid-menu">
+            <button class="menu-btn" onclick="showSection('depBaridi')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/512px-Algerie_Poste_logo.svg.png" class="method-logo">
+                <span>بريدي موب</span>
+            </button>
+            <button class="menu-btn" onclick="showSection('depBinance')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Binance_Logo.svg/512px-Binance_Logo.svg.png" class="method-logo">
+                <span>بينانس</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="withdrawMethods" class="section-view">
+        <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع للرئيسية</button></div>
+        <div class="grid-menu">
+            <button class="menu-btn" onclick="showSection('witBaridi')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/512px-Algerie_Poste_logo.svg.png" class="method-logo">
+                <span>بريدي موب</span>
+            </button>
+            <button class="menu-btn" onclick="showSection('witBinance')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Binance_Logo.svg/512px-Binance_Logo.svg.png" class="method-logo">
+                <span>بينانس</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="depBaridi" class="section-view">
+        <div style="text-align: center;"><button class="back-btn" onclick="showSection('depositMethods')"><i class="fas fa-arrow-right"></i> رجوع</button></div>
+        <div class="form-box"><h3>إيداع بريدي موب</h3><input type="number" placeholder="المبلغ"><br><br><input type="text" placeholder="المعرف"><button class="btn-submit" onclick="showSection('homePage')">تأكيد الإيداع</button></div>
+    </div>
+
+    <div id="witBaridi" class="section-view">
+        <div style="text-align: center;"><button class="back-btn" onclick="showSection('withdrawMethods')"><i class="fas fa-arrow-right"></i> رجوع</button></div>
+        <div class="form-box"><h3>سحب بريدي موب</h3><input type="number" placeholder="المبلغ"><br><br><input type="text" placeholder="رقم الـ RIP"><button class="btn-submit" style="background:var(--withdraw-red)" onclick="showSection('homePage')">طلب سحب</button></div>
+    </div>
+
     <div id="sellPage" class="section-view">
-        <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
+        <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع</button></div>
         <div class="grid-menu">
             <button class="menu-btn" onclick="openSaleForm('يوتيوب', 'YT')"><i class="fab fa-youtube" style="color: var(--yt-red);"></i><span>يوتيوب</span></button>
             <button class="menu-btn" onclick="openSaleForm('تيك توك', 'TK')"><i class="fab fa-tiktok" style="color: var(--tk-black);"></i><span>تيك توك</span></button>
@@ -89,65 +129,6 @@
             <button class="menu-btn" onclick="openSaleForm('فري فاير', 'FF')"><i class="fas fa-fire" style="color: var(--ff-red);"></i><span>فري فاير</span></button>
         </div>
     </div>
-
-    <div id="depositMethods" class="section-view">
-        <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
-        <div class="grid-menu">
-            <button class="menu-btn" onclick="showSection('depBaridi')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/1024px-Algerie_Poste_logo.svg.png" class="method-logo"><span>بريدي موب</span></button>
-            <button class="menu-btn" onclick="showSection('depBinance')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Binance_Logo.svg" class="method-logo"><span>بينانس</span></button>
-        </div>
-    </div>
-
-    <div id="withdrawMethods" class="section-view">
-        <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
-        <div class="grid-menu">
-            <button class="menu-btn" onclick="showSection('witBaridi')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/1024px-Algerie_Poste_logo.svg.png" class="method-logo"><span>بريدي موب</span></button>
-            <button class="menu-btn" onclick="showSection('witBinance')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Binance_Logo.svg" class="method-logo"><span>بينانس</span></button>
-        </div>
-    </div>
-
-    <div id="depBaridi" class="section-view"><div class="form-box"><h3>إيداع بريدي موب</h3><input type="number" placeholder="المبلغ"><br><br><input type="text" placeholder="المعرف"><button class="btn-submit" onclick="showSection('homePage')">تأكيد</button></div></div>
-    <div id="witBaridi" class="section-view"><div class="form-box"><h3>سحب بريدي موب</h3><input type="number" placeholder="المبلغ"><br><br><input type="text" placeholder="رقم الـ RIP"><button class="btn-submit" style="background:var(--withdraw-red)" onclick="showSection('homePage')">طلب سحب</button></div></div>
-
-    <div id="signupPage" class="section-view">
-        <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
-        <div class="form-box">
-            <h2>تسجيل جديد</h2>
-            <input type="text" placeholder="الاسم العائلي"><br><br>
-            <input type="text" placeholder="الاسم الشخصي"><br><br>
-            <label>تاريخ الميلاد:</label><input type="date"><br><br>
-            <input type="email" placeholder="البريد الإلكتروني"><br><br>
-            <input type="password" placeholder="كلمة المرور"><br><br>
-            <div class="captcha-container"><span id="signupCapCode" class="captcha-display">----</span><i class="fas fa-sync" onclick="generateCaptcha('signup')"></i><br><input type="text" id="signupCapInput" placeholder="الرمز"></div>
-            <button class="btn-submit" onclick="validateSignup()">إنشاء الحساب</button>
-        </div>
-    </div>
-
-    <div id="loginPage" class="section-view">
-        <div style="text-align: center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button></div>
-        <div class="form-box">
-            <h2>دخول</h2>
-            <input type="email" placeholder="الإيميل"><br><br>
-            <input type="password" placeholder="كلمة المرور"><br><br>
-            <div class="captcha-container"><span id="loginCapCode" class="captcha-display">----</span><i class="fas fa-sync" onclick="generateCaptcha('login')"></i><br><input type="text" id="loginCapInput" placeholder="الرمز"></div>
-            <button class="btn-submit" onclick="validateLogin()">دخول</button>
-        </div>
-    </div>
-
-    <div id="saleForm" class="section-view">
-        <div style="text-align: center;"><button class="back-btn" onclick="showSection('sellPage')">← رجوع</button></div>
-        <div class="form-box">
-            <h2 id="formTitle">تفاصيل البيع</h2>
-            <div class="input-group"><input type="text" placeholder="المجال (تقنية، رياضة...)"></div>
-            <div class="input-group"><input type="number" id="countInput" placeholder="العدد"></div>
-            <div class="input-group"><select><option>الربح مفعل</option><option>الربح غير مفعل</option></select></div>
-            <div class="input-group"><input type="url" placeholder="رابط الحساب"></div>
-            <div class="input-group"><input type="number" placeholder="السعر المطلوب (د.ج)"></div>
-            <button class="btn-submit" onclick="alert('تم الإرسال')">تأكيد العرض</button>
-        </div>
-    </div>
-
-    <div id="buyPage" class="section-view"><div style="text-align:center;"><button class="back-btn" onclick="showSection('homePage')">← عودة</button><h2 style="color:white">السوق</h2><p style="color:gray">لا توجد عروض حالياً</p></div></div>
 
     <script>
         let codes = { signup: "", login: "" };
@@ -164,16 +145,15 @@
             document.getElementById(type + "CapCode").innerText = code;
         }
         function openSaleForm(name, type) {
-            document.getElementById('formTitle').innerText = "بيع " + name;
-            showSection('saleForm');
+            alert("نموذج بيع " + name + " سيفتح قريباً");
         }
         function validateSignup() { 
-            if(document.getElementById('signupCapInput').value.toUpperCase() === codes.signup) alert("تم!"); 
-            else generateCaptcha('signup');
+            alert("تم إرسال طلب التسجيل");
+            showSection('homePage');
         }
         function validateLogin() { 
-            if(document.getElementById('loginCapInput').value.toUpperCase() === codes.login) alert("تم!"); 
-            else generateCaptcha('login');
+            alert("تم تسجيل الدخول");
+            showSection('homePage');
         }
     </script>
 </body>
