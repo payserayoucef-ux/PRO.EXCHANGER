@@ -1,363 +1,205 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ProExchanger | المنصة الاحترافية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root { 
-            --dark-bg: #0a0f1a; --card-bg: #ffffff; --primary-blue: #2563eb; 
-            --yt-red: #FF0000; --tk-black: #010101; --fb-blue: #1877F2;
-            --ig-pink: #E4405F; --blogger-orange: #ff5722; --pubg-gold: #f39c12;
-            --ff-red: #c0392b; --success-green: #10b981; --withdraw-red: #e11d48;
-        }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--dark-bg); margin: 0; padding: 0; color: white; }
-        
-        header { 
-            background: linear-gradient(180deg, #111827 0%, var(--dark-bg) 100%);
-            padding: 80px 15px 40px; text-align: center; border-bottom: 3px solid var(--primary-blue); position: relative;
-        }
-        .auth-bar { position: absolute; top: 20px; width: 100%; left: 0; display: flex; justify-content: center; gap: 10px; z-index: 1000; }
-        .btn-auth { padding: 8px 18px; font-weight: bold; border-radius: 12px; border: none; cursor: pointer; transition: 0.3s; }
-        .btn-signup { background: var(--primary-blue); color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
-        .btn-login { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); }
-        .section-view { display: none; width: 100%; animation: slideUp 0.4s ease-out; padding: 20px; padding-bottom: 100px; }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .balance-card { 
-            background: white; padding: 25px; border-radius: 24px; width: 95%; max-width: 500px; 
-            margin: -30px auto 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.5); color: #1e293b;
-        }
-        .grid-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; max-width: 1000px; margin: auto; }
-        .menu-btn { 
-            background: white; padding: 25px 10px; border-radius: 22px; font-weight: bold; color: #1e293b;
-            display: flex; flex-direction: column; align-items: center; gap: 12px; cursor: pointer; border: none; transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-        .menu-btn:active { transform: scale(0.95); }
-        .menu-btn i { font-size: 35px; }
-        /* أزرار الرجوع والتحكم */
-        .nav-controls { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
-        .btn-back-main { 
-            background: rgba(255,255,255,0.1); color: white; padding: 12px 25px; border-radius: 15px; 
-            text-decoration: none; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: bold;
-        }
-        .btn-back-main:hover { background: rgba(255,255,255,0.2); }
-        .form-box { background: white; padding: 30px 20px; border-radius: 28px; max-width: 550px; margin: auto; color: #333; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .input-group { margin-bottom: 15px; text-align: right; }
-        .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #475569; font-size: 14px; }
-        input, select, textarea { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 14px; font-size: 16px; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--primary-blue); }
-        .captcha-container { background: #f8fafc; padding: 15px; border-radius: 18px; text-align: center; margin: 15px 0; border: 2px dashed #cbd5e1; }
-        .captcha-display { font-size: 26px; font-weight: 900; letter-spacing: 6px; color: var(--primary-blue); font-family: monospace; }
-        .actions-row { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-confirm { flex: 2; padding: 16px; background: var(--primary-blue); color: white; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3); }
-        .btn-cancel { flex: 1; padding: 16px; background: #f1f5f9; color: #64748b; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; }
-        
-        .method-logo { width: 45px; height: 45px; object-fit: contain; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ProExchanger | المنصة الكاملة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { 
+            --dark-bg: #0a0f1a; --card-bg: #ffffff; --primary-blue: #2563eb; 
+            --yt-red: #FF0000; --tk-black: #010101; --fb-blue: #1877F2;
+            --ig-pink: #E4405F; --blogger-orange: #ff5722; --pubg-gold: #f39c12;
+            --ff-red: #c0392b; --success-green: #10b981; --withdraw-red: #e11d48;
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--dark-bg); margin: 0; padding: 0; color: white; }
+        
+        header { 
+            background: linear-gradient(180deg, #111827 0%, var(--dark-bg) 100%);
+            padding: 80px 15px 40px; text-align: center; border-bottom: 3px solid var(--primary-blue); position: relative;
+        }
+
+        .auth-bar { position: absolute; top: 20px; width: 100%; left: 0; display: flex; justify-content: center; gap: 10px; z-index: 1000; }
+        .btn-auth { padding: 8px 18px; font-weight: bold; border-radius: 12px; border: none; cursor: pointer; transition: 0.3s; }
+        .btn-signup { background: var(--primary-blue); color: white; }
+        .btn-login { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); }
+
+        .section-view { display: none; width: 100%; animation: slideUp 0.4s ease-out; padding: 20px; padding-bottom: 100px; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .balance-card { 
+            background: white; padding: 25px; border-radius: 24px; width: 95%; max-width: 500px; 
+            margin: -30px auto 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.5); color: #1e293b;
+        }
+
+        .grid-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; max-width: 1000px; margin: auto; }
+        .menu-btn { 
+            background: white; padding: 25px 10px; border-radius: 22px; font-weight: bold; color: #1e293b;
+            display: flex; flex-direction: column; align-items: center; gap: 12px; cursor: pointer; border: none; transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .menu-btn:active { transform: scale(0.95); }
+        .menu-btn i { font-size: 35px; }
+
+        .btn-back-main { 
+            background: rgba(255,255,255,0.1); color: white; padding: 12px 25px; border-radius: 15px; 
+            display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: bold; margin: 0 auto 20px; width: fit-content;
+        }
+
+        .form-box { background: white; padding: 30px 20px; border-radius: 28px; max-width: 550px; margin: auto; color: #333; }
+        .input-group { margin-bottom: 15px; text-align: right; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #475569; }
+        input, select { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 14px; font-size: 16px; outline: none; }
+
+        .actions-row { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-confirm { flex: 2; padding: 16px; background: var(--primary-blue); color: white; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; }
+        .btn-cancel { flex: 1; padding: 16px; background: #f1f5f9; color: #64748b; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; }
+        
+        .method-logo { width: 45px; height: 45px; object-fit: contain; }
+        .captcha-container { background: #f8fafc; padding: 15px; border-radius: 18px; text-align: center; margin: 15px 0; border: 2px dashed #cbd5e1; }
+        .captcha-display { font-size: 26px; font-weight: 900; letter-spacing: 6px; color: var(--primary-blue); }
+    </style>
 </head>
 <body onload="initApp()">
-    <header>
-        <div class="auth-bar">
-            <button class="btn-auth btn-login" onclick="showSection('loginPage')">دخول</button>
-            <button class="btn-auth btn-signup" onclick="showSection('signupPage')">تسجيل جديد</button>
-        </div>
-        <h1 style="margin:0; font-size: 28px; letter-spacing: 2px;">PRO EXCHANGER</h1>
-        <p style="color: #94a3b8; font-size: 12px; margin-top: 5px;">وسيطك الآمن لتداول الحسابات</p>
-    </header>
-    <div id="homePage" class="section-view" style="display: block;">
-        <div class="balance-card">
-            <div><span style="color: #64748b; font-size: 14px; font-weight: bold;">رصيدك المتوفر:</span><div style="font-size:32px; font-weight:900; color: #0f172a;">0.00 <span style="font-size: 16px;">د.ج</span></div></div>
-            <div style="background: #ecfdf5; padding: 15px; border-radius: 20px;"><i class="fas fa-wallet" style="font-size: 35px; color: var(--success-green);"></i></div>
-        </div>
-        <div class="grid-menu">
-            <button class="menu-btn" onclick="showSection('sellPage')"><i class="fas fa-tag" style="color:var(--primary-blue)"></i><span>عرض بيع</span></button>
-            <button class="menu-btn" onclick="showSection('buyPage')"><i class="fas fa-shopping-bag" style="color:var(--success-green)"></i><span>شراء حساب</span></button>
-            <button class="menu-btn" onclick="showSection('depositMethods')"><i class="fas fa-file-import" style="color:var(--pubg-gold)"></i><span>إيداع الأموال</span></button>
-            <button class="menu-btn" onclick="showSection('withdrawMethods')"><i class="fas fa-money-check-dollar" style="color:var(--withdraw-red)"></i><span>سحب الأموال</span></button>
-        </div>
-    </div>
-    <div id="signupPage" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع للرئيسية</button></div>
-        <div class="form-box">
-            <h2 style="text-align: center; margin-top: 0;">إنشاء حساب جديد</h2>
-            <div class="input-group"><label>الاسم العائلي:</label><input type="text" placeholder="لقبك"></div>
-            <div class="input-group"><label>الاسم الشخصي:</label><input type="text" placeholder="اسمك"></div>
-            <div class="input-group"><label>تاريخ الميلاد:</label><input type="date"></div>
-            <div class="input-group"><label>البريد الإلكتروني:</label><input type="email" placeholder="name@example.com"></div>
-            <div class="input-group"><label>كلمة المرور:</label><input type="password" placeholder="••••••••"></div>
-            <div class="input-group"><label>تأكيد كلمة المرور:</label><input type="password" placeholder="••••••••"></div>
-            <div class="captcha-container">
-                <span id="signupCapCode" class="captcha-display">----</span>
-                <i class="fas fa-sync-alt" onclick="generateCaptcha('signup')" style="cursor:pointer; margin-right:15px; color:#94a3b8;"></i>
-                <input type="text" id="signupCapInput" placeholder="أدخل رمز التحقق" style="margin-top:10px; text-align:center;">
-            </div>
-            <div class="actions-row">
-                <button class="btn-confirm" onclick="validateSignup()">إنشاء الحساب الآن</button>
-                <button class="btn-cancel" onclick="showSection('homePage')">إلغاء</button>
-            </div>
-        </div>
-    </div>
-    <div id="loginPage" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع</button></div>
-        <div class="form-box">
-            <h2 style="text-align: center; margin-top: 0;">تسجيل الدخول</h2>
-            <div class="input-group"><label>البريد الإلكتروني:</label><input type="email"></div>
-            <div class="input-group"><label>كلمة المرور:</label><input type="password"></div>
-            <div class="captcha-container">
-                <span id="loginCapCode" class="captcha-display">----</span>
-                <i class="fas fa-sync-alt" onclick="generateCaptcha('login')" style="cursor:pointer; margin-right:15px; color:#94a3b8;"></i>
-                <input type="text" id="loginCapInput" placeholder="أدخل الرمز" style="margin-top:10px; text-align:center;">
-            </div>
-            <div class="actions-row">
-                <button class="btn-confirm" onclick="validateLogin()">دخول</button>
-                <button class="btn-cancel" onclick="showSection('homePage')">رجوع</button>
-            </div>
-        </div>
-    </div>
-    <div id="sellPage" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-chevron-right"></i> عودة للرئيسية</button></div>
-        <h3 style="text-align: center; color: #94a3b8;">اختر المنصة التي تريد بيعها</h3>
-        <div class="grid-menu">
-            <button class="menu-btn" onclick="openSaleForm('يوتيوب', 'YT')"><i class="fab fa-youtube" style="color: var(--yt-red);"></i><span>يوتيوب</span></button>
-            <button class="menu-btn" onclick="openSaleForm('تيك توك', 'TK')"><i class="fab fa-tiktok" style="color: var(--tk-black);"></i><span>تيك توك</span></button>
-            <button class="menu-btn" onclick="openSaleForm('صفحة فيسبوك', 'FB')"><i class="fas fa-flag" style="color: var(--fb-blue);"></i><span>صفحة فيسبوك</span></button>
-            <button class="menu-btn" onclick="openSaleForm('مجموعة فيسبوك', 'FBG')"><i class="fas fa-users" style="color: var(--fb-blue);"></i><span>مجموعة فيسبوك</span></button>
-            <button class="menu-btn" onclick="openSaleForm('انستقرام', 'IG')"><i class="fab fa-instagram" style="color: var(--ig-pink);"></i><span>انستقرام</span></button>
-            <button class="menu-btn" onclick="openSaleForm('مدونة بلوجر', 'BLG')"><i class="fab fa-blogger" style="color: var(--blogger-orange);"></i><span>مدونة بلوجر</span></button>
-            <button class="menu-btn" onclick="openSaleForm('حساب ببجي', 'PUBG')"><i class="fas fa-crosshairs" style="color: var(--pubg-gold);"></i><span>ببجي</span></button>
-            <button class="menu-btn" onclick="openSaleForm('حساب فري فاير', 'FF')"><i class="fas fa-fire" style="color: var(--ff-red);"></i><span>فري فاير</span></button>
-        </div>
-    </div>
-    <div id="saleForm" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('sellPage')"><i class="fas fa-arrow-right"></i> عودة للمنصات</button></div>
-        <div class="form-box">
-            <h2 id="formTitle" style="text-align: center; color: var(--primary-blue);">تفاصيل الحساب</h2>
-            <div class="input-group"><label>المجال:</label><input type="text" placeholder="مثال: تقنية، ألعاب..."></div>
-            <div class="input-group"><label id="countLabel">عدد المتابعين/المشتركين:</label><input type="number"></div>
-            <div class="input-group"><label>هل الربح مفعل؟</label><select><option>نعم، الربح مفعل</option><option>لا، الربح غير مفعل</option></select></div>
-            <div class="input-group"><label>رابط القناة/الحساب:</label><input type="url" placeholder="https://..."></div>
-            <div class="input-group"><label>السعر المطلوب (بالدينار):</label><input type="number" placeholder="000.00"></div>
-            <div class="actions-row">
-                <button class="btn-confirm" onclick="alert('تم إرسال العرض بنجاح للمراجعة')">تأكيد ونشر العرض</button>
-                <button class="btn-cancel" onclick="showSection('sellPage')">إلغاء</button>
-            </div>
-        </div>
-    </div>
-    <div id="depositMethods" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> عودة</button></div>
-        <h3 style="text-align: center;">وسائل الإيداع المتاحة</h3>
-        <div class="grid-menu">
-            <button class="menu-btn" onclick="showSection('depBaridi')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/512px-Algerie_Poste_logo.svg.png
-" class="method-logo"><span>بريدي موب</span></button>
-            <button class="menu-btn" onclick="showSection('depBinance')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Binance_Logo.svg/512px-Binance_Logo.svg.png
-" class="method-logo"><span>بينانس</span></button>
-        </div>
-    </div>
-    <div id="withdrawMethods" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> عودة</button></div>
-        <h3 style="text-align: center;">وسائل السحب المتاحة</h3>
-        <div class="grid-menu">
-            <button class="menu-btn" onclick="showSection('witBaridi')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/1024px-Algerie_Poste_logo.svg.png" class="method-logo"><span>بريدي موب</span></button>
-            <button class="menu-btn" onclick="showSection('witBinance')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Binance_Logo.svg" class="method-logo"><span>بينانس</span></button>
-        </div>
-    </div>
-    <div id="depBaridi" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('depositMethods')"><i class="fas fa-arrow-right"></i> رجوع</button></div>
-        <div class="form-box">
-            <h3 style="text-align:center;">إيداع بريدي موب</h3>
-            <div style="background:#f1f5f9; padding:15px; border-radius:15px; text-align:center; font-weight:bold; color:var(--primary-blue); margin-bottom:15px;">00799999001644493295</div>
-            <div class="input-group"><label>المبلغ المودع:</label><input type="number"></div>
-            <div class="input-group"><label>معرف العملية:</label><input type="text"></div>
-            <div class="input-group"><label>صورة الوصل:</label><input type="file"></div>
-            <button class="btn-confirm" style="width:100%" onclick="alert('جاري مراجعة الإيداع')">تأكيد العملية</button>
-        </div>
-    </div>
-    <div id="buyPage" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> عودة</button></div>
-        <div style="text-align: center; padding: 60px 20px;">
-            <i class="fas fa-store-slash" style="font-size: 50px; color: #334155; margin-bottom: 20px;"></i>
-            <h3>السوق فارغ حالياً</h3>
-            <p style="color: #64748b;">لا توجد حسابات معروضة للبيع في الوقت الحالي.</p>
-        </div>
-    </div>
-    <script>
-        let codes = { signup: "", login: "" };
-        function initApp() {
-            generateCaptcha('signup');
-            generateCaptcha('login');
-        }
-        function showSection(id) {
-            document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
-            const target = document.getElementById(id);
-            if(target) {
-                target.style.display = 'block';
-                window.scrollTo(0, 0);
-            }
-        }
-        function generateCaptcha(type) {
-            const chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
-            let code = "";
-            for (let i = 0; i < 6; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
-            codes[type] = code;
-            document.getElementById(type + "CapCode").innerText = code;
-        }
-        function openSaleForm(name, type) {
-            document.getElementById('formTitle').innerText = "بيع " + name;
-            document.getElementById('countLabel').innerText = (type === 'YT') ? "عدد المشتركين:" : "عدد المتابعين:";
-            showSection('saleForm');
-        }
-        function validateSignup() {
-            const val = document.getElementById('signupCapInput').value.toUpperCase();
-            if(val === codes.signup) { alert("تم إرسال طلبك للتسجيل!"); showSection('homePage'); }
-            else { alert("رمز التحقق غير صحيح"); generateCaptcha('signup'); }
-        }
-        function validateLogin() {
-            const val = document.getElementById('loginCapInput').value.toUpperCase();
-            if(val === codes.login) { alert("مرحباً بك مجدداً!"); showSection('homePage'); }
-            else { alert("رمز التحقق غير صحيح"); generateCaptcha('login'); }
-        }
-    </script>
-</body>
-</html>
-            </div>
-            <div class="actions-row">
-                <button class="btn-confirm" onclick="validateSignup()">إنشاء الحساب الآن</button>
-                <button class="btn-cancel" onclick="showSection('homePage')">إلغاء</button>
-            </div>
-        </div>
-    </div>
 
-    <div id="loginPage" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع</button></div>
-        <div class="form-box">
-            <h2 style="text-align: center; margin-top: 0;">تسجيل الدخول</h2>
-            <div class="input-group"><label>البريد الإلكتروني:</label><input type="email"></div>
-            <div class="input-group"><label>كلمة المرور:</label><input type="password"></div>
-            <div class="captcha-container">
-                <span id="loginCapCode" class="captcha-display">----</span>
-                <i class="fas fa-sync-alt" onclick="generateCaptcha('login')" style="cursor:pointer; margin-right:15px; color:#94a3b8;"></i>
-                <input type="text" id="loginCapInput" placeholder="أدخل الرمز" style="margin-top:10px; text-align:center;">
-            </div>
-            <div class="actions-row">
-                <button class="btn-confirm" onclick="validateLogin()">دخول</button>
-                <button class="btn-cancel" onclick="showSection('homePage')">رجوع</button>
-            </div>
+    <header>
+        <div class="auth-bar">
+            <button class="btn-auth btn-login" onclick="showSection('loginPage')">دخول</button>
+            <button class="btn-auth btn-signup" onclick="showSection('signupPage')">تسجيل جديد</button>
         </div>
-    </div>
+        <h1 style="margin:0;">PRO EXCHANGER</h1>
+    </header>
 
-    <div id="sellPage" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-chevron-right"></i> عودة للرئيسية</button></div>
-        <h3 style="text-align: center; color: #94a3b8;">اختر المنصة التي تريد بيعها</h3>
+    <div id="homePage" class="section-view" style="display: block;">
+        <div class="balance-card">
+            <div><span style="color: #64748b; font-weight: bold;">الرصيد:</span><div style="font-size:32px; font-weight:900;">0.00 د.ج</div></div>
+            <i class="fas fa-wallet" style="font-size: 35px; color: var(--success-green);"></i>
+        </div>
         <div class="grid-menu">
-            <button class="menu-btn" onclick="openSaleForm('يوتيوب', 'YT')"><i class="fab fa-youtube" style="color: var(--yt-red);"></i><span>يوتيوب</span></button>
-            <button class="menu-btn" onclick="openSaleForm('تيك توك', 'TK')"><i class="fab fa-tiktok" style="color: var(--tk-black);"></i><span>تيك توك</span></button>
-            <button class="menu-btn" onclick="openSaleForm('صفحة فيسبوك', 'FB')"><i class="fas fa-flag" style="color: var(--fb-blue);"></i><span>صفحة فيسبوك</span></button>
-            <button class="menu-btn" onclick="openSaleForm('مجموعة فيسبوك', 'FBG')"><i class="fas fa-users" style="color: var(--fb-blue);"></i><span>مجموعة فيسبوك</span></button>
-            <button class="menu-btn" onclick="openSaleForm('انستقرام', 'IG')"><i class="fab fa-instagram" style="color: var(--ig-pink);"></i><span>انستقرام</span></button>
-            <button class="menu-btn" onclick="openSaleForm('مدونة بلوجر', 'BLG')"><i class="fab fa-blogger" style="color: var(--blogger-orange);"></i><span>مدونة بلوجر</span></button>
-            <button class="menu-btn" onclick="openSaleForm('حساب ببجي', 'PUBG')"><i class="fas fa-crosshairs" style="color: var(--pubg-gold);"></i><span>ببجي</span></button>
-            <button class="menu-btn" onclick="openSaleForm('حساب فري فاير', 'FF')"><i class="fas fa-fire" style="color: var(--ff-red);"></i><span>فري فاير</span></button>
+            <button class="menu-btn" onclick="showSection('sellPage')"><i class="fas fa-tag" style="color:var(--primary-blue)"></i><span>عرض بيع</span></button>
+            <button class="menu-btn" onclick="showSection('buyPage')"><i class="fas fa-shopping-bag" style="color:var(--success-green)"></i><span>شراء حساب</span></button>
+            <button class="menu-btn" onclick="showSection('depositMethods')"><i class="fas fa-file-import" style="color:var(--pubg-gold)"></i><span>إيداع الأموال</span></button>
+            <button class="menu-btn" onclick="showSection('withdrawMethods')"><i class="fas fa-money-check-dollar" style="color:var(--withdraw-red)"></i><span>سحب الأموال</span></button>
         </div>
     </div>
 
-    <div id="saleForm" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('sellPage')"><i class="fas fa-arrow-right"></i> عودة للمنصات</button></div>
+    <div id="withdrawMethods" class="section-view">
+        <button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع للرئيسية</button>
+        <h3 style="text-align: center;">اختر وسيلة السحب</h3>
+        <div class="grid-menu">
+            <button class="menu-btn" onclick="showSection('witBaridiForm')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/1024px-Algerie_Poste_logo.svg.png" class="method-logo">
+                <span>بريدي موب</span>
+            </button>
+            <button class="menu-btn" onclick="showSection('witBinanceForm')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Binance_Logo.svg" class="method-logo">
+                <span>بينانس</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="witBaridiForm" class="section-view">
+        <button class="btn-back-main" onclick="showSection('withdrawMethods')"><i class="fas fa-arrow-right"></i> رجوع</button>
         <div class="form-box">
-            <h2 id="formTitle" style="text-align: center; color: var(--primary-blue);">تفاصيل الحساب</h2>
-            <div class="input-group"><label>المجال:</label><input type="text" placeholder="مثال: تقنية، ألعاب..."></div>
-            <div class="input-group"><label id="countLabel">عدد المتابعين/المشتركين:</label><input type="number"></div>
-            <div class="input-group"><label>هل الربح مفعل؟</label><select><option>نعم، الربح مفعل</option><option>لا، الربح غير مفعل</option></select></div>
-            <div class="input-group"><label>رابط القناة/الحساب:</label><input type="url" placeholder="https://..."></div>
-            <div class="input-group"><label>السعر المطلوب (بالدينار):</label><input type="number" placeholder="000.00"></div>
+            <h3 style="text-align:center;">سحب عبر بريدي موب</h3>
+            <div class="input-group"><label>المبلغ المراد سحبه (د.ج):</label><input type="number" placeholder="0.00"></div>
+            <div class="input-group"><label>رقم الحساب (RIP):</label><input type="text" placeholder="00799999..."></div>
+            <div class="input-group"><label>اسم صاحب الحساب:</label><input type="text" placeholder="الاسم الكامل"></div>
             <div class="actions-row">
-                <button class="btn-confirm" onclick="alert('تم إرسال العرض بنجاح للمراجعة')">تأكيد ونشر العرض</button>
-                <button class="btn-cancel" onclick="showSection('sellPage')">إلغاء</button>
+                <button class="btn-confirm" style="background:var(--withdraw-red)" onclick="alert('تم إرسال طلب السحب')">تأكيد الطلب</button>
+                <button class="btn-cancel" onclick="showSection('withdrawMethods')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="witBinanceForm" class="section-view">
+        <button class="btn-back-main" onclick="showSection('withdrawMethods')"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <div class="form-box">
+            <h3 style="text-align:center;">سحب عبر بينانس (USDT)</h3>
+            <p style="text-align:center; color:#666; font-size:12px;">سعر الصرف: 1 USDT = 260 د.ج</p>
+            <div class="input-group"><label>المبلغ بالدينار الجزائري:</label><input type="number" placeholder="0.00"></div>
+            <div class="input-group"><label>عنوان محفظة USDT (TRC20):</label><input type="text" placeholder="T..."></div>
+            <div class="actions-row">
+                <button class="btn-confirm" style="background:var(--withdraw-red)" onclick="alert('تم إرسال طلب السحب')">تأكيد الطلب</button>
+                <button class="btn-cancel" onclick="showSection('withdrawMethods')">إلغاء</button>
             </div>
         </div>
     </div>
 
     <div id="depositMethods" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> عودة</button></div>
-        <h3 style="text-align: center;">وسائل الإيداع المتاحة</h3>
+        <button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع</button>
         <div class="grid-menu">
-            <button class="menu-btn" onclick="showSection('depBaridi')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/1024px-Algerie_Poste_logo.svg.png" class="method-logo"><span>بريدي موب</span></button>
-            <button class="menu-btn" onclick="showSection('depBinance')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Binance_Logo.svg" class="method-logo"><span>بينانس</span></button>
+            <button class="menu-btn" onclick="showSection('depBaridiForm')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/1024px-Algerie_Poste_logo.svg.png" class="method-logo"><span>بريدي موب</span></button>
+            <button class="menu-btn" onclick="showSection('depBinanceForm')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Binance_Logo.svg" class="method-logo"><span>بينانس</span></button>
         </div>
     </div>
 
-    <div id="withdrawMethods" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> عودة</button></div>
-        <h3 style="text-align: center;">وسائل السحب المتاحة</h3>
-        <div class="grid-menu">
-            <button class="menu-btn" onclick="showSection('witBaridi')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Algerie_Poste_logo.svg/1024px-Algerie_Poste_logo.svg.png" class="method-logo"><span>بريدي موب</span></button>
-            <button class="menu-btn" onclick="showSection('witBinance')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Binance_Logo.svg" class="method-logo"><span>بينانس</span></button>
-        </div>
-    </div>
-
-    <div id="depBaridi" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('depositMethods')"><i class="fas fa-arrow-right"></i> رجوع</button></div>
+    <div id="depBaridiForm" class="section-view">
+        <button class="btn-back-main" onclick="showSection('depositMethods')"><i class="fas fa-arrow-right"></i> رجوع</button>
         <div class="form-box">
-            <h3 style="text-align:center;">إيداع بريدي موب</h3>
-            <div style="background:#f1f5f9; padding:15px; border-radius:15px; text-align:center; font-weight:bold; color:var(--primary-blue); margin-bottom:15px;">00799999001644493295</div>
-            <div class="input-group"><label>المبلغ المودع:</label><input type="number"></div>
-            <div class="input-group"><label>معرف العملية:</label><input type="text"></div>
-            <div class="input-group"><label>صورة الوصل:</label><input type="file"></div>
-            <button class="btn-confirm" style="width:100%" onclick="alert('جاري مراجعة الإيداع')">تأكيد العملية</button>
+            <h3>إيداع بريدي موب</h3>
+            <div style="background:#f1f5f9; padding:10px; border-radius:10px; text-align:center; margin-bottom:15px; color:var(--primary-blue); font-weight:bold;">0079999901644493295</div>
+            <div class="input-group"><label>المبلغ:</label><input type="number"></div>
+            <div class="input-group"><label>المعرف:</label><input type="text"></div>
+            <button class="btn-confirm" style="width:100%" onclick="showSection('homePage')">تأكيد الإيداع</button>
         </div>
     </div>
 
-    <div id="buyPage" class="section-view">
-        <div class="nav-controls"><button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> عودة</button></div>
-        <div style="text-align: center; padding: 60px 20px;">
-            <i class="fas fa-store-slash" style="font-size: 50px; color: #334155; margin-bottom: 20px;"></i>
-            <h3>السوق فارغ حالياً</h3>
-            <p style="color: #64748b;">لا توجد حسابات معروضة للبيع في الوقت الحالي.</p>
+    <div id="depBinanceForm" class="section-view">
+        <button class="btn-back-main" onclick="showSection('depositMethods')"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <div class="form-box">
+            <h3>إيداع بينانس</h3>
+            <div style="background:#f1f5f9; padding:10px; border-radius:10px; text-align:center; margin-bottom:15px; color:var(--pubg-gold); font-weight:bold;">761600642</div>
+            <div class="input-group"><label>المبلغ بالدينار:</label><input type="number"></div>
+            <button class="btn-confirm" style="width:100%" onclick="showSection('homePage')">تأكيد الإيداع</button>
         </div>
     </div>
+
+    <div id="sellPage" class="section-view">
+        <button class="btn-back-main" onclick="showSection('homePage')"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <div class="grid-menu">
+            <button class="menu-btn" onclick="openSaleForm('يوتيوب')"><i class="fab fa-youtube" style="color:var(--yt-red)"></i><span>يوتيوب</span></button>
+            <button class="menu-btn" onclick="openSaleForm('تيك توك')"><i class="fab fa-tiktok" style="color:var(--tk-black)"></i><span>تيك توك</span></button>
+            <button class="menu-btn" onclick="openSaleForm('صفحة فيسبوك')"><i class="fas fa-flag" style="color:var(--fb-blue)"></i><span>صفحة فيسبوك</span></button>
+            <button class="menu-btn" onclick="openSaleForm('مجموعة فيسبوك')"><i class="fas fa-users" style="color:var(--fb-blue)"></i><span>مجموعة فيسبوك</span></button>
+            <button class="menu-btn" onclick="openSaleForm('انستقرام')"><i class="fab fa-instagram" style="color:var(--ig-pink)"></i><span>انستقرام</span></button>
+            <button class="menu-btn" onclick="openSaleForm('مدونة بلوجر')"><i class="fab fa-blogger" style="color:var(--blogger-orange)"></i><span>مدونة بلوجر</span></button>
+            <button class="menu-btn" onclick="openSaleForm('ببجي')"><i class="fas fa-crosshairs" style="color:var(--pubg-gold)"></i><span>ببجي</span></button>
+            <button class="menu-btn" onclick="openSaleForm('فري فاير')"><i class="fas fa-fire" style="color:var(--ff-red)"></i><span>فري فاير</span></button>
+        </div>
+    </div>
+
+    <div id="saleForm" class="section-view">
+        <button class="btn-back-main" onclick="showSection('sellPage')"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <div class="form-box"><h2 id="formTitle"></h2><input type="text" placeholder="المجال"><br><br><input type="number" placeholder="العدد"><br><br><input type="number" placeholder="السعر"><br><br><button class="btn-confirm" style="width:100%" onclick="alert('تم النشر')">تأكيد العرض</button></div>
+    </div>
+
+    <div id="loginPage" class="section-view">
+        <button class="btn-back-main" onclick="showSection('homePage')">رجوع</button>
+        <div class="form-box"><h2>دخول</h2><input type="email" placeholder="الإيميل"><br><br><input type="password" placeholder="كلمة المرور"><br><br><button class="btn-confirm" style="width:100%" onclick="showSection('homePage')">دخول</button></div>
+    </div>
+
+    <div id="signupPage" class="section-view">
+        <button class="btn-back-main" onclick="showSection('homePage')">رجوع</button>
+        <div class="form-box"><h2>تسجيل</h2><input type="text" placeholder="الاسم"><br><br><input type="email" placeholder="الإيميل"><br><br><input type="password" placeholder="كلمة المرور"><br><br><button class="btn-confirm" style="width:100%" onclick="showSection('homePage')">تسجيل</button></div>
+    </div>
+
+    <div id="buyPage" class="section-view"><button class="btn-back-main" onclick="showSection('homePage')">رجوع</button><h3 style="text-align:center">السوق فارغ</h3></div>
 
     <script>
-        let codes = { signup: "", login: "" };
-
-        function initApp() {
-            generateCaptcha('signup');
-            generateCaptcha('login');
-        }
-
         function showSection(id) {
             document.querySelectorAll('.section-view').forEach(s => s.style.display = 'none');
             const target = document.getElementById(id);
-            if(target) {
-                target.style.display = 'block';
-                window.scrollTo(0, 0);
-            }
+            if(target) { target.style.display = 'block'; window.scrollTo(0, 0); }
         }
 
-        function generateCaptcha(type) {
-            const chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
-            let code = "";
-            for (let i = 0; i < 6; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
-            codes[type] = code;
-            document.getElementById(type + "CapCode").innerText = code;
-        }
-
-        function openSaleForm(name, type) {
+        function openSaleForm(name) {
             document.getElementById('formTitle').innerText = "بيع " + name;
-            document.getElementById('countLabel').innerText = (type === 'YT') ? "عدد المشتركين:" : "عدد المتابعين:";
             showSection('saleForm');
         }
 
-        function validateSignup() {
-            const val = document.getElementById('signupCapInput').value.toUpperCase();
-            if(val === codes.signup) { alert("تم إرسال طلبك للتسجيل!"); showSection('homePage'); }
-            else { alert("رمز التحقق غير صحيح"); generateCaptcha('signup'); }
-        }
-
-        function validateLogin() {
-            const val = document.getElementById('loginCapInput').value.toUpperCase();
-            if(val === codes.login) { alert("مرحباً بك مجدداً!"); showSection('homePage'); }
-            else { alert("رمز التحقق غير صحيح"); generateCaptcha('login'); }
+        function initApp() {
+            // يمكن إضافة الكباتشا هنا لاحقاً
         }
     </script>
 </body>
