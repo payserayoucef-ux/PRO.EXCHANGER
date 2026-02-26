@@ -4,39 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>موقعي الشخصي - طلب خطي</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; text-align: center; padding: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; text-align: center; padding: 20px; }
         .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; }
         button { padding: 10px 20px; cursor: pointer; border: none; border-radius: 5px; background: #007bff; color: white; transition: 0.3s; }
-        button:hover { background: #0056b3; }
-        input, textarea { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; display: block; margin-left: auto; margin-right: auto; }
-        #form-section { display: none; margin-top: 20px; border-top: 2px solid #eee; padding-top: 20px; }
+        input, textarea { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; display: block; margin-left: auto; margin-right: auto; font-family: inherit; }
+        
+        /* هذا القسم هو ما سيظهر في الـ PDF */
+        #pdf-content { display: none; padding: 40px; text-align: right; direction: rtl; }
+        .pdf-header { margin-bottom: 50px; }
+        .pdf-body { line-height: 1.8; margin-top: 30px; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>مرحباً بك في موقعك الشخصي</h1>
-        
+    <div class="container" id="main-ui">
+        <h1>موقعي الشخصي</h1>
         <div class="btn-group">
-            <button onclick="showForm()">طلب خطي</button>
-            <button onclick="alert('زر إضافي 1')">خدمة أخرى</button>
-            <button onclick="alert('زر إضافي 2')">سيرة ذاتية</button>
+            <button onclick="showForm()">إنشاء طلب خطي</button>
         </div>
 
-        <div id="form-section">
-            <h3>إملاء بيانات الطلب الخطي</h3>
-            <input type="text" id="fname" placeholder="الاسم">
-            <input type="text" id="lname" placeholder="اللقب">
+        <div id="form-section" style="display:none;">
+            <input type="text" id="fname" placeholder="الاسم واللقب">
             <input type="text" id="address" placeholder="العنوان">
             <input type="text" id="phone" placeholder="رقم الهاتف">
-            <input type="text" id="receiver" placeholder="المرسل إليه (مثلاً: السيد مدير...)">
+            <input type="text" id="receiver" placeholder="إلى السيد (المرسل إليه)">
             <input type="text" id="subject" placeholder="الموضوع">
-            <textarea id="message" rows="5" placeholder="تفسير للموضوع (نص الطلب)"></textarea>
-            
-            <button style="background: #28a745;" onclick="generatePDF()">تحميل PDF</button>
+            <textarea id="message" rows="5" placeholder="نص الطلب الخطي..."></textarea>
+            <button style="background: #28a745;" onclick="generatePDF()">تحميل ملف PDF</button>
+        </div>
+    </div>
+
+    <div id="pdf-content">
+        <div class="pdf-header">
+            <p><strong>الاسم:</strong> <span id="p-name"></span></p>
+            <p><strong>العنوان:</strong> <span id="p-address"></span></p>
+            <p><strong>الهاتف:</strong> <span id="p-phone"></span></p>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <h3>إلى السيد: <span id="p-receiver"></span></h3>
+        </div>
+        <div class="pdf-body">
+            <p><strong>الموضوع:</strong> <span id="p-subject"></span></p>
+            <p id="p-message" style="margin-top: 20px;"></p>
+        </div>
+        <div style="margin-top: 50px; text-align: left;">
+            <p>التوقيع: .....................</p>
         </div>
     </div>
 
@@ -46,32 +61,31 @@
         }
 
         function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+            // 1. نقل البيانات من الخانات إلى قالب الـ PDF
+            document.getElementById('p-name').innerText = document.getElementById('fname').value;
+            document.getElementById('p-address').innerText = document.getElementById('address').value;
+            document.getElementById('p-phone').innerText = document.getElementById('phone').value;
+            document.getElementById('p-receiver').innerText = document.getElementById('receiver').value;
+            document.getElementById('p-subject').innerText = document.getElementById('subject').value;
+            document.getElementById('p-message').innerText = document.getElementById('message').value;
 
-            // إعدادات الخط (ملاحظة: لتمثيل العربي بشكل مثالي في PDF تحتاج إضافة خط يدعم العربية، هذا مثال بسيط)
-            const name = document.getElementById('fname').value + " " + document.getElementById('lname').value;
-            const address = document.getElementById('address').value;
-            const phone = document.getElementById('phone').value;
-            const receiver = document.getElementById('receiver').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
+            // 2. إظهار المحتوى المخصص للـ PDF مؤقتاً
+            const element = document.getElementById('pdf-content');
+            element.style.display = 'block';
 
-            // كتابة المحتوى داخل الملف (تم استخدام تنسيق مبسط)
-            let content = `
-            الاسم واللقب: ${name}
-            العنوان: ${address}
-            الهاتف: ${phone}
+            // 3. خيارات توليد الملف
+            const opt = {
+                margin:       1,
+                filename:     'طلب_خطي.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
 
-            إلى السيد: ${receiver}
-            الموضوع: ${subject}
-
-            النص:
-            ${message}
-            `;
-
-            doc.text(content, 190, 20, { align: "right" }); // محاذاة لليمين
-            doc.save("talab_khati.pdf");
+            // 4. التشغيل والتحميل
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.style.display = 'none'; // إخفاء القالب بعد التحميل
+            });
         }
     </script>
 </body>
