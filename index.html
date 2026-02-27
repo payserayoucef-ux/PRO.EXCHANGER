@@ -1,73 +1,113 @@
-<section id="tools" class="tool-card">
-    <h2 style="text-align: center;">إدخال بيانات الطلب الخطي</h2>
-    <div id="form-section">
-        <input type="text" id="fname" placeholder="الاسم واللقب">
-        <input type="text" id="address" placeholder="العنوان السكني">
-        <input type="text" id="commune" placeholder="البلدية">
-        <input type="text" id="phone" placeholder="رقم الهاتف">
-        <input type="text" id="receiver_title" placeholder="إلى السيد (مثلاً: مدير التربية، رئيس المجلس الشعبي)">
-        <input type="text" id="subject" placeholder="موضوع الطلب">
-        <textarea id="message" rows="4" placeholder="تفسير إضافي (اختياري)..."></textarea>
-        <button class="btn-download" onclick="generatePDF()">تحميل الطلب الخطي (PDF)</button>
-    </div>
-</section>
-
-<div id="pdf-template" dir="rtl" style="display: none; font-family: 'Arial', sans-serif; padding: 40px; color: #000;">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الوثائق الإدارية - إنشاء طلب خطي</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
-    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; }
+        header { background: #2c3e50; color: white; padding: 15px; text-align: center; }
+        .container { max-width: 800px; margin: 20px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        
+        /* تنسيق الخانات */
+        .input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        textarea { grid-column: span 2; }
+        
+        button { width: 100%; padding: 15px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        button:hover { background: #219150; }
+
+        /* قسم المدونة */
+        .blog { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; }
+        .post { background: #fdfdfd; padding: 15px; margin-bottom: 15px; border-right: 4px solid #3498db; }
+
+        /* قالب PDF المخفي */
+        #pdf-template { display: none; padding: 50px; background: white; color: black; line-height: 1.8; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>مولد الوثائق الإدارية الذكي</h1>
+</header>
+
+<div class="container">
+    <h2>إدخال بيانات الطلب الخطي</h2>
+    <div class="input-group">
+        <input type="text" id="fname" placeholder="الاسم واللقب">
+        <input type="text" id="phone" placeholder="رقم الهاتف">
+        <input type="text" id="address" placeholder="العنوان">
+        <input type="text" id="commune" placeholder="البلدية">
+        <input type="text" id="receiver" placeholder="إلى الســــــــيد (المرسل إليه)">
+        <input type="text" id="subject" placeholder="الموضوع">
+        <textarea id="message" rows="4" placeholder="تفسير الموضوع (اختياري)..."></textarea>
+    </div>
+    <button onclick="generatePDF()">تحميل ملف PDF جاهز</button>
+
+    <div class="blog">
+        <h2>مقالات تهمك</h2>
+        <div class="post">
+            <h3>نصائح لكتابة طلب خطي احترافي</h3>
+            <p>لضمان قبول طلبك الإداري، يجب أن يكون الخط واضحاً والمعلومات دقيقة. ابدأ دوماً بذكر المعلومات الشخصية في الأعلى...</p>
+        </div>
+        <div class="post">
+            <h3>أهمية التصريح الشرفي</h3>
+            <p>التصريح الشرفي هو وثيقة يلتزم فيها المواطن بصحة المعلومات المقدمة للإدارة، وهو بديل سريع لبعض الوثائق الرسمية...</p>
+        </div>
+    </div>
+</div>
+
+<div id="pdf-template" dir="rtl">
+    <div style="display: flex; justify-content: space-between;">
         <div style="text-align: right;">
             <p>الاسم واللقب : <span id="p-name"></span></p>
-            <p>العنوان : <span id="p-address"></span>، بلدية <span id="p-commune"></span></p>
+            <p>العنوان : <span id="p-address"></span> ، بلدية <span id="p-commune"></span></p>
             <p>رقم الهاتف : <span id="p-phone"></span></p>
         </div>
         <div style="text-align: left;">
-            <p>بتاريخ : <span id="p-date"></span></p>
+            <p>اليوم : <span id="p-date"></span></p>
         </div>
     </div>
 
-    <div style="text-align: left; margin-top: 20px; margin-left: 40px;">
-        <p style="font-size: 1.2em; font-weight: bold;">إلى الســــــــيد : <span id="p-receiver"></span></p>
+    <div style="text-align: left; margin-top: 30px; margin-left: 50px;">
+        <p style="font-size: 1.3em; font-weight: bold;">إلى الســــــــيد : <span id="p-receiver"></span></p>
     </div>
 
     <div style="text-align: center; margin-top: 60px;">
         <h3 style="text-decoration: underline;">الموضوع : <span id="p-subject"></span></h3>
     </div>
 
-    <div style="margin-top: 50px; text-align: right; line-height: 2;">
-        <p style="text-indent: 40px;">
-            لي الشرف العظيم أن أتقدم إلى سيادتكم المحترمة بطلبي هذا والمتمثل في 
-            <strong><span id="p-subject-rep"></span></strong>
-            راجياً منكم أخذ طلبي هذا بعين الاعتبار.
-        </p>
+    <div style="margin-top: 40px; text-align: right;">
+        <p style="text-indent: 50px;">لي الشرف العظيم أن أتقدم إلى سيادتكم المحترمة بطلبي هذا والمتمثل في <span id="p-subject-rep"></span>، راجياً منكم أخذ طلبي هذا بعين الاعتبار.</p>
         
-        <p id="p-extra-message" style="text-indent: 40px;"></p>
+        <p id="p-extra" style="text-indent: 50px;"></p>
 
-        <p style="text-indent: 40px; margin-top: 30px;">
-            وفي الأخير تقبلوا مني فائق الاحترام والتقدير.
-        </p>
+        <p style="text-indent: 50px; margin-top: 20px;">وفي الأخير تقبلوا مني فائق الاحترام والتقدير.</p>
     </div>
 
-    <div style="margin-top: 80px; text-align: left; margin-left: 80px;">
-        <p style="font-weight: bold;">المعني</p>
+    <div style="margin-top: 100px; text-align: left; margin-left: 100px;">
+        <p>المعني</p>
     </div>
 </div>
 
 <script>
     function generatePDF() {
-        // الحصول على تاريخ اليوم بتنسيق عربي
-        const today = new Date();
-        const dateString = today.toLocaleDateString('ar-DZ', { year: 'numeric', month: 'long', day: 'numeric' });
-
-        // ربط البيانات
+        // تعبئة البيانات في القالب
         document.getElementById('p-name').innerText = document.getElementById('fname').value;
         document.getElementById('p-address').innerText = document.getElementById('address').value;
         document.getElementById('p-commune').innerText = document.getElementById('commune').value;
         document.getElementById('p-phone').innerText = document.getElementById('phone').value;
-        document.getElementById('p-receiver').innerText = document.getElementById('receiver_title').value;
+        document.getElementById('p-receiver').innerText = document.getElementById('receiver').value;
         document.getElementById('p-subject').innerText = document.getElementById('subject').value;
         document.getElementById('p-subject-rep').innerText = document.getElementById('subject').value;
-        document.getElementById('p-extra-message').innerText = document.getElementById('message').value;
-        document.getElementById('p-date').innerText = dateString;
+        document.getElementById('p-extra').innerText = document.getElementById('message').value;
+        
+        // التاريخ التلقائي
+        const d = new Date();
+        document.getElementById('p-date').innerText = d.toLocaleDateString('ar-DZ');
 
         const element = document.getElementById('pdf-template');
         element.style.display = 'block';
@@ -76,7 +116,7 @@
             margin: 0.5,
             filename: 'talab_khati.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 3, useCORS: true }, // تكبير الـ scale لجعل الخط أوضح
+            html2canvas: { scale: 3 },
             jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
         };
 
@@ -84,8 +124,7 @@
             element.style.display = 'none';
         });
     }
-
-    function showForm() {
-        document.getElementById('form-section').style.display = 'block';
-    }
 </script>
+
+</body>
+</html>
