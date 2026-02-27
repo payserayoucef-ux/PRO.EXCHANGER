@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستخرج الوثائق الإدارية - الجزائر</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #2c3e50; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 18px; margin-top: 10px; }
+        button:hover { background-color: #219150; }
 
+        /* تنسيق معاينة التصريح (مخفي في المتصفح ويظهر في PDF) */
+        #declaration-pdf {
+            display: none;
+            padding: 40px;
+            line-height: 1.8;
+            color: black;
+        }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .bold { font-weight: bold; }
+        .title { font-size: 24px; text-decoration: underline; margin-bottom: 30px; }
+        .content-row { margin-bottom: 15px; }
+        .signature-section { margin-top: 4.5cm; display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>ملأ معلومات التصريح الشرفي</h2>
+    
+    <div class="form-group">
+        <label>الاسم واللقب:</label>
+        <input type="text" id="fullName" placeholder="مثال: محمد بن علي">
+    </div>
+    
+    <div class="form-group">
+        <label>تاريخ الميلاد:</label>
+        <input type="date" id="birthDate">
+    </div>
+    
+    <div class="form-group">
+        <label>مكان الميلاد:</label>
+        <input type="text" id="birthPlace" placeholder="مثال: الجزائر الوسطى">
+    </div>
+    
+    <div class="form-group">
+        <label>رقم بطاقة التعريف الوطنية (أرقام فقط):</label>
+        <input type="number" id="idNumber" placeholder="0000000000">
+    </div>
+    
+    <div class="form-group">
+        <label>تاريخ صدورها:</label>
+        <input type="date" id="issueDate">
+    </div>
+    
+    <div class="form-group">
+        <label>بلدية الإقامة:</label>
+        <input type="text" id="municipality" placeholder="البلدية">
+    </div>
+
+    <div class="form-group">
+        <label>الولاية:</label>
+        <input type="text" id="province" placeholder="الولاية">
+    </div>
+
+    <div class="form-group">
+        <label>سبب التصريح:</label>
+        <textarea id="reason" rows="3" placeholder="مثال: أصرح أنني لا أمارس أي نشاط مأجور حالياً"></textarea>
+    </div>
+
+    <button onclick="generatePDF()">تحميل الوثيقة (PDF)</button>
+</div>
+
+<div id="declaration-pdf">
+    <div class="text-center bold title">تصــريح شـرفــي</div>
+    
+    <div class="text-right bold" style="font-size: 14px;">أنا الممضي أسفله،</div>
+    
+    <div class="content-row">
+        <span class="bold">السيد(ة):</span> <span id="p-name"></span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="bold">المولود(ة) بتاريخ:</span> <span id="p-birthDate"></span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="bold">بـــــ:</span> <span id="p-birthPlace"></span>
+    </div>
+
+    <div class="content-row">
+        <span class="bold">و الحامل لبطاقة التعريف الوطنية رقم:</span> <span id="p-idNumber"></span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="bold">الصادرة بتاريخ:</span> <span id="p-issueDate"></span>
+    </div>
+
+    <div class="content-row">
+        <span class="bold">عن بلدية:</span> <span id="p-municipality"></span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="bold">ولاية:</span> <span id="p-province"></span>
+    </div>
+
+    <div style="margin-top: 2cm;" class="text-right">
+        <span class="bold">أصرح بمقتضى شرفي بأنني</span> <span id="p-reason"></span>
+    </div>
+
+    <div class="signature-section">
+        <div class="bold">إمضاء المعني</div>
+        <div class="bold">مصادقة البلدية</div>
+    </div>
+</div>
+
+<script>
+    function generatePDF() {
+        // نقل البيانات من الخانات إلى قالب PDF
+        document.getElementById('p-name').innerText = document.getElementById('fullName').value;
+        document.getElementById('p-birthDate').innerText = document.getElementById('birthDate').value;
+        document.getElementById('p-birthPlace').innerText = document.getElementById('birthPlace').value;
+        document.getElementById('p-idNumber').innerText = document.getElementById('idNumber').value;
+        document.getElementById('p-issueDate').innerText = document.getElementById('issueDate').value;
+        document.getElementById('p-municipality').innerText = document.getElementById('municipality').value;
+        document.getElementById('p-province').innerText = document.getElementById('province').value;
+        document.getElementById('p-reason').innerText = document.getElementById('reason').value;
+
+        // إعداد خيارات PDF
+        const element = document.getElementById('declaration-pdf');
+        element.style.display = 'block'; // إظهاره مؤقتاً للالتقاط
+
+        const opt = {
+            margin:       1,
+            filename:     'تصريح_شرفي.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        // توليد الملف
+        html2pdf().set(opt).from(element).save().then(() => {
+            element.style.display = 'none'; // إخفاؤه مجدداً
+        });
+    }
+</script>
+
+</body>
+</html>
