@@ -3,90 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقعي الشخصي - طلب خطي</title>
+    <title>منصة الوثائق الإدارية | طلبات خطية وتصاريح جاهزة</title>
+    <meta name="description" content="أفضل موقع لإنشاء طلبات خطية وتصاريح إدارية بملف PDF جاهز. دليل شامل لكيفية المراسلات الإدارية.">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; text-align: center; padding: 20px; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        button { padding: 10px 20px; cursor: pointer; border: none; border-radius: 5px; background: #007bff; color: white; transition: 0.3s; }
-        input, textarea { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; display: block; margin-left: auto; margin-right: auto; font-family: inherit; }
+        :root { --primary: #2c3e50; --secondary: #3498db; --accent: #27ae60; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f9f9f9; color: #333; line-height: 1.6; }
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav { background: #fff; padding: 10px; display: flex; justify-content: center; gap: 20px; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 100; }
+        nav a { text-decoration: none; color: var(--primary); font-weight: bold; }
         
-        /* هذا القسم هو ما سيظهر في الـ PDF */
-        #pdf-content { display: none; padding: 40px; text-align: right; direction: rtl; }
-        .pdf-header { margin-bottom: 50px; }
-        .pdf-body { line-height: 1.8; margin-top: 30px; }
+        .container { max-width: 900px; margin: 20px auto; padding: 20px; }
+        
+        /* قسم الأداة */
+        .tool-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px; }
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-bottom: 25px; }
+        button { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-main { background: var(--secondary); color: white; }
+        .btn-download { background: var(--accent); color: white; width: 100%; margin-top: 20px; font-size: 1.1em; }
+        
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+
+        /* قسم المدونة */
+        .blog-section { display: grid; grid-template-columns: 1fr; gap: 20px; text-align: right; }
+        .post { background: white; padding: 20px; border-radius: 10px; border-right: 5px solid var(--secondary); }
+        .post h3 { color: var(--primary); margin-top: 0; }
+        
+        footer { text-align: center; padding: 30px; color: #777; font-size: 0.9em; }
+
+        /* تنسيق الـ PDF المخفي */
+        #pdf-template { display: none; padding: 50px; background: white; }
     </style>
 </head>
 <body>
 
-    <div class="container" id="main-ui">
-        <h1>موقعي الشخصي</h1>
+<header>
+    <h1>منصة المستندات الإدارية الذكية</h1>
+    <p>أنشئ وثائقك الرسمية في ثوانٍ بكل احترافية</p>
+</header>
+
+<nav>
+    <a href="#tools">الأدوات</a>
+    <a href="#blog">مقالات تهمك</a>
+    <a href="#about">من نحن</a>
+</nav>
+
+<div class="container">
+    
+    <section id="tools" class="tool-card">
+        <h2 style="text-align: center;">اختر نوع الوثيقة</h2>
         <div class="btn-group">
-            <button onclick="showForm()">إنشاء طلب خطي</button>
+            <button class="btn-main" onclick="showForm()">طلب خطي</button>
+            <button class="btn-main" onclick="alert('سيتوفر قريباً: تصريح شرفي')">تصريح شرفي</button>
+            <button class="btn-main" onclick="alert('سيتوفر قريباً: عقد بيع')">عقد بيع</button>
         </div>
 
         <div id="form-section" style="display:none;">
-            <input type="text" id="fname" placeholder="الاسم واللقب">
-            <input type="text" id="address" placeholder="العنوان">
+            <input type="text" id="fname" placeholder="الاسم الكامل">
+            <input type="text" id="address" placeholder="العنوان السكني">
             <input type="text" id="phone" placeholder="رقم الهاتف">
-            <input type="text" id="receiver" placeholder="إلى السيد (المرسل إليه)">
-            <input type="text" id="subject" placeholder="الموضوع">
-            <textarea id="message" rows="5" placeholder="نص الطلب الخطي..."></textarea>
-            <button style="background: #28a745;" onclick="generatePDF()">تحميل ملف PDF</button>
+            <input type="text" id="receiver" placeholder="الجهة المرسل إليها (مثلاً: السيد مدير التربية)">
+            <input type="text" id="subject" placeholder="موضوع الطلب">
+            <textarea id="message" rows="6" placeholder="اكتب تفاصيل طلبك هنا بوضوح..."></textarea>
+            <button class="btn-download" onclick="generatePDF()">تحميل الوثيقة PDF</button>
         </div>
+    </section>
+
+    <section id="blog" class="blog-section">
+        <h2 style="border-bottom: 2px solid var(--secondary); padding-bottom: 10px;">دليلك الإداري (مقالات مفيدة)</h2>
+        
+        <article class="post">
+            <h3>كيفية كتابة طلب خطي ناجح ومقبول؟</h3>
+            <p>يعتبر الطلب الخطي هو الوسيلة الرسمية الأولى للتواصل مع الإدارات. لكي يتم قبول طلبك، يجب أن تلتزم بالهيكل القانوني: ابدأ بمعلوماتك الشخصية في أعلى اليمين، ثم المرسل إليه في اليسار...</p>
+            <small>وقت القراءة: 3 دقائق</small>
+        </article>
+
+        <article class="post">
+            <h3>ما هو الفرق بين التصريح الشرفي والتصريح الأبوي؟</h3>
+            <p>التصريح الشرفي هو التزام شخصي بصحة معلومات معينة، بينما التصريح الأبوي هو وثيقة قانونية تسمح للقاصر بالقيام بإجراءات معينة تحت مسؤولية الولي...</p>
+            <small>وقت القراءة: 4 دقائق</small>
+        </article>
+    </section>
+
+</div>
+
+<div id="pdf-template" dir="rtl">
+    <div style="text-align: right;">
+        <p><strong>الاسم:</strong> <span id="p-name"></span></p>
+        <p><strong>العنوان:</strong> <span id="p-address"></span></p>
+        <p><strong>الهاتف:</strong> <span id="p-phone"></span></p>
     </div>
-
-    <div id="pdf-content">
-        <div class="pdf-header">
-            <p><strong>الاسم:</strong> <span id="p-name"></span></p>
-            <p><strong>العنوان:</strong> <span id="p-address"></span></p>
-            <p><strong>الهاتف:</strong> <span id="p-phone"></span></p>
-        </div>
-        <div style="text-align: center; margin-top: 20px;">
-            <h3>إلى السيد: <span id="p-receiver"></span></h3>
-        </div>
-        <div class="pdf-body">
-            <p><strong>الموضوع:</strong> <span id="p-subject"></span></p>
-            <p id="p-message" style="margin-top: 20px;"></p>
-        </div>
-        <div style="margin-top: 50px; text-align: left;">
-            <p>التوقيع: .....................</p>
-        </div>
+    <div style="text-align: left; margin-top: -60px; padding-left: 50px;">
+        <p><strong>إلى السيد:</strong> <span id="p-receiver"></span></p>
     </div>
+    <div style="text-align: center; margin-top: 70px;">
+        <h2 style="text-decoration: underline;">الموضوع: <span id="p-subject"></span></h2>
+    </div>
+    <div style="margin-top: 40px; text-align: justify; line-height: 2;">
+        <p>لي عظيم الشرف أن أتقدم إلى سيادتكم المحترمة بهذا الطلب والمتمثل في <strong><span id="p-subject-rep"></span></strong>.</p>
+        <p id="p-message"></p>
+        <p>وفي انتظار ردكم، تقبلوا مني أسمى عبارات التقدير والاحترام.</p>
+    </div>
+    <div style="margin-top: 80px; text-align: left; padding-left: 100px;">
+        <p>توقيع المعني:</p>
+    </div>
+</div>
 
-    <script>
-        function showForm() {
-            document.getElementById('form-section').style.display = 'block';
-        }
+<footer>
+    <p>&copy; 2026 منصة الوثائق الإدارية - جميع الحقوق محفوظة</p>
+</footer>
 
-        function generatePDF() {
-            // 1. نقل البيانات من الخانات إلى قالب الـ PDF
-            document.getElementById('p-name').innerText = document.getElementById('fname').value;
-            document.getElementById('p-address').innerText = document.getElementById('address').value;
-            document.getElementById('p-phone').innerText = document.getElementById('phone').value;
-            document.getElementById('p-receiver').innerText = document.getElementById('receiver').value;
-            document.getElementById('p-subject').innerText = document.getElementById('subject').value;
-            document.getElementById('p-message').innerText = document.getElementById('message').value;
+<script>
+    function showForm() { document.getElementById('form-section').style.display = 'block'; }
+    
+    function generatePDF() {
+        document.getElementById('p-name').innerText = document.getElementById('fname').value;
+        document.getElementById('p-address').innerText = document.getElementById('address').value;
+        document.getElementById('p-phone').innerText = document.getElementById('phone').value;
+        document.getElementById('p-receiver').innerText = document.getElementById('receiver').value;
+        document.getElementById('p-subject').innerText = document.getElementById('subject').value;
+        document.getElementById('p-subject-rep').innerText = document.getElementById('subject').value;
+        document.getElementById('p-message').innerText = document.getElementById('message').value;
 
-            // 2. إظهار المحتوى المخصص للـ PDF مؤقتاً
-            const element = document.getElementById('pdf-content');
-            element.style.display = 'block';
+        const element = document.getElementById('pdf-template');
+        element.style.display = 'block';
+        
+        const opt = {
+            margin: 0.5,
+            filename: 'document_official.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
 
-            // 3. خيارات توليد الملف
-            const opt = {
-                margin:       1,
-                filename:     'طلب_خطي.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-            };
+        html2pdf().set(opt).from(element).save().then(() => {
+            element.style.display = 'none';
+        });
+    }
+</script>
 
-            // 4. التشغيل والتحميل
-            html2pdf().set(opt).from(element).save().then(() => {
-                element.style.display = 'none'; // إخفاء القالب بعد التحميل
-            });
-        }
-    </script>
 </body>
 </html>
