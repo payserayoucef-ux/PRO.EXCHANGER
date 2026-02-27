@@ -3,162 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة ucef-ux للوثائق الإدارية</title>
+    <title>منصة ucef-ux للوثائق الإدارية الجزائرية</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
     <style>
-        :root { --primary: #2c3e50; --secondary: #3498db; --success: #27ae60; --bg: #f4f7f6; }
-        body { font-family: 'Arial', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
-        header { background: var(--primary); color: white; padding: 25px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        
-        .container { max-width: 1000px; margin: 30px auto; padding: 20px; }
+        :root { --primary: #2c3e50; --secondary: #3498db; --success: #27ae60; --bg: #f8fafc; }
+        body { font-family: 'Arial', sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--secondary); }
+        .container { max-width: 1100px; margin: 20px auto; padding: 15px; }
         
         /* شبكة الأزرار */
         .services-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
-            gap: 15px; 
-            margin-bottom: 40px; 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+            gap: 10px; margin-bottom: 30px; 
         }
         .btn-service { 
-            background: white; 
-            border: 2px solid var(--secondary); 
-            color: var(--primary); 
-            padding: 15px 10px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            transition: 0.3s; 
-            font-size: 0.95rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background: white; border: 1px solid #ddd; padding: 12px; border-radius: 8px; 
+            cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 0.85rem;
         }
-        .btn-service:hover { background: var(--secondary); color: white; transform: translateY(-3px); }
-        .btn-active { background: var(--success); color: white; border-color: var(--success); }
+        .btn-service:hover { border-color: var(--secondary); background: #ebf5ff; }
+        .btn-active { background: var(--secondary) !important; color: white !important; border: none; }
 
         /* منطقة العمل */
-        .workspace { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        .workspace { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
         textarea { grid-column: span 2; }
-        .btn-download { width: 100%; padding: 18px; background: var(--success); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .btn-download { width: 100%; padding: 15px; background: var(--success); color: white; border: none; border-radius: 6px; font-size: 1.1rem; cursor: pointer; margin-top: 15px; font-weight: bold; }
 
         /* قالب PDF */
-        #pdf-render { display: none; padding: 60px; background: white; color: black; line-height: 2; font-size: 14pt; }
-        .label-box { display: inline-block; min-width: 110px; }
-        .colon-mark { margin-left: 10px; font-weight: bold; }
+        #pdf-render { display: none; width: 800px; padding: 60px; background: white; color: black; line-height: 1.8; font-size: 14pt; position: absolute; left: -9999px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>منصة ucef-ux للخدمات الإدارية</h1>
-    <p>اختر النموذج، املأ البيانات، وحمل ملفك PDF فوراً</p>
+    <h1>بوابة ucef-ux للوثائق الإدارية</h1>
+    <p>صناعة الوثائق الجزائرية بلمسة ذكية</p>
 </header>
 
 <div class="container">
-    <div class="services-grid">
-        <button class="btn-service btn-active" onclick="showForm('talab')">طلب خطي</button>
-        <button class="btn-service" onclick="comingSoon('تصريح شرفي')">تصريح شرفي</button>
-        <button class="btn-service" onclick="comingSoon('تصريح ابوي')">تصريح ابوي</button>
-        <button class="btn-service" onclick="comingSoon('طعن منحة البطالة')">طعن منحة البطالة</button>
-        <button class="btn-service" onclick="comingSoon('نزاع او فك نزاع')">نزاع او فك نزاع</button>
-        <button class="btn-service" onclick="comingSoon('عقد بيع دراجة نارية')">عقد بيع دراجة نارية</button>
-        <button class="btn-service" onclick="comingSoon('عقد عمل')">عقد عمل</button>
-        <button class="btn-service" onclick="comingSoon('طلب رخصة مرور')">طلب رخصة مرور</button>
-        <button class="btn-service" onclick="comingSoon('تصريح بالاحتياز')">تصريح بالاحتياز (معوز)</button>
-        <button class="btn-service" onclick="comingSoon('شهادة حسن الجوار')">شهادة حسن الجوار</button>
-        <button class="btn-service" onclick="comingSoon('شهادة استغلال ارض')">شهادة استغلال ارض فلاحية</button>
-        <button class="btn-service" onclick="comingSoon('تسجيل عقد زواج')">طلب تسجيل عقد زواج</button>
-        <button class="btn-service" onclick="comingSoon('مسابقة الأساتذة')">طلب مسابقة توظيف الاساتذة</button>
-        <button class="btn-service" onclick="comingSoon('الرقم السري CCP')">طلب الرقم السري CCP</button>
-        <button class="btn-service" onclick="comingSoon('طلب استخلاف')">طلب استخلاف</button>
-        <button class="btn-service" onclick="comingSoon('عداد غاز')">طلب تركيب عداد غاز</button>
-        <button class="btn-service" onclick="comingSoon('عداد كهرباء')">طلب تركيب عداد كهرباء</button>
-        <button class="btn-service" onclick="comingSoon('عداد ماء')">طلب تركيب عداد ماء</button>
-    </div>
-
-    <div class="workspace" id="main-workspace">
-        <h2 id="form-title">بيانات الطلب الخطي</h2>
-        <div class="input-group">
-            <input type="text" id="fname" placeholder="الاسم واللقب">
-            <input type="text" id="phone" placeholder="رقم الهاتف">
-            <input type="text" id="address" placeholder="العنوان">
-            <input type="text" id="commune" placeholder="البلدية">
-            <input type="text" id="receiver" placeholder="إلى الســــــــيد (المرسل إليه)">
-            <input type="text" id="subject" placeholder="موضوع الطلب">
-            <textarea id="message" rows="4" placeholder="توضيحات إضافية للموضوع..."></textarea>
+    <div class="services-grid" id="buttons-container">
         </div>
-        <button class="btn-download" onclick="generatePDF()">تحميل الوثيقة PDF</button>
+
+    <div class="workspace">
+        <h2 id="current-title">طلب خطي</h2>
+        <div id="dynamic-inputs" class="input-group">
+            </div>
+        <button class="btn-download" onclick="generatePDF()">تحميل الوثيقة (PDF)</button>
     </div>
 </div>
 
 <div id="pdf-render" dir="rtl">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <div style="text-align: right;">
-            <div><span class="label-box">الاسم واللقب</span><span class="colon-mark">:</span><span id="p-name"></span></div>
-            <div><span class="label-box">العنوان</span><span class="colon-mark">:</span><span id="p-address"></span> ، بلدية <span id="p-commune"></span></div>
-            <div><span class="label-box">رقم الهاتف</span><span class="colon-mark">:</span><span id="p-phone"></span></div>
-        </div>
-        <div style="text-align: left;">
-            <div><span class="label-box">اليوم</span><span class="colon-mark">:</span><span id="p-date"></span></div>
-        </div>
-    </div>
-
-    <div style="text-align: left; margin-top: 40px; margin-left: 40px;">
-        <p style="font-size: 1.4em; font-weight: bold;">إلى الســــــــيد<span class="colon-mark">:</span><span id="p-receiver"></span></p>
-    </div>
-
-    <div style="text-align: center; margin-top: 70px;">
-        <h3 style="text-decoration: underline;">الموضوع<span class="colon-mark">:</span><span id="p-subject"></span></h3>
-    </div>
-
-    <div style="margin-top: 50px; text-align: right;">
-        <p style="text-indent: 60px;">لي الشرف العظيم أن أتقدم إلى سيادتكم المحترمة بطلبي هذا والمتمثل في <strong><span id="p-sub-rep"></span></strong> ، راجياً منكم أخذ طلبي هذا بعين الاعتبار.</p>
-        <p id="p-extra" style="text-indent: 60px;"></p>
-        <p style="text-indent: 60px; margin-top: 40px;">وفي الأخير تقبلوا مني فائق الاحترام والتقدير.</p>
-    </div>
-
-    <div style="margin-top: 100px; text-align: left; margin-left: 120px; font-weight: bold;">
-        <p>المعني</p>
-    </div>
+    <div id="pdf-body"></div>
 </div>
 
 <script>
-    function comingSoon(name) {
-        alert("نموذج (" + name + ") قيد التجهيز وسيكون متاحاً قريباً بتنسيق رسمي خاص.");
+    // قاعدة بيانات النماذج الجزائرية
+    const models = {
+        "talab": { title: "طلب خطي", fields: ["fname", "address", "commune", "phone", "receiver", "subject", "details"], template: "لي الشرف العظيم أن أتقدم لسيادتكم بطلبي هذا والمتمثل في {subject}. {details}" },
+        "sharafi": { title: "تصريح شرفي", fields: ["fname", "birth", "address", "id_card"], template: "أنا الموقع أدناه، أصرح بشرفي أنني {details}. أتحمل كامل المسؤولية القانونية في حال ثبت عكس ذلك." },
+        "abawi": { title: "تصريح أبوي", fields: ["fname", "son_name", "son_birth", "destination"], template: "أنا الموقع أدناه، بصفتي ولي أمر القاصر {son_name}، أصرح أنني أرخص له بالسفر إلى {destination}." },
+        "batala": { title: "طعن منحة البطالة", fields: ["fname", "phone", "reason"], template: "أتقدم بهذا الطعن بخصوص توقيف منحة البطالة الخاصة بي، محيطاً سيادتكم علماً أنني {reason}." },
+        "bike": { title: "عقد بيع دراجة نارية", fields: ["fname", "buyer_name", "bike_type", "bike_serial"], template: "أصرح أنني بعت دراجتي من نوع {bike_type} رقم الهيكل {bike_serial} للسيد {buyer_name} بمبلغ متفق عليه." },
+        "gaz": { title: "طلب عداد غاز", fields: ["fname", "address", "phone"], template: "أطلب من مصالحكم الموقرة تزويد سكني الكائن بالعنوان المذكور أعلاه بمرجع عداد الغاز الطبيعي." }
+        // يمكن إضافة البقية بنفس الطريقة
+    };
+
+    let currentModel = "talab";
+
+    function init() {
+        const container = document.getElementById('buttons-container');
+        Object.keys(models).forEach(key => {
+            let btn = document.createElement('button');
+            btn.className = `btn-service ${key === 'talab' ? 'btn-active' : ''}`;
+            btn.innerText = models[key].title;
+            btn.onclick = () => switchModel(key, btn);
+            container.appendChild(btn);
+        });
+        switchModel('talab');
+    }
+
+    function switchModel(key, btn) {
+        currentModel = key;
+        document.querySelectorAll('.btn-service').forEach(b => b.classList.remove('btn-active'));
+        if(btn) btn.classList.add('btn-active');
+        
+        document.getElementById('current-title').innerText = models[key].title;
+        const inputDiv = document.getElementById('dynamic-inputs');
+        inputDiv.innerHTML = "";
+        
+        models[key].fields.forEach(f => {
+            let input = document.createElement(f === 'details' || f === 'reason' ? 'textarea' : 'input');
+            input.id = `input-${f}`;
+            input.placeholder = getPlaceholder(f);
+            if(input.tagName === 'TEXTAREA') input.rows = 3;
+            inputDiv.appendChild(input);
+        });
+    }
+
+    function getPlaceholder(f) {
+        const mapping = { fname: "الاسم واللقب", address: "العنوان", commune: "البلدية", phone: "رقم الهاتف", receiver: "المرسل إليه", subject: "الموضوع", details: "تفاصيل أخرى", birth: "تاريخ الميلاد", id_card: "رقم بطاقة التعريف", son_name: "اسم الابن القاصر", son_birth: "تاريخ ميلاده", destination: "جهة السفر", buyer_name: "اسم المشتري", bike_type: "نوع الدراجة", bike_serial: "رقم الهيكل", reason: "سبب الطعن" };
+        return mapping[f] || f;
     }
 
     function generatePDF() {
-        document.getElementById('p-name').innerText = document.getElementById('fname').value;
-        document.getElementById('p-address').innerText = document.getElementById('address').value;
-        document.getElementById('p-commune').innerText = document.getElementById('commune').value;
-        document.getElementById('p-phone').innerText = document.getElementById('phone').value;
-        document.getElementById('p-receiver').innerText = document.getElementById('receiver').value;
-        document.getElementById('p-subject').innerText = document.getElementById('subject').value;
-        document.getElementById('p-sub-rep').innerText = document.getElementById('subject').value;
-        document.getElementById('p-extra').innerText = document.getElementById('message').value;
-        
-        // تعديل التاريخ ليظهر بالأرقام الغبارية (123)
-        const d = new Date();
-        const dateStr = d.toLocaleDateString('en-GB'); // استخدام en-GB يضمن أرقاماً مثل الهاتف
-        document.getElementById('p-date').innerText = dateStr;
+        const m = models[currentModel];
+        let text = m.template;
+        m.fields.forEach(f => {
+            const val = document.getElementById(`input-${f}`).value || "..........";
+            text = text.replace(`{${f}}`, val);
+        });
 
+        const d = new Date();
+        const dateStr = `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+
+        const html = `
+            <div style="display:flex; justify-content:space-between;">
+                <div>
+                    <p>الاسم واللقب: ${document.getElementById('input-fname')?.value || '....'}</p>
+                    <p>العنوان: ${document.getElementById('input-address')?.value || '....'}</p>
+                </div>
+                <div><p>اليوم: ${dateStr}</p></div>
+            </div>
+            <div style="text-align:center; margin-top:50px;">
+                <h2 style="text-decoration:underline;">${m.title}</h2>
+            </div>
+            <div style="margin-top:40px; text-align:right;">
+                <p style="text-indent:50px;">${text}</p>
+                <p style="margin-top:30px;">تقبلوا مني فائق الاحترام والتقدير.</p>
+            </div>
+            <div style="margin-top:80px; text-align:left; margin-left:80px;"><strong>المعني</strong></div>
+        `;
+
+        document.getElementById('pdf-body').innerHTML = html;
         const element = document.getElementById('pdf-render');
         element.style.display = 'block';
 
-        const opt = {
-            margin: 0.5,
-            filename: 'document_ucef_ux.pdf',
-            image: { type: 'jpeg', quality: 1 },
-            html2canvas: { scale: 3, useCORS: true },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-        };
-
-        html2pdf().set(opt).from(element).save().then(() => {
-            element.style.display = 'none';
-        });
+        html2pdf().set({
+            margin: 0.5, filename: `${currentModel}_ucef.pdf`,
+            html2canvas: { scale: 3 }, jsPDF: { unit: 'in', format: 'a4' }
+        }).from(element).save().then(() => element.style.display = 'none');
     }
-</script>
 
+    window.onload = init;
+</script>
 </body>
 </html>
