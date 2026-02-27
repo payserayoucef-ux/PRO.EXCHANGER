@@ -3,73 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الوثائق الإدارية - ucef-ux</title>
+    <title>منصة ucef-ux للوثائق الإدارية</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
-        body { font-family: 'Arial', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; text-align: right; }
-        .header { background: #2c3e50; color: white; padding: 20px; text-align: center; margin-bottom: 30px; }
-        .container { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        :root { --primary: #2c3e50; --secondary: #3498db; --success: #27ae60; --bg: #f4f7f6; }
+        body { font-family: 'Arial', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
+        header { background: var(--primary); color: white; padding: 25px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
-        /* تنسيق الخانات */
-        .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; margin-bottom: 10px; }
-        textarea { grid-column: span 2; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 20px; }
         
-        button { width: 100%; padding: 15px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #2ecc71; }
+        /* شبكة الأزرار */
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            gap: 15px; 
+            margin-bottom: 40px; 
+        }
+        .btn-service { 
+            background: white; 
+            border: 2px solid var(--secondary); 
+            color: var(--primary); 
+            padding: 15px 10px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: 0.3s; 
+            font-size: 0.95rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .btn-service:hover { background: var(--secondary); color: white; transform: translateY(-3px); }
+        .btn-active { background: var(--success); color: white; border-color: var(--success); }
 
-        /* ستايل الـ PDF الحقيقي */
+        /* منطقة العمل */
+        .workspace { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        textarea { grid-column: span 2; }
+        .btn-download { width: 100%; padding: 18px; background: var(--success); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 20px; }
+
+        /* قالب PDF */
         #pdf-render { display: none; padding: 60px; background: white; color: black; line-height: 2; font-size: 14pt; }
-        .label-fix { display: inline-block; min-width: 100px; font-weight: bold; }
-        .colon { margin: 0 5px; }
+        .label-box { display: inline-block; min-width: 110px; }
+        .colon-mark { margin-left: 10px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>مولد طلباتك الإدارية الاحترافي</h1>
-    <p>موقع ucef-ux - حلول برمجية بسيطة</p>
-</div>
+<header>
+    <h1>منصة ucef-ux للخدمات الإدارية</h1>
+    <p>اختر النموذج، املأ البيانات، وحمل ملفك PDF فوراً</p>
+</header>
 
 <div class="container">
-    <div class="grid-inputs">
-        <input type="text" id="fname" placeholder="الاسم واللقب">
-        <input type="text" id="phone" placeholder="رقم الهاتف">
-        <input type="text" id="address" placeholder="العنوان">
-        <input type="text" id="commune" placeholder="البلدية">
-        <input type="text" id="receiver" placeholder="إلى الســــــــيد (المرسل إليه)">
-        <input type="text" id="subject" placeholder="موضوع الطلب">
-        <textarea id="message" rows="4" placeholder="تفسير إضافي لموضوع الطلب (اختياري)..."></textarea>
+    <div class="services-grid">
+        <button class="btn-service btn-active" onclick="showForm('talab')">طلب خطي</button>
+        <button class="btn-service" onclick="comingSoon('تصريح شرفي')">تصريح شرفي</button>
+        <button class="btn-service" onclick="comingSoon('تصريح ابوي')">تصريح ابوي</button>
+        <button class="btn-service" onclick="comingSoon('طعن منحة البطالة')">طعن منحة البطالة</button>
+        <button class="btn-service" onclick="comingSoon('نزاع او فك نزاع')">نزاع او فك نزاع</button>
+        <button class="btn-service" onclick="comingSoon('عقد بيع دراجة نارية')">عقد بيع دراجة نارية</button>
+        <button class="btn-service" onclick="comingSoon('عقد عمل')">عقد عمل</button>
+        <button class="btn-service" onclick="comingSoon('طلب رخصة مرور')">طلب رخصة مرور</button>
+        <button class="btn-service" onclick="comingSoon('تصريح بالاحتياز')">تصريح بالاحتياز (معوز)</button>
+        <button class="btn-service" onclick="comingSoon('شهادة حسن الجوار')">شهادة حسن الجوار</button>
+        <button class="btn-service" onclick="comingSoon('شهادة استغلال ارض')">شهادة استغلال ارض فلاحية</button>
+        <button class="btn-service" onclick="comingSoon('تسجيل عقد زواج')">طلب تسجيل عقد زواج</button>
+        <button class="btn-service" onclick="comingSoon('مسابقة الأساتذة')">طلب مسابقة توظيف الاساتذة</button>
+        <button class="btn-service" onclick="comingSoon('الرقم السري CCP')">طلب الرقم السري CCP</button>
+        <button class="btn-service" onclick="comingSoon('طلب استخلاف')">طلب استخلاف</button>
+        <button class="btn-service" onclick="comingSoon('عداد غاز')">طلب تركيب عداد غاز</button>
+        <button class="btn-service" onclick="comingSoon('عداد كهرباء')">طلب تركيب عداد كهرباء</button>
+        <button class="btn-service" onclick="comingSoon('عداد ماء')">طلب تركيب عداد ماء</button>
     </div>
-    <button onclick="generatePDF()">تحميل طلب خطي PDF</button>
+
+    <div class="workspace" id="main-workspace">
+        <h2 id="form-title">بيانات الطلب الخطي</h2>
+        <div class="input-group">
+            <input type="text" id="fname" placeholder="الاسم واللقب">
+            <input type="text" id="phone" placeholder="رقم الهاتف">
+            <input type="text" id="address" placeholder="العنوان">
+            <input type="text" id="commune" placeholder="البلدية">
+            <input type="text" id="receiver" placeholder="إلى الســــــــيد (المرسل إليه)">
+            <input type="text" id="subject" placeholder="موضوع الطلب">
+            <textarea id="message" rows="4" placeholder="توضيحات إضافية للموضوع..."></textarea>
+        </div>
+        <button class="btn-download" onclick="generatePDF()">تحميل الوثيقة PDF</button>
+    </div>
 </div>
 
 <div id="pdf-render" dir="rtl">
     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
         <div style="text-align: right;">
-            <div><span class="label-fix">الاسم واللقب</span> <span class="colon">:</span> <span id="p-name"></span></div>
-            <div><span class="label-fix">العنوان</span> <span class="colon">:</span> <span id="p-address"></span> ، بلدية <span id="p-commune"></span></div>
-            <div><span class="label-fix">رقم الهاتف</span> <span class="colon">:</span> <span id="p-phone"></span></div>
+            <div><span class="label-box">الاسم واللقب</span><span class="colon-mark">:</span><span id="p-name"></span></div>
+            <div><span class="label-box">العنوان</span><span class="colon-mark">:</span><span id="p-address"></span> ، بلدية <span id="p-commune"></span></div>
+            <div><span class="label-box">رقم الهاتف</span><span class="colon-mark">:</span><span id="p-phone"></span></div>
         </div>
         <div style="text-align: left;">
-            <div><span class="label-fix">اليوم</span> <span class="colon">:</span> <span id="p-date"></span></div>
+            <div><span class="label-box">اليوم</span><span class="colon-mark">:</span><span id="p-date"></span></div>
         </div>
     </div>
 
     <div style="text-align: left; margin-top: 40px; margin-left: 40px;">
-        <p style="font-size: 1.4em; font-weight: bold;">إلى الســــــــيد <span class="colon">:</span> <span id="p-receiver"></span></p>
+        <p style="font-size: 1.4em; font-weight: bold;">إلى الســــــــيد<span class="colon-mark">:</span><span id="p-receiver"></span></p>
     </div>
 
     <div style="text-align: center; margin-top: 70px;">
-        <h3 style="text-decoration: underline;">الموضوع <span class="colon">:</span> <span id="p-subject"></span></h3>
+        <h3 style="text-decoration: underline;">الموضوع<span class="colon-mark">:</span><span id="p-subject"></span></h3>
     </div>
 
     <div style="margin-top: 50px; text-align: right;">
         <p style="text-indent: 60px;">لي الشرف العظيم أن أتقدم إلى سيادتكم المحترمة بطلبي هذا والمتمثل في <strong><span id="p-sub-rep"></span></strong> ، راجياً منكم أخذ طلبي هذا بعين الاعتبار.</p>
-        
         <p id="p-extra" style="text-indent: 60px;"></p>
-
         <p style="text-indent: 60px; margin-top: 40px;">وفي الأخير تقبلوا مني فائق الاحترام والتقدير.</p>
     </div>
 
@@ -79,8 +124,11 @@
 </div>
 
 <script>
+    function comingSoon(name) {
+        alert("نموذج (" + name + ") قيد التجهيز وسيكون متاحاً قريباً بتنسيق رسمي خاص.");
+    }
+
     function generatePDF() {
-        // تعبئة البيانات
         document.getElementById('p-name').innerText = document.getElementById('fname').value;
         document.getElementById('p-address').innerText = document.getElementById('address').value;
         document.getElementById('p-commune').innerText = document.getElementById('commune').value;
@@ -90,18 +138,19 @@
         document.getElementById('p-sub-rep').innerText = document.getElementById('subject').value;
         document.getElementById('p-extra').innerText = document.getElementById('message').value;
         
-        // ضبط التاريخ
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        document.getElementById('p-date').innerText = new Date().toLocaleDateString('ar-EG', options);
+        // تعديل التاريخ ليظهر بالأرقام الغبارية (123)
+        const d = new Date();
+        const dateStr = d.toLocaleDateString('en-GB'); // استخدام en-GB يضمن أرقاماً مثل الهاتف
+        document.getElementById('p-date').innerText = dateStr;
 
         const element = document.getElementById('pdf-render');
         element.style.display = 'block';
 
         const opt = {
             margin: 0.5,
-            filename: 'talab_khati_ucef.pdf',
+            filename: 'document_ucef_ux.pdf',
             image: { type: 'jpeg', quality: 1 },
-            html2canvas: { scale: 3, letterRendering: true, useCORS: true },
+            html2canvas: { scale: 3, useCORS: true },
             jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
         };
 
