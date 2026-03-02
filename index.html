@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>النماذج الإدارية الجزائرية</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
 body{
@@ -21,15 +22,10 @@ body{
     border-radius:15px;
     box-shadow:0 0 15px rgba(0,0,0,0.15);
 }
-h2{
-    color:#006400;
-}
 input, select{
     width:100%;
     padding:10px;
     margin:8px 0;
-    border-radius:8px;
-    border:1px solid #ccc;
 }
 button{
     background:#006400;
@@ -38,11 +34,17 @@ button{
     border:none;
     width:100%;
     cursor:pointer;
-    font-size:16px;
-    border-radius:8px;
 }
-button:hover{
-    background:#004d00;
+.document{
+    width:210mm;
+    min-height:297mm;
+    padding:20mm;
+    background:white;
+    text-align:right;
+    font-size:18px;
+}
+.hidden{
+    display:none;
 }
 </style>
 </head>
@@ -61,15 +63,15 @@ button:hover{
 <input type="text" id="birth" placeholder="تاريخ ومكان الميلاد">
 <input type="text" id="address" placeholder="العنوان الكامل">
 <input type="text" id="idnum" placeholder="رقم بطاقة التعريف">
-<input type="text" id="extra" placeholder="معلومات إضافية (موقع الأرض / سبب الطلب...)">
+<input type="text" id="extra" placeholder="معلومات إضافية">
 
-<button onclick="generatePDF()">تحميل الملف PDF</button>
+<button onclick="generatePDF()">تحميل PDF</button>
 </div>
 
+<div id="doc" class="document hidden"></div>
+
 <script>
-async function generatePDF(){
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+function generatePDF(){
 
     let type = document.getElementById("type").value;
     let nom = document.getElementById("nom").value;
@@ -77,55 +79,59 @@ async function generatePDF(){
     let address = document.getElementById("address").value;
     let idnum = document.getElementById("idnum").value;
     let extra = document.getElementById("extra").value;
-
     let today = new Date().toLocaleDateString('ar-DZ');
 
-    doc.setFont("Helvetica");
-    doc.setFontSize(14);
-
-    doc.text("الجمهورية الجزائرية الديمقراطية الشعبية", 105, 15, null, null, "center");
-    doc.text("-------------------------------------------------", 105, 22, null, null, "center");
+    let content = `
+    <h3 style="text-align:center;">الجمهورية الجزائرية الديمقراطية الشعبية</h3>
+    <hr>
+    `;
 
     if(type === "ccp"){
-        doc.text("تصريح شرفي لفتح حساب بريدي جاري", 105, 35, null, null, "center");
-
-        doc.text("أنا الممضي أسفله:", 10, 55);
-        doc.text("الاسم واللقب: " + nom, 10, 65);
-        doc.text("تاريخ ومكان الميلاد: " + birth, 10, 75);
-        doc.text("العنوان: " + address, 10, 85);
-        doc.text("رقم بطاقة التعريف: " + idnum, 10, 95);
-
-        doc.text("أصرح بشرفي أنني لا أملك حساب CCP آخر.", 10, 110);
+        content += `
+        <h3 style="text-align:center;">تصريح شرفي لفتح حساب CCP</h3>
+        <p>أنا الممضي أسفله: ${nom}</p>
+        <p>المولود في: ${birth}</p>
+        <p>الساكن بـ: ${address}</p>
+        <p>رقم بطاقة التعريف: ${idnum}</p>
+        <p>أصرح بشرفي أنني لا أملك حساب CCP آخر.</p>
+        `;
     }
 
     if(type === "farm"){
-        doc.text("طلب شهادة استغلال أرض فلاحية", 105, 35, null, null, "center");
-
-        doc.text("أنا الممضي أسفله:", 10, 55);
-        doc.text("الاسم واللقب: " + nom, 10, 65);
-        doc.text("تاريخ ومكان الميلاد: " + birth, 10, 75);
-        doc.text("العنوان: " + address, 10, 85);
-        doc.text("رقم بطاقة التعريف: " + idnum, 10, 95);
-
-        doc.text("أصرح أنني أستغل الأرض الواقعة بـ: " + extra, 10, 110);
+        content += `
+        <h3 style="text-align:center;">طلب شهادة استغلال أرض فلاحية</h3>
+        <p>أنا الممضي أسفله: ${nom}</p>
+        <p>المولود في: ${birth}</p>
+        <p>الساكن بـ: ${address}</p>
+        <p>رقم بطاقة التعريف: ${idnum}</p>
+        <p>أصرح أنني أستغل الأرض الواقعة بـ: ${extra}</p>
+        `;
     }
 
     if(type === "neighbor"){
-        doc.text("طلب شهادة حسن الجوار", 105, 35, null, null, "center");
-
-        doc.text("أنا الممضي أسفله:", 10, 55);
-        doc.text("الاسم واللقب: " + nom, 10, 65);
-        doc.text("تاريخ ومكان الميلاد: " + birth, 10, 75);
-        doc.text("العنوان: " + address, 10, 85);
-        doc.text("رقم بطاقة التعريف: " + idnum, 10, 95);
-
-        doc.text("أطلب شهادة حسن الجوار لغرض: " + extra, 10, 110);
+        content += `
+        <h3 style="text-align:center;">طلب شهادة حسن الجوار</h3>
+        <p>أنا الممضي أسفله: ${nom}</p>
+        <p>المولود في: ${birth}</p>
+        <p>الساكن بـ: ${address}</p>
+        <p>رقم بطاقة التعريف: ${idnum}</p>
+        <p>أطلب شهادة حسن الجوار لغرض: ${extra}</p>
+        `;
     }
 
-    doc.text("حرر في: " + today, 10, 140);
-    doc.text("الإمضاء", 150, 160);
+    content += `
+    <br><br>
+    <p>حرر في: ${today}</p>
+    <p style="text-align:left;">الإمضاء</p>
+    `;
 
-    doc.save("document.pdf");
+    let element = document.getElementById("doc");
+    element.innerHTML = content;
+    element.classList.remove("hidden");
+
+    html2pdf().from(element).save("document.pdf");
+
+    element.classList.add("hidden");
 }
 </script>
 
