@@ -3,138 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مستخرج التصريح الشرفي - نماذج إدارية جزائرية</title>
+    <title>مستخرج التصاريح الشرفية - الجزائر</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
-        body { font-family: 'Tajawal', sans-serif; }
-        .form-input { @apply w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; }
+        .official-font { font-family: 'Amiri', serif; }
+        /* تصميم الفورم */
+        .input-field { @apply w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all bg-white; }
+        /* إخفاء القالب الذي سيتحول لـ PDF عن عين المستخدم */
+        #pdf-content { width: 210mm; background: white; padding: 20mm; position: absolute; left: -9999px; top: 0; }
     </style>
 </head>
-<body class="bg-gray-100">
+<body>
 
-    <nav class="bg-blue-800 text-white p-4 shadow-md text-center">
-        <h1 class="text-xl font-bold">بوابة النماذج الإدارية الرقمية</h1>
+    <nav class="bg-blue-700 text-white shadow-lg p-4 mb-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <span class="text-xl font-bold">النماذج الإدارية الجزائرية</span>
+            <button onclick="alert('سيتم إضافة نماذج جديدة قريباً (شهادة ضياع، توكيل، إلخ)')" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg text-sm font-bold transition">
+                + إضافة نموذج جديد
+            </button>
+        </div>
     </nav>
 
-    <main class="container mx-auto py-10 px-4 max-w-3xl">
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div class="bg-blue-50 p-6 border-b border-blue-100 text-center">
-                <h2 class="text-2xl font-bold text-blue-900">استخراج تصريح شرفي</h2>
-                <p class="text-gray-600 mt-2 text-sm text-justify">يرجى ملء البيانات التالية بدقة. سيتم توليد ملف PDF جاهز للطباعة متوافق مع المقاسات المعمول بها في البلديات والدوائر الجزائرية.</p>
+    <div class="container mx-auto px-4 max-w-4xl pb-20">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+            <div class="bg-gray-50 p-6 border-b border-gray-100">
+                <h1 class="text-2xl font-bold text-center text-gray-800 underline decoration-blue-500 underline-offset-8">استخراج تصريح شرفي</h1>
+                <p class="text-center text-gray-500 mt-4 text-sm font-medium">املأ البيانات باللغة العربية واضغط على زر التحميل</p>
             </div>
 
-            <form id="declarationForm" class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-sm font-bold mb-2">الاسم واللقب:</label>
-                    <input type="text" id="fullName" class="form-input" placeholder="مثال: محمد بن علي" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-bold mb-2">تاريخ الميلاد:</label>
-                    <input type="date" id="birthDate" class="form-input" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-bold mb-2">مكان الميلاد:</label>
-                    <input type="text" id="birthPlace" class="form-input" placeholder="البلدية والولاية" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-bold mb-2">رقم بطاقة التعريف / رخصة السياقة:</label>
-                    <input type="text" id="idNumber" class="form-input" placeholder="أرقام أو حروف وأرقام" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-bold mb-2">تاريخ إصدارها:</label>
-                    <input type="date" id="issueDate" class="form-input" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-bold mb-2">سلطة الإصدار (البلدية):</label>
-                    <input type="text" id="authority" class="form-input" placeholder="بلدية إصدار الوثيقة" required>
-                </div>
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-bold mb-2">الولاية:</label>
-                    <input type="text" id="province" class="form-input" placeholder="ولاية الإقامة حالياً" required>
-                </div>
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-bold mb-2">موضوع التصريح (أصرح بشرفي أنني):</label>
-                    <textarea id="statement" rows="3" class="form-input" placeholder="مثال: لم أزاول الدراسة نهائياً..." required></textarea>
+            <form id="mainForm" class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="md:col-span-2 bg-blue-50 p-4 rounded-lg text-blue-800 text-sm mb-2">
+                    <b>ملاحظة:</b> هذا النموذج متوافق مع متطلبات الحالة المدنية في الجزائر.
                 </div>
 
-                <div class="md:col-span-2 mt-4 text-center">
-                    <button type="button" onclick="generatePDF()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg transition-transform transform hover:scale-105">
-                         تحميل النموذج PDF جاهز للطباعة 📄
+                <div>
+                    <label class="block mb-2 font-bold text-gray-700">الاسم واللقب:</label>
+                    <input type="text" id="in_name" class="input-field" placeholder="محمد بن فلان">
+                </div>
+                <div>
+                    <label class="block mb-2 font-bold text-gray-700">تاريخ الميلاد:</label>
+                    <input type="text" id="in_bDate" class="input-field" placeholder="يوم/شهر/سنة">
+                </div>
+                <div>
+                    <label class="block mb-2 font-bold text-gray-700">مكان الميلاد:</label>
+                    <input type="text" id="in_bPlace" class="input-field" placeholder="البلدية والولاية">
+                </div>
+                <div>
+                    <label class="block mb-2 font-bold text-gray-700">رقم بطاقة التعريف/الرخصة:</label>
+                    <input type="text" id="in_idNum" class="input-field">
+                </div>
+                <div>
+                    <label class="block mb-2 font-bold text-gray-700">تاريخ الإصدار:</label>
+                    <input type="text" id="in_iDate" class="input-field" placeholder="0000/00/00">
+                </div>
+                <div>
+                    <label class="block mb-2 font-bold text-gray-700">سلطة الإصدار (البلدية):</label>
+                    <input type="text" id="in_auth" class="input-field">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block mb-2 font-bold text-gray-700">الولاية:</label>
+                    <input type="text" id="in_prov" class="input-field">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block mb-2 font-bold text-gray-700">نص التصريح (أصرح بشرفي أنني):</label>
+                    <textarea id="in_stat" rows="4" class="input-field" placeholder="مثال: لم أزاول الدراسة نهائياً..."></textarea>
+                </div>
+
+                <div class="md:col-span-2 mt-4">
+                    <button type="button" onclick="generatePDF()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-1 flex justify-center items-center gap-2 text-xl">
+                        <span>تحميل التصريح PDF (بالعربية)</span>
+                        <span>📂</span>
                     </button>
-                    <p class="text-xs text-gray-400 mt-4">بضغطك على الزر، أنت توافق على صحة البيانات المدخلة.</p>
                 </div>
             </form>
         </div>
-    </main>
+    </div>
 
-    <footer class="text-center py-6 text-gray-500 text-xs">
-        <a href="#" class="mx-2 hover:underline">سياسة الخصوصية</a> | 
-        <a href="#" class="mx-2 hover:underline">اتفاقية الاستخدام</a>
-        <p class="mt-2">تم التطوير لتسهيل المعاملات الإدارية © 2026</p>
-    </footer>
+    <div id="pdf-content" class="official-font text-right" dir="rtl">
+        <div class="text-center mb-12">
+            <h2 class="text-2xl font-bold">الجمهورية الجزائرية الديمقراطية الشعبية</h2>
+            <div class="mt-2 text-xl font-bold italic underline">تصريح شرفي</div>
+        </div>
+
+        <div class="text-xl leading-[2.5] mt-10">
+            <p>أنا الموقع أسفله السيد(ة): <b id="out_name">..........</b></p>
+            <p>المولود(ة) بتاريخ: <b id="out_bDate">..........</b> بـ: <b id="out_bPlace">..........</b></p>
+            <p>الحامل لبطاقة تعريف وطنية (أو رخصة سياقة) رقم: <b id="out_idNum">..........</b></p>
+            <p>الصادرة بتاريخ: <b id="out_iDate">..........</b> عن دائرة / بلدية: <b id="out_auth">..........</b></p>
+            <p>الساكن بـ: <b id="out_prov">..........</b></p>
+            
+            <div class="mt-8">
+                <p class="font-bold underline mb-4">أصرح بشرفي أنني:</p>
+                <div id="out_stat" class="pr-8 leading-relaxed italic" style="min-height: 100px;"></div>
+            </div>
+        </div>
+
+        <div class="mt-32 flex justify-between px-10">
+            <div class="text-center">
+                <p class="font-bold underline mb-4">توقيع المعني</p>
+            </div>
+            <div class="text-center font-bold">
+                حرر بـ: ..................... في: <span id="out_date"></span>
+            </div>
+        </div>
+    </div>
 
     <script>
-        async function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({
-                orientation: 'p',
-                unit: 'mm',
-                format: 'a4'
-            });
+        function generatePDF() {
+            // 1. ملء بيانات القالب من مدخلات المستخدم
+            document.getElementById('out_name').innerText = document.getElementById('in_name').value || '........';
+            document.getElementById('out_bDate').innerText = document.getElementById('in_bDate').value || '........';
+            document.getElementById('out_bPlace').innerText = document.getElementById('in_bPlace').value || '........';
+            document.getElementById('out_idNum').innerText = document.getElementById('in_idNum').value || '........';
+            document.getElementById('out_iDate').innerText = document.getElementById('in_iDate').value || '........';
+            document.getElementById('out_auth').innerText = document.getElementById('in_auth').value || '........';
+            document.getElementById('out_prov').innerText = document.getElementById('in_prov').value || '........';
+            document.getElementById('out_stat').innerText = document.getElementById('in_stat').value || '................';
+            document.getElementById('out_date').innerText = new Date().toLocaleDateString('ar-DZ');
 
-            // جلب البيانات من الفورم
-            const data = {
-                name: document.getElementById('fullName').value,
-                bDate: document.getElementById('birthDate').value,
-                bPlace: document.getElementById('birthPlace').value,
-                idNum: document.getElementById('idNumber').value,
-                iDate: document.getElementById('issueDate').value,
-                auth: document.getElementById('authority').value,
-                prov: document.getElementById('province').value,
-                stat: document.getElementById('statement').value
+            // 2. إعدادات مكتبة html2pdf لضمان جودة الخط العربي
+            const element = document.getElementById('pdf-content');
+            const options = {
+                margin:       [10, 10, 10, 10], // هوامش الصفحة
+                filename:     'تصريح_شرفي.pdf',
+                image:        { type: 'jpeg', quality: 1 }, // جودة عالية جداً
+                html2canvas:  { 
+                    scale: 3, // تكبير الصورة لضمان وضوح النص عند الطباعة
+                    useCORS: true,
+                    letterRendering: true 
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // ملاحظة: لدعم العربية بشكل كامل في jsPDF، يفضل إضافة خط (Font) يدوي.
-            // هنا سنستخدم محاكاة للنص لضمان التنسيق الإداري الجزائري
-            
-            doc.setFontSize(22);
-            doc.text("الجمهورية الجزائرية الديمقراطية الشعبية", 105, 20, { align: "center" });
-            
-            doc.setFontSize(18);
-            doc.text("تصريح شرفي", 105, 40, { align: "center" });
-
-            doc.setFontSize(14);
-            let y = 60;
-            const lineSpacing = 12;
-
-            doc.text(`أنا الموقع أسفله السيد(ة): ${data.name}`, 190, y, { align: "right" });
-            y += lineSpacing;
-            doc.text(`المولود(ة) بتاريخ: ${data.bDate} بـ: ${data.bPlace}`, 190, y, { align: "right" });
-            y += lineSpacing;
-            doc.text(`الحامل لبطاقة تعريف/رخصة سياقة رقم: ${data.idNum}`, 190, y, { align: "right" });
-            y += lineSpacing;
-            doc.text(`الصادرة بتاريخ: ${data.iDate} عن بلدية: ${data.auth}`, 190, y, { align: "right" });
-            y += lineSpacing;
-            doc.text(`الساكن بـ: ${data.prov}`, 190, y, { align: "right" });
-            
-            y += 20;
-            doc.setFontSize(16);
-            doc.text("أصرح بشرفي أنني:", 190, y, { align: "right" });
-            
-            y += 15;
-            doc.setFontSize(14);
-            doc.text(data.stat, 185, y, { align: "right", maxWidth: 170 });
-
-            y += 40;
-            doc.text(`حرر بـ ................. في: ${new Date().toLocaleDateString('ar-DZ')}`, 60, y, { align: "center" });
-            y += 10;
-            doc.setFontSize(15);
-            doc.text("توقيع المعني", 60, y, { align: "center" });
-
-            // تحميل الملف
-            doc.save(`تصريح_شرفي_${data.name}.pdf`);
+            // 3. التنفيذ
+            html2pdf().set(options).from(element).save();
         }
     </script>
 </body>
