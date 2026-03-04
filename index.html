@@ -1,44 +1,166 @@
-<script>
-    function sync() {
-        const fields = ['name', 'bDate', 'bPlace', 'idNum', 'iDate', 'auth', 'prov', 'stat'];
-        fields.forEach(f => {
-            const val = document.getElementById('in_' + f).value;
-            // نستخدم innerHTML لضمان التنسيق أو textContent للأمان
-            document.getElementById('out_' + f).textContent = val;
-        });
-    }
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة النماذج الإدارية - الجزائر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    function downloadPDF() {
-        const element = document.getElementById('pdf-content');
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #f1f5f9; color: #334155; margin: 0; padding: 0; }
+        .official-font { font-family: 'Amiri', serif; }
         
-        // إعدادات احترافية لمنع "تخربط" النصوص العربية
-        const opt = {
-            margin:       [0, 0, 0, 0], 
-            filename:     'تصريح_شرفي_مصحح.pdf',
-            image:        { type: 'jpeg', quality: 1 }, // جودة الصورة القصوى
-            html2canvas:  { 
-                scale: 4, // رفع الدقة ليكون النص حاداً جداً عند الطباعة (مثل النص الحقيقي)
-                useCORS: true, 
-                letterRendering: false, // تعطيل هذا الخيار يمنع تباعد الحروف العربية
-                allowTaint: true,
-                logging: false
-            },
-            jsPDF: { 
-                unit: 'mm', 
-                format: 'a4', 
-                orientation: 'portrait',
-                precision: 32 // دقة عالية في تموضع العناصر
-            }
-        };
+        /* إطارات الخانات واضحة ومريحة */
+        .input-group { @apply mb-6; }
+        .input-label { @apply block text-lg font-bold text-blue-900 mb-2; }
+        .input-field { 
+            @apply w-full p-4 border-2 border-blue-300 rounded-2xl bg-white text-xl font-bold shadow-sm outline-none transition-all;
+            focus:border-blue-600 focus:ring-4 focus:ring-blue-100;
+        }
+        
+        /* تنسيق ورقة الـ PDF الظاهرة لضمان الالتقاط الصحيح */
+        #pdf-content { 
+            width: 210mm; 
+            min-height: 297mm; 
+            padding: 25mm; 
+            background: white; 
+            margin: 20px auto; /* جعلها في المنتصف ليراها المستخدم وتراها المكتبة */
+            color: black;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .pdf-row { display: flex; align-items: baseline; margin-bottom: 12px; width: 100%; }
+        .pdf-label { font-weight: bold; white-space: nowrap; margin-left: 10px; font-size: 24px; }
+        .pdf-value { flex-grow: 1; word-break: break-all; font-size: 24px; }
 
-        // تنفيذ التحويل مع التأكد من أن الصفحة ثابتة
-        html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
-            // هذا السطر يضمن أن الملف لن يتحرك من مكانه عند الحفظ
-        }).save();
-    }
+        /* إخفاء المعاينة عند الطباعة العادية بالمتصفح لمنع التكرار */
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
 
-    // لتحديث التاريخ تلقائياً عند فتح الصفحة
-    window.onload = function() {
-        sync();
-    };
-</script>
+    <nav class="bg-blue-900 text-white p-5 mb-8 shadow-xl no-print">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="font-bold text-xl">بوابة النماذج الرقمية الجزائرية</h1>
+            <button class="bg-blue-700 px-4 py-2 rounded-lg text-xs">+ نموذج جديد</button>
+        </div>
+    </nav>
+
+    <main class="container mx-auto max-w-4xl pb-20 no-print">
+        
+        <div class="bg-white p-6 sm:p-10 rounded-3xl shadow-2xl border-t-8 border-blue-600 mb-10">
+            <h2 class="text-3xl font-black text-center text-blue-900 mb-8 underline underline-offset-8">تعبئة بيانات التصريح الشرفي</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="input-group md:col-span-2">
+                    <label class="input-label">الاسم واللقب :</label>
+                    <input type="text" id="in_name" oninput="sync()" placeholder="اكتب الاسم واللقب هنا" class="input-field">
+                </div>
+
+                <div class="input-group"><label class="input-label">تاريخ الميلاد :</label><input type="text" id="in_bDate" oninput="sync()" class="input-field"></div>
+                <div class="input-group"><label class="input-label">مكان الميلاد :</label><input type="text" id="in_bPlace" oninput="sync()" class="input-field"></div>
+                <div class="input-group"><label class="input-label">رقم بطاقة التعريف / الرخصة :</label><input type="text" id="in_idNum" oninput="sync()" class="input-field"></div>
+                <div class="input-group"><label class="input-label">تاريخ الإصدار :</label><input type="text" id="in_iDate" oninput="sync()" class="input-field"></div>
+                <div class="input-group"><label class="input-label">سلطة الإصدار (البلدية) :</label><input type="text" id="in_auth" oninput="sync()" class="input-field"></div>
+                <div class="input-group"><label class="input-label">الولاية :</label><input type="text" id="in_prov" oninput="sync()" class="input-field"></div>
+
+                <div class="input-group md:col-span-2">
+                    <label class="input-label text-blue-600">أصرح بشرفي أنني :</label>
+                    <textarea id="in_stat" oninput="sync()" rows="4" class="input-field border-blue-400"></textarea>
+                </div>
+
+                <button onclick="downloadPDF()" class="md:col-span-2 bg-green-600 hover:bg-green-700 text-white font-black py-5 rounded-2xl shadow-xl transition text-2xl mt-4 flex justify-center items-center gap-3">
+                    <span>حفظ وتحميل PDF للطباعة</span>
+                    <span>📥</span>
+                </button>
+            </div>
+        </div>
+
+        <h3 class="text-center font-bold text-gray-500 mb-4 italic no-print">المعاينة الحية (سيظهر الملف هكذا) :</h3>
+
+        <div class="overflow-x-auto p-4 bg-gray-200 rounded-3xl border-4 border-dashed border-gray-400">
+            <div id="pdf-content" class="official-font text-right">
+                
+                <div class="text-center mt-10 mb-20">
+                    <h1 class="text-7xl font-bold underline underline-offset-[20px] decoration-4">تصريح شرفي</h1>
+                </div>
+
+                <div class="text-3xl leading-[2.6] px-5">
+                    <div class="pdf-row">
+                        <span class="pdf-label">أنا الموقع أسفله السيد(ة) :</span>
+                        <span id="out_name" class="pdf-value font-bold"></span>
+                    </div>
+                    <div class="pdf-row">
+                        <span class="pdf-label">المولود(ة) بتاريخ :</span>
+                        <span id="out_bDate" class="pdf-value font-bold"></span>
+                        <span class="pdf-label mr-10">بـ :</span>
+                        <span id="out_bPlace" class="pdf-value font-bold"></span>
+                    </div>
+                    <div class="pdf-row">
+                        <span class="pdf-label">الحامل لبطاقة تعريف وطنية رقم :</span>
+                        <span id="out_idNum" class="pdf-value font-bold"></span>
+                    </div>
+                    <div class="pdf-row">
+                        <span class="pdf-label">الصادرة بتاريخ :</span>
+                        <span id="out_iDate" class="pdf-value font-bold"></span>
+                        <span class="pdf-label mr-10">عن بلدية :</span>
+                        <span id="out_auth" class="pdf-value font-bold"></span>
+                    </div>
+                    <div class="pdf-row">
+                        <span class="pdf-label">الساكن بـ :</span>
+                        <span id="out_prov" class="pdf-value font-bold"></span>
+                    </div>
+                    
+                    <div class="mt-16 flex items-start">
+                        <span class="pdf-label underline underline-offset-4 ml-4">أصرح بشرفي أنني :</span>
+                        <span id="out_stat" class="pdf-value font-bold text-4xl italic"></span>
+                    </div>
+                </div>
+
+                <div class="mt-auto mb-28 flex justify-between px-20">
+                    <div class="text-center"><h3 class="text-4xl font-bold underline underline-offset-[10px]">توقيع المعني</h3></div>
+                    <div class="text-center"><h3 class="text-4xl font-bold underline underline-offset-[10px]">مصادقة البلدية</h3></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function sync() {
+            const fields = ['name', 'bDate', 'bPlace', 'idNum', 'iDate', 'auth', 'prov', 'stat'];
+            fields.forEach(f => {
+                document.getElementById('out_' + f).innerText = document.getElementById('in_' + f).value || '........';
+            });
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('pdf-content');
+            
+            // إعدادات تمنع الصفحة البيضاء وتضمن جودة النص العربي
+            const opt = {
+                margin:       0,
+                filename:     'تصريح_شرفي_جزائري.pdf',
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { 
+                    scale: 3, 
+                    useCORS: true, 
+                    letterRendering: false,
+                    scrollY: 0,
+                    windowWidth: document.documentElement.offsetWidth 
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        }
+
+        window.onload = sync;
+    </script>
+</body>
+</html>
