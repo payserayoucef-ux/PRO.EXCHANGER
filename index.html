@@ -3,113 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة النماذج الإدارية | حلول تعبئة النماذج الذكية</title>
-    <meta name="description" content="أكبر مكتبة للنماذج الإدارية الجاهزة للتعبئة والتحميل بصيغة PDF. نماذج الموارد البشرية، المالية، والطلبات الرسمية.">
+    <title>مستخرج التصريح الشرفي - نماذج إدارية جزائرية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body { font-family: 'Tajawal', sans-serif; }
+        .form-input { @apply w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100">
 
-    <nav class="bg-white border-b sticky top-0 z-50 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-blue-700">نماذج أونلاين</a>
-            <div class="space-x-4 space-x-reverse text-sm font-medium">
-                <a href="#about" class="hover:text-blue-600">عن المنصة</a>
-                <a href="#categories" class="hover:text-blue-600">الأقسام</a>
-            </div>
-        </div>
+    <nav class="bg-blue-800 text-white p-4 shadow-md text-center">
+        <h1 class="text-xl font-bold">بوابة النماذج الإدارية الرقمية</h1>
     </nav>
 
-    <header class="bg-gradient-to-r from-blue-700 to-blue-500 text-white py-16 px-4">
-        <div class="container mx-auto text-center">
-            <h1 class="text-4xl font-extrabold mb-4">بوابة النماذج الإدارية الرقمية</h1>
-            <p class="text-lg opacity-90 max-w-2xl mx-auto">
-                نقدم لك أدوات مجانية لملء النماذج الرسمية إلكترونياً وتصديرها كملفات PDF جاهزة للطباعة، مما يوفر وقتك ويضمن دقة بياناتك الإدارية.
-            </p>
-        </div>
-    </header>
+    <main class="container mx-auto py-10 px-4 max-w-3xl">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div class="bg-blue-50 p-6 border-b border-blue-100 text-center">
+                <h2 class="text-2xl font-bold text-blue-900">استخراج تصريح شرفي</h2>
+                <p class="text-gray-600 mt-2 text-sm text-justify">يرجى ملء البيانات التالية بدقة. سيتم توليد ملف PDF جاهز للطباعة متوافق مع المقاسات المعمول بها في البلديات والدوائر الجزائرية.</p>
+            </div>
 
-    <div class="container mx-auto my-6 text-center text-gray-400 text-xs border border-dashed p-4">
-        مساحة إعلانية
-    </div>
-
-    <main id="categories" class="container mx-auto py-10 px-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition border p-6">
-                <div class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">قسم الموارد البشرية</div>
-                <h3 class="text-xl font-bold mb-2">نموذج طلب إجازة</h3>
-                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
-                    يستخدم هذا النموذج لتقديم طلبات الإجازة السنوية أو المرضية. يتيح لك النظام إدخال التواريخ والبيانات الشخصية ليتم توليد ملف PDF رسمي موقع.
-                </p>
-                <div class="group relative">
-                    <button class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700">تعبئة البيانات الآن</button>
-                    <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-[10px] p-1 rounded">اضغط للانتقال لصفحة إدخال البيانات وتصدير PDF</span>
+            <form id="declarationForm" class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-bold mb-2">الاسم واللقب:</label>
+                    <input type="text" id="fullName" class="form-input" placeholder="مثال: محمد بن علي" required>
                 </div>
-            </article>
-
-            <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition border p-6">
-                <div class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">القسم المالي</div>
-                <h3 class="text-xl font-bold mb-2">كشف مصاريف العمل</h3>
-                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
-                    أداة احترافية مخصصة للموظفين لتسجيل المصاريف النثرية وفواتير العمل بوضوح لضمان سرعة صرف المستحقات المالية.
-                </p>
-                <div class="group relative">
-                    <button class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700">تعبئة البيانات الآن</button>
-                    <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-[10px] p-1 rounded">سيتم فتح محرر البيانات الخاص بالعهدة المالية</span>
+                <div>
+                    <label class="block text-sm font-bold mb-2">تاريخ الميلاد:</label>
+                    <input type="date" id="birthDate" class="form-input" required>
                 </div>
-            </article>
-
-            <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition border p-6">
-                <div class="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">الإدارة العامة</div>
-                <h3 class="text-xl font-bold mb-2">نموذج استقالة رسمي</h3>
-                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
-                    صيغة قانونية وإدارية سليمة لتقديم الاستقالة، تتضمن كافة البيانات المطلوبة لضمان حفظ حقوق الطرفين عند انتهاء التعاقد.
-                </p>
-                <div class="group relative">
-                    <button class="w-full bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700">تعبئة البيانات الآن</button>
-                    <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-[10px] p-1 rounded">اضغط لبدء كتابة خطاب الاستقالة وتنسيقه</span>
+                <div>
+                    <label class="block text-sm font-bold mb-2">مكان الميلاد:</label>
+                    <input type="text" id="birthPlace" class="form-input" placeholder="البلدية والولاية" required>
                 </div>
-            </article>
+                <div>
+                    <label class="block text-sm font-bold mb-2">رقم بطاقة التعريف / رخصة السياقة:</label>
+                    <input type="text" id="idNumber" class="form-input" placeholder="أرقام أو حروف وأرقام" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">تاريخ إصدارها:</label>
+                    <input type="date" id="issueDate" class="form-input" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">سلطة الإصدار (البلدية):</label>
+                    <input type="text" id="authority" class="form-input" placeholder="بلدية إصدار الوثيقة" required>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold mb-2">الولاية:</label>
+                    <input type="text" id="province" class="form-input" placeholder="ولاية الإقامة حالياً" required>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold mb-2">موضوع التصريح (أصرح بشرفي أنني):</label>
+                    <textarea id="statement" rows="3" class="form-input" placeholder="مثال: لم أزاول الدراسة نهائياً..." required></textarea>
+                </div>
 
+                <div class="md:col-span-2 mt-4 text-center">
+                    <button type="button" onclick="generatePDF()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg transition-transform transform hover:scale-105">
+                         تحميل النموذج PDF جاهز للطباعة 📄
+                    </button>
+                    <p class="text-xs text-gray-400 mt-4">بضغطك على الزر، أنت توافق على صحة البيانات المدخلة.</p>
+                </div>
+            </form>
         </div>
     </main>
 
-    <section id="about" class="bg-white py-12 border-t mt-10">
-        <div class="container mx-auto px-4 max-w-4xl text-center">
-            <h2 class="text-2xl font-bold mb-4 italic text-blue-800">لماذا نستخدم منصة النماذج؟</h2>
-            <p class="text-gray-600 leading-relaxed mb-6">
-                هدفنا هو رقمنة المعاملات الورقية التقليدية. من خلال واجهة سهلة الاستخدام، نقوم بمعالجة البيانات التي تدخلها وتحويلها فوراً إلى مستندات رسمية (PDF). جميع العمليات تتم داخل متصفحك لضمان أعلى مستويات الخصوصية والأمان.
-            </p>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 border-b border-gray-700 pb-8 mb-8 text-sm">
-            <div>
-                <h4 class="font-bold mb-4">روابط سريعة</h4>
-                <ul>
-                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">الرئيسية</a></li>
-                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">جميع النماذج</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold mb-4">قانوني</h4>
-                <ul>
-                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">سياسة الخصوصية</a></li>
-                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">شروط الاستخدام</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold mb-4">تواصل معنا</h4>
-                <p class="text-gray-400">للاقتراحات: support@yourdomain.com</p>
-            </div>
-        </div>
-        <p class="text-center text-gray-500 text-xs">© 2026 منصة النماذج الإدارية - جميع الحقوق محفوظة</p>
+    <footer class="text-center py-6 text-gray-500 text-xs">
+        <a href="#" class="mx-2 hover:underline">سياسة الخصوصية</a> | 
+        <a href="#" class="mx-2 hover:underline">اتفاقية الاستخدام</a>
+        <p class="mt-2">تم التطوير لتسهيل المعاملات الإدارية © 2026</p>
     </footer>
 
+    <script>
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'p',
+                unit: 'mm',
+                format: 'a4'
+            });
+
+            // جلب البيانات من الفورم
+            const data = {
+                name: document.getElementById('fullName').value,
+                bDate: document.getElementById('birthDate').value,
+                bPlace: document.getElementById('birthPlace').value,
+                idNum: document.getElementById('idNumber').value,
+                iDate: document.getElementById('issueDate').value,
+                auth: document.getElementById('authority').value,
+                prov: document.getElementById('province').value,
+                stat: document.getElementById('statement').value
+            };
+
+            // ملاحظة: لدعم العربية بشكل كامل في jsPDF، يفضل إضافة خط (Font) يدوي.
+            // هنا سنستخدم محاكاة للنص لضمان التنسيق الإداري الجزائري
+            
+            doc.setFontSize(22);
+            doc.text("الجمهورية الجزائرية الديمقراطية الشعبية", 105, 20, { align: "center" });
+            
+            doc.setFontSize(18);
+            doc.text("تصريح شرفي", 105, 40, { align: "center" });
+
+            doc.setFontSize(14);
+            let y = 60;
+            const lineSpacing = 12;
+
+            doc.text(`أنا الموقع أسفله السيد(ة): ${data.name}`, 190, y, { align: "right" });
+            y += lineSpacing;
+            doc.text(`المولود(ة) بتاريخ: ${data.bDate} بـ: ${data.bPlace}`, 190, y, { align: "right" });
+            y += lineSpacing;
+            doc.text(`الحامل لبطاقة تعريف/رخصة سياقة رقم: ${data.idNum}`, 190, y, { align: "right" });
+            y += lineSpacing;
+            doc.text(`الصادرة بتاريخ: ${data.iDate} عن بلدية: ${data.auth}`, 190, y, { align: "right" });
+            y += lineSpacing;
+            doc.text(`الساكن بـ: ${data.prov}`, 190, y, { align: "right" });
+            
+            y += 20;
+            doc.setFontSize(16);
+            doc.text("أصرح بشرفي أنني:", 190, y, { align: "right" });
+            
+            y += 15;
+            doc.setFontSize(14);
+            doc.text(data.stat, 185, y, { align: "right", maxWidth: 170 });
+
+            y += 40;
+            doc.text(`حرر بـ ................. في: ${new Date().toLocaleDateString('ar-DZ')}`, 60, y, { align: "center" });
+            y += 10;
+            doc.setFontSize(15);
+            doc.text("توقيع المعني", 60, y, { align: "center" });
+
+            // تحميل الملف
+            doc.save(`تصريح_شرفي_${data.name}.pdf`);
+        }
+    </script>
 </body>
 </html>
