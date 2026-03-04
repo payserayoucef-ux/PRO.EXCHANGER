@@ -9,42 +9,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #f4f7f9; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; }
         .official-font { font-family: 'Amiri', serif; }
-        .input-field { @apply w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white mb-4; }
+        .input-field { @apply w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white mb-3; }
         
-        /* تنسيق دقيق لورقة A4 */
         #pdf-content { 
             width: 210mm; 
-            height: 296mm; /* ملء ارتفاع الورقة تقريباً */
+            height: 296mm; 
             padding: 20mm; 
             background: white; 
             margin: 0 auto;
             color: black;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* يبدأ من الأعلى */
         }
 
-        /* تحسين التباعد عند التحميل */
-        .pdf-body {
-            flex-grow: 1;
-            margin-top: 20mm;
-        }
+        /* لضمان عدم وجود تباعد بين الكلمات في الـ PDF */
+        .no-underline { border-bottom: none !important; text-decoration: none !important; }
     </style>
 </head>
 <body>
 
     <nav class="bg-blue-900 text-white p-4 shadow-md flex justify-between items-center px-8">
-        <h1 class="font-bold">موقع النماذج الإدارية</h1>
-        <button class="bg-blue-800 px-4 py-2 rounded text-xs hover:bg-blue-700 transition">+ إضافة نموذج جديد</button>
+        <h1 class="font-bold text-lg">بوابة النماذج الرقمية</h1>
+        <button class="bg-blue-800 px-4 py-2 rounded text-xs hover:bg-blue-700">+ إضافة نموذج جديد</button>
     </nav>
 
     <div class="container mx-auto py-10 px-4">
         <div class="max-w-4xl mx-auto">
             
-            <div class="bg-white p-6 rounded-xl shadow-md mb-10 border-b-4 border-blue-600">
-                <h2 class="text-xl font-bold mb-6 text-gray-700">تعبئة بيانات التصريح الشرفي</h2>
+            <div class="bg-white p-6 rounded-xl shadow-lg mb-8 border-r-8 border-blue-600">
+                <h2 class="text-xl font-bold mb-6 text-gray-800">تعبئة بيانات التصريح الشرفي</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4">
                     <input type="text" id="in_name" oninput="sync()" placeholder="الاسم واللقب" class="input-field">
@@ -52,42 +47,42 @@
                     <input type="text" id="in_bPlace" oninput="sync()" placeholder="مكان الميلاد" class="input-field">
                     <input type="text" id="in_idNum" oninput="sync()" placeholder="رقم بطاقة التعريف / الرخصة" class="input-field">
                     <input type="text" id="in_iDate" oninput="sync()" placeholder="تاريخ الإصدار" class="input-field">
-                    <input type="text" id="in_auth" oninput="sync()" placeholder="بلدية الإصدار" class="input-field">
+                    <input type="text" id="in_auth" oninput="sync()" placeholder="سلطة الإصدار" class="input-field">
                     <input type="text" id="in_prov" oninput="sync()" placeholder="الولاية" class="input-field md:col-span-2">
-                    <textarea id="in_stat" oninput="sync()" placeholder="أصرح بشرفي أنني: (اكتب نص التصريح هنا)" rows="3" class="input-field md:col-span-2"></textarea>
+                    <textarea id="in_stat" oninput="sync()" placeholder="أصرح بشرفي أنني..." rows="3" class="input-field md:col-span-2"></textarea>
                 </div>
 
-                <button onclick="downloadPDF()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-lg shadow-lg transition transform hover:scale-[1.01]">
-                    استخراج وتحميل النموذج (PDF) 📥
+                <button onclick="downloadPDF()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-lg shadow-lg transition text-lg">
+                    تحميل بصيغة PDF للطباعة 📥
                 </button>
             </div>
 
-            <div id="pdf-wrapper" class="overflow-x-auto bg-gray-300 p-4 rounded-lg">
+            <div id="pdf-wrapper" class="overflow-x-auto bg-gray-400 p-4 rounded-lg">
                 <div id="pdf-content" class="official-font text-right">
                     
-                    <div class="text-center mt-5">
-                        <h1 class="text-7xl font-bold underline underline-offset-[15px] decoration-4">تصريح شرفي</h1>
+                    <div class="text-center mt-10">
+                        <h1 class="text-7xl font-bold underline underline-offset-[12px]">تصريح شرفي</h1>
                     </div>
 
-                    <div class="pdf-body text-3xl leading-[3] mt-20">
-                        <p>أنا الموقع أسفله السيد(ة): <span id="out_name" class="font-bold border-b-2 border-black">..............................</span></p>
-                        <p>المولود(ة) بتاريخ: <span id="out_bDate" class="font-bold border-b-2 border-black">..................</span> بـ: <span id="out_bPlace" class="font-bold border-b-2 border-black">..................</span></p>
-                        <p>الحامل لبطاقة تعريف وطنية رقم: <span id="out_idNum" class="font-bold border-b-2 border-black">..............................</span></p>
-                        <p>الصادرة بتاريخ: <span id="out_iDate" class="font-bold border-b-2 border-black">..................</span> عن بلدية: <span id="out_auth" class="font-bold border-b-2 border-black">..................</span></p>
-                        <p>الساكن بـ: <span id="out_prov" class="font-bold border-b-2 border-black">..................</span></p>
+                    <div class="mt-24 text-3xl leading-[2.8]">
+                        <p>أنا الموقع أسفله السيد(ة): <span id="out_name" class="font-bold no-underline"></span></p>
+                        <p>المولود(ة) بتاريخ: <span id="out_bDate" class="font-bold no-underline"></span> بـ: <span id="out_bPlace" class="font-bold no-underline"></span></p>
+                        <p>الحامل لبطاقة تعريف وطنية رقم: <span id="out_idNum" class="font-bold no-underline"></span></p>
+                        <p>الصادرة بتاريخ: <span id="out_iDate" class="font-bold no-underline"></span> عن بلدية: <span id="out_auth" class="font-bold no-underline"></span></p>
+                        <p>الساكن بـ: <span id="out_prov" class="font-bold no-underline"></span></p>
                         
-                        <div class="mt-10 flex items-baseline">
-                            <span class="font-bold whitespace-nowrap ml-2">أصرح بشرفي أنني:</span>
-                            <span id="out_stat" class="font-bold italic border-b-2 border-black flex-grow inline-block min-w-[100px]">......................................................................</span>
+                        <div class="mt-8 flex items-baseline">
+                            <span class="font-bold whitespace-nowrap ml-3 italic">أصرح بشرفي أنني:</span>
+                            <span id="out_stat" class="font-bold no-underline flex-grow"></span>
                         </div>
                     </div>
 
-                    <div class="mt-auto mb-20 flex justify-between items-start px-10">
+                    <div class="mt-20 flex justify-between px-10">
                         <div class="text-center">
-                            <p class="font-bold text-3xl underline mb-10">توقيع المعني</p>
+                            <p class="font-bold text-3xl underline underline-offset-8">توقيع المعني</p>
                         </div>
                         <div class="text-center">
-                            <p class="font-bold text-3xl underline mb-10">مصادقة البلدية</p>
+                            <p class="font-bold text-3xl underline underline-offset-8">مصادقة البلدية</p>
                         </div>
                     </div>
                 </div>
@@ -98,14 +93,14 @@
 
     <script>
         function sync() {
-            document.getElementById('out_name').innerText = document.getElementById('in_name').value || '....................';
-            document.getElementById('out_bDate').innerText = document.getElementById('in_bDate').value || '................';
-            document.getElementById('out_bPlace').innerText = document.getElementById('in_bPlace').value || '................';
-            document.getElementById('out_idNum').innerText = document.getElementById('in_idNum').value || '................';
-            document.getElementById('out_iDate').innerText = document.getElementById('in_iDate').value || '................';
-            document.getElementById('out_auth').innerText = document.getElementById('in_auth').value || '................';
-            document.getElementById('out_prov').innerText = document.getElementById('in_prov').value || '................';
-            document.getElementById('out_stat').innerText = document.getElementById('in_stat').value || '...................................................';
+            document.getElementById('out_name').innerText = document.getElementById('in_name').value;
+            document.getElementById('out_bDate').innerText = document.getElementById('in_bDate').value;
+            document.getElementById('out_bPlace').innerText = document.getElementById('in_bPlace').value;
+            document.getElementById('out_idNum').innerText = document.getElementById('in_idNum').value;
+            document.getElementById('out_iDate').innerText = document.getElementById('in_iDate').value;
+            document.getElementById('out_auth').innerText = document.getElementById('in_auth').value;
+            document.getElementById('out_prov').innerText = document.getElementById('in_prov').value;
+            document.getElementById('out_stat').innerText = document.getElementById('in_stat').value;
         }
 
         function downloadPDF() {
@@ -114,11 +109,7 @@
                 margin: 0,
                 filename: 'تصريح_شرفي_جزائري.pdf',
                 image: { type: 'jpeg', quality: 1 },
-                html2canvas: { 
-                    scale: 2, 
-                    useCORS: true,
-                    scrollY: 0 // يضمن عدم وجود إزاحة رأسية
-                },
+                html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             html2pdf().from(element).set(opt).save();
