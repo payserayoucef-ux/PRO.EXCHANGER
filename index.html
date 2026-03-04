@@ -1,143 +1,66 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>النماذج الإدارية الجزائرية</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-<style>
-body{
-    font-family: Arial;
-    direction: rtl;
-    background:#f4f6f9;
-    text-align:center;
-}
-.container{
-    background:white;
-    width:95%;
-    max-width:700px;
-    margin:20px auto;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 0 15px rgba(0,0,0,0.15);
-}
-input, select{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-}
-button{
-    background:#006400;
-    color:white;
-    padding:12px;
-    border:none;
-    width:100%;
-    cursor:pointer;
-}
-#doc{
-    width:210mm;
-    min-height:297mm;
-    padding:20mm;
-    background:white;
-    text-align:right;
-    font-size:18px;
-    margin:auto;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة النماذج الإدارية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50">
 
-<div class="container">
-<h2>النماذج الإدارية الجزائرية</h2>
+    <nav class="bg-blue-600 text-white shadow-lg p-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">مكتبة النماذج الذكية</h1>
+            <div class="hidden md:block text-sm">سهولة الوصول.. سرعة الإنجاز</div>
+        </div>
+    </nav>
 
-<select id="type">
-<option value="ccp">تصريح شرفي لفتح حساب CCP</option>
-<option value="farm">شهادة استغلال أرض فلاحية</option>
-<option value="neighbor">شهادة حسن الجوار</option>
-</select>
+    <header class="py-12 px-4 text-center bg-white border-b">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">ابحث عن النموذج الإداري</h2>
+        <div class="max-w-xl mx-auto relative">
+            <input type="text" placeholder="مثال: طلب إجازة، تقرير عمل..." 
+                   class="w-full p-4 pr-12 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none shadow-sm">
+            <span class="absolute left-4 top-4 text-gray-400">🔍</span>
+        </div>
+    </header>
 
-<input type="text" id="nom" placeholder="الاسم واللقب">
-<input type="text" id="birth" placeholder="تاريخ ومكان الميلاد">
-<input type="text" id="address" placeholder="العنوان الكامل">
-<input type="text" id="idnum" placeholder="رقم بطاقة التعريف">
-<input type="text" id="extra" placeholder="معلومات إضافية">
+    <main class="container mx-auto py-10 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100">
+                <div class="p-6">
+                    <div class="text-blue-600 text-xs font-bold uppercase mb-2">الموارد البشرية</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">نموذج طلب إجازة سنوية</h3>
+                    <p class="text-gray-600 text-sm mb-6">نموذج رسمي لتقديم طلب إجازة مع الحساب التلقائي للأيام المتبقية.</p>
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg flex justify-center items-center gap-2">
+                        <span>فتح النموذج لتعبئته</span>
+                        <span>📄</span>
+                    </button>
+                </div>
+            </div>
 
-<button onclick="generatePDF()">تحميل PDF</button>
-</div>
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100">
+                <div class="p-6">
+                    <div class="text-green-600 text-xs font-bold uppercase mb-2">القسم المالي</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">نموذج عهدة مالية</h3>
+                    <p class="text-gray-600 text-sm mb-6">تعبئة بيانات العهدة النقدية والمصاريف النثرية للموظفين.</p>
+                    <button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg flex justify-center items-center gap-2">
+                        <span>فتح النموذج لتعبئته</span>
+                        <span>💰</span>
+                    </button>
+                </div>
+            </div>
 
-<div id="doc"></div>
+            </div>
+    </main>
 
-<script>
-function generatePDF(){
-
-    let type = document.getElementById("type").value;
-    let nom = document.getElementById("nom").value;
-    let birth = document.getElementById("birth").value;
-    let address = document.getElementById("address").value;
-    let idnum = document.getElementById("idnum").value;
-    let extra = document.getElementById("extra").value;
-    let today = new Date().toLocaleDateString('ar-DZ');
-
-    let content = `
-    <h3 style="text-align:center;">الجمهورية الجزائرية الديمقراطية الشعبية</h3>
-    <hr>
-    `;
-
-    if(type === "ccp"){
-        content += `
-        <h3 style="text-align:center;">تصريح شرفي لفتح حساب CCP</h3>
-        <p>أنا الممضي أسفله: ${nom}</p>
-        <p>المولود في: ${birth}</p>
-        <p>الساكن بـ: ${address}</p>
-        <p>رقم بطاقة التعريف: ${idnum}</p>
-        <p>أصرح بشرفي أنني لا أملك حساب CCP آخر.</p>
-        `;
-    }
-
-    if(type === "farm"){
-        content += `
-        <h3 style="text-align:center;">طلب شهادة استغلال أرض فلاحية</h3>
-        <p>أنا الممضي أسفله: ${nom}</p>
-        <p>المولود في: ${birth}</p>
-        <p>الساكن بـ: ${address}</p>
-        <p>رقم بطاقة التعريف: ${idnum}</p>
-        <p>أصرح أنني أستغل الأرض الواقعة بـ: ${extra}</p>
-        `;
-    }
-
-    if(type === "neighbor"){
-        content += `
-        <h3 style="text-align:center;">طلب شهادة حسن الجوار</h3>
-        <p>أنا الممضي أسفله: ${nom}</p>
-        <p>المولود في: ${birth}</p>
-        <p>الساكن بـ: ${address}</p>
-        <p>رقم بطاقة التعريف: ${idnum}</p>
-        <p>أطلب شهادة حسن الجوار لغرض: ${extra}</p>
-        `;
-    }
-
-    content += `
-    <br><br>
-    <p>حرر في: ${today}</p>
-    <br><br>
-    <p style="text-align:left;">الإمضاء</p>
-    `;
-
-    let element = document.getElementById("doc");
-    element.innerHTML = content;
-
-    const opt = {
-        margin:       0,
-        filename:     'document.pdf',
-        image:        { type: 'jpeg', quality: 1 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().set(opt).from(element).save();
-}
-</script>
+    <footer class="bg-gray-800 text-gray-400 py-8 text-center text-sm">
+        <p>حقوق النشر © 2026 - نظام الإدارة الذكي</p>
+    </footer>
 
 </body>
 </html>
