@@ -5,132 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة النماذج الإدارية - الجزائر</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f0f4f8; color: #334155; }
         .official-font { font-family: 'Amiri', serif; }
         
-        /* تحسين الخانات لتكون مريحة للعين */
-        .input-group { @apply mb-5; }
-        .input-label { @apply block text-sm font-bold text-gray-600 mb-2 mr-1 flex items-center gap-2; }
+        /* إطار واضح جداً ومريح للعين */
+        .input-group { @apply mb-6; }
+        .input-label { @apply block text-lg font-bold text-blue-900 mb-2; }
         .input-field { 
-            @apply w-full p-4 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none bg-white text-lg font-medium transition-all shadow-sm text-gray-800 placeholder-gray-400;
+            @apply w-full p-4 border-2 border-blue-200 rounded-xl bg-white text-xl font-bold shadow-sm outline-none transition-all;
+            focus:border-blue-600 focus:ring-4 focus:ring-blue-100;
         }
         
-        /* حاوية الـ PDF المخفية للمعاينة */
+        /* تنسيق ورقة الـ PDF لضمان عدم تبعثر النقاط */
         #pdf-content { 
             width: 210mm; 
             height: 296mm; 
-            padding: 20mm; 
+            padding: 25mm; 
             background: white; 
             margin: 0 auto;
             color: black;
             display: flex;
             flex-direction: column;
         }
+        .pdf-row { display: flex; align-items: baseline; margin-bottom: 15px; width: 100%; }
+        .pdf-label { font-weight: bold; white-space: nowrap; margin-left: 8px; }
+        .pdf-value { flex-grow: 1; word-break: break-all; }
     </style>
 </head>
-<body class="antialiased">
+<body class="p-2 sm:p-0">
 
-    <nav class="bg-white border-b border-gray-100 py-4 px-6 sticky top-0 z-50">
+    <nav class="bg-blue-900 text-white p-5 mb-8 shadow-xl">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-200">DZ</div>
-                <h1 class="font-bold text-xl text-gray-800 hidden sm:block">نماذج إدارية رقمية</h1>
-            </div>
-            <button class="bg-blue-50 text-blue-600 px-5 py-2 rounded-xl font-bold text-sm hover:bg-blue-600 hover:text-white transition-all">
-                + نموذج جديد
-            </button>
+            <h1 class="font-bold text-xl">بوابة النماذج الرقمية</h1>
+            <span class="text-sm opacity-80 hidden sm:inline">سهولة . سرعة . إتقان</span>
         </div>
     </nav>
 
-    <main class="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto">
+    <main class="container mx-auto max-w-4xl pb-20">
+        
+        <div class="bg-white p-6 sm:p-10 rounded-3xl shadow-2xl border-t-8 border-blue-600">
+            <h2 class="text-3xl font-black text-center text-blue-900 mb-10 underline underline-offset-8">تعبئة بيانات التصريح الشرفي</h2>
             
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-extrabold text-gray-900 mb-3">استخراج تصريح شرفي</h2>
-                <p class="text-gray-500 max-w-lg mx-auto leading-relaxed">أدخل بياناتك الشخصية بدقة، وسيقوم النظام بتوليد ملف جاهز للطباعة فوراً.</p>
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="input-group md:col-span-2">
+                    <label class="input-label">الاسم واللقب :</label>
+                    <input type="text" id="in_name" oninput="sync()" placeholder="اكتب هنا الاسم واللقب" class="input-field">
+                </div>
 
-            <div class="bg-white p-6 sm:p-10 rounded-[2.5rem] shadow-xl shadow-gray-200/50 border border-gray-50 mb-12">
-                <form class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                <div class="input-group">
+                    <label class="input-label">تاريخ الميلاد :</label>
+                    <input type="text" id="in_bDate" oninput="sync()" placeholder="مثال: 1990/05/12" class="input-field">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">مكان الميلاد :</label>
+                    <input type="text" id="in_bPlace" oninput="sync()" placeholder="البلدية والولاية" class="input-field">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">رقم بطاقة التعريف / الرخصة :</label>
+                    <input type="text" id="in_idNum" oninput="sync()" class="input-field border-blue-300">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">تاريخ الإصدار :</label>
+                    <input type="text" id="in_iDate" oninput="sync()" class="input-field border-blue-300">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">سلطة الإصدار (البلدية) :</label>
+                    <input type="text" id="in_auth" oninput="sync()" class="input-field border-blue-300">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">الولاية الحالية :</label>
+                    <input type="text" id="in_prov" oninput="sync()" class="input-field border-blue-300">
+                </div>
+
+                <div class="input-group md:col-span-2">
+                    <label class="input-label text-blue-600">أصرح بشرفي أنني :</label>
+                    <textarea id="in_stat" oninput="sync()" rows="4" placeholder="اكتب موضوع التصريح هنا..." class="input-field border-blue-400 italic"></textarea>
+                </div>
+
+                <button onclick="downloadPDF()" class="md:col-span-2 bg-green-600 hover:bg-green-700 text-white font-black py-5 rounded-2xl shadow-xl transition text-2xl mt-4 flex justify-center items-center gap-3">
+                    <span>حفظ وتحميل PDF للطباعة</span>
+                    <span>📄</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-16 overflow-hidden">
+            <h3 class="text-center font-bold text-gray-500 mb-6 italic">--- شكل النموذج النهائي المخصص للطباعة ---</h3>
+            <div id="pdf-wrapper" class="overflow-x-auto bg-gray-700 p-4 sm:p-10 rounded-3xl">
+                <div id="pdf-content" class="official-font text-right shadow-2xl">
                     
-                    <div class="input-group md:col-span-2">
-                        <label class="input-label"><span>👤</span> الاسم واللقب الكامل</label>
-                        <input type="text" id="in_name" oninput="sync()" placeholder="مثال: محمد بن علي" class="input-field">
+                    <div class="text-center mt-12 mb-24">
+                        <h1 class="text-7xl font-bold underline underline-offset-[20px] decoration-4">تصريح شرفي</h1>
                     </div>
 
-                    <div class="input-group">
-                        <label class="input-label"><span>📅</span> تاريخ الميلاد</label>
-                        <input type="text" id="in_bDate" oninput="sync()" placeholder="يوم / شهر / سنة" class="input-field">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label"><span>📍</span> مكان الميلاد</label>
-                        <input type="text" id="in_bPlace" oninput="sync()" placeholder="البلدية والولاية" class="input-field">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label"><span>🆔</span> رقم بطاقة التعريف / الرخصة</label>
-                        <input type="text" id="in_idNum" oninput="sync()" class="input-field">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label"><span>📆</span> تاريخ الإصدار</label>
-                        <input type="text" id="in_iDate" oninput="sync()" class="input-field">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label"><span>🏛️</span> سلطة الإصدار (البلدية)</label>
-                        <input type="text" id="in_auth" oninput="sync()" class="input-field">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label"><span>🗺️</span> الولاية</label>
-                        <input type="text" id="in_prov" oninput="sync()" class="input-field">
-                    </div>
-
-                    <div class="input-group md:col-span-2">
-                        <label class="input-label"><span>📜</span> موضوع التصريح (أصرح بشرفي أنني:)</label>
-                        <textarea id="in_stat" oninput="sync()" rows="4" placeholder="اكتب غرض التصريح هنا..." class="input-field resize-none"></textarea>
-                    </div>
-
-                    <div class="md:col-span-2 mt-4">
-                        <button type="button" onclick="downloadPDF()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-lg shadow-blue-200 transition-all text-xl flex items-center justify-center gap-3 active:scale-95">
-                            <span>استخراج وتحميل PDF</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="mb-10 overflow-hidden">
-                <h3 class="text-center font-bold text-gray-400 mb-6 flex items-center justify-center gap-4">
-                    <span class="h-px w-20 bg-gray-200"></span>
-                    معاينة حية للنموذج
-                    <span class="h-px w-20 bg-gray-200"></span>
-                </h3>
-                <div id="pdf-wrapper" class="overflow-x-auto bg-gray-100 p-4 sm:p-8 rounded-[2rem] border-4 border-dashed border-gray-200">
-                    <div id="pdf-content" class="official-font text-right shadow-2xl">
-                        <div class="text-center mt-12">
-                            <h1 class="text-7xl font-bold underline underline-offset-[15px]">تصريح شرفي</h1>
+                    <div class="text-3xl leading-[2.6] px-5">
+                        <div class="pdf-row">
+                            <span class="pdf-label">أنا الموقع أسفله السيد(ة) :</span>
+                            <span id="out_name" class="pdf-value font-bold"></span>
                         </div>
-                        <div class="mt-28 text-3xl leading-[2.8]">
-                            <p>أنا الموقع أسفله السيد(ة): <span id="out_name" class="font-bold"></span></p>
-                            <p>المولود(ة) بتاريخ: <span id="out_bDate" class="font-bold"></span> بـ: <span id="out_bPlace" class="font-bold"></span></p>
-                            <p>الحامل لبطاقة تعريف وطنية رقم: <span id="out_idNum" class="font-bold"></span></p>
-                            <p>الصادرة بتاريخ: <span id="out_iDate" class="font-bold"></span> عن بلدية: <span id="out_auth" class="font-bold"></span></p>
-                            <p>الساكن بـ: <span id="out_prov" class="font-bold"></span></p>
-                            <div class="mt-12 flex items-baseline">
-                                <span class="font-bold whitespace-nowrap ml-4 italic underline decoration-1">أصرح بشرفي أنني:</span>
-                                <span id="out_stat" class="font-bold flex-grow text-4xl"></span>
-                            </div>
+                        <div class="pdf-row">
+                            <span class="pdf-label">المولود(ة) بتاريخ :</span>
+                            <span id="out_bDate" class="pdf-value font-bold"></span>
+                            <span class="pdf-label mr-10">بـ :</span>
+                            <span id="out_bPlace" class="pdf-value font-bold"></span>
                         </div>
-                        <div class="mt-auto mb-28 flex justify-between px-16">
-                            <div class="text-center"><p class="font-bold text-4xl underline underline-offset-8">توقيع المعني</p></div>
-                            <div class="text-center"><p class="font-bold text-4xl underline underline-offset-8">مصادقة البلدية</p></div>
+                        <div class="pdf-row">
+                            <span class="pdf-label">الحامل لبطاقة تعريف وطنية رقم :</span>
+                            <span id="out_idNum" class="pdf-value font-bold"></span>
+                        </div>
+                        <div class="pdf-row">
+                            <span class="pdf-label">الصادرة بتاريخ :</span>
+                            <span id="out_iDate" class="pdf-value font-bold"></span>
+                            <span class="pdf-label mr-10">عن بلدية :</span>
+                            <span id="out_auth" class="pdf-value font-bold"></span>
+                        </div>
+                        <div class="pdf-row">
+                            <span class="pdf-label">الساكن بـ :</span>
+                            <span id="out_prov" class="pdf-value font-bold"></span>
+                        </div>
+                        
+                        <div class="mt-16 flex items-start">
+                            <span class="pdf-label underline underline-offset-4 ml-4">أصرح بشرفي أنني :</span>
+                            <span id="out_stat" class="pdf-value font-bold text-4xl italic"></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto mb-32 flex justify-between px-20">
+                        <div class="text-center">
+                            <h3 class="text-4xl font-bold underline underline-offset-[10px]">توقيع المعني</h3>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-4xl font-bold underline underline-offset-[10px]">مصادقة البلدية</h3>
                         </div>
                     </div>
                 </div>
@@ -138,15 +152,12 @@
         </div>
     </main>
 
-    <footer class="bg-white border-t border-gray-100 py-10 text-center">
-        <p class="text-gray-400 text-sm font-medium">جميع الحقوق محفوظة © 2026 - نظام النماذج الإدارية</p>
-    </footer>
-
     <script>
         function sync() {
             const fields = ['name', 'bDate', 'bPlace', 'idNum', 'iDate', 'auth', 'prov', 'stat'];
             fields.forEach(f => {
-                document.getElementById('out_' + f).innerText = document.getElementById('in_' + f).value;
+                const val = document.getElementById('in_' + f).value;
+                document.getElementById('out_' + f).innerText = val;
             });
         }
         function downloadPDF() {
