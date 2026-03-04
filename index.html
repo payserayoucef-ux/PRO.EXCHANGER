@@ -3,63 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة النماذج الإدارية</title>
+    <title>منصة النماذج الإدارية | حلول تعبئة النماذج الذكية</title>
+    <meta name="description" content="أكبر مكتبة للنماذج الإدارية الجاهزة للتعبئة والتحميل بصيغة PDF. نماذج الموارد البشرية، المالية، والطلبات الرسمية.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Tajawal', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 text-gray-800">
 
-    <nav class="bg-blue-600 text-white shadow-lg p-6">
+    <nav class="bg-white border-b sticky top-0 z-50 p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">مكتبة النماذج الذكية</h1>
-            <div class="hidden md:block text-sm">سهولة الوصول.. سرعة الإنجاز</div>
+            <a href="#" class="text-2xl font-bold text-blue-700">نماذج أونلاين</a>
+            <div class="space-x-4 space-x-reverse text-sm font-medium">
+                <a href="#about" class="hover:text-blue-600">عن المنصة</a>
+                <a href="#categories" class="hover:text-blue-600">الأقسام</a>
+            </div>
         </div>
     </nav>
 
-    <header class="py-12 px-4 text-center bg-white border-b">
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">ابحث عن النموذج الإداري</h2>
-        <div class="max-w-xl mx-auto relative">
-            <input type="text" placeholder="مثال: طلب إجازة، تقرير عمل..." 
-                   class="w-full p-4 pr-12 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none shadow-sm">
-            <span class="absolute left-4 top-4 text-gray-400">🔍</span>
+    <header class="bg-gradient-to-r from-blue-700 to-blue-500 text-white py-16 px-4">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-extrabold mb-4">بوابة النماذج الإدارية الرقمية</h1>
+            <p class="text-lg opacity-90 max-w-2xl mx-auto">
+                نقدم لك أدوات مجانية لملء النماذج الرسمية إلكترونياً وتصديرها كملفات PDF جاهزة للطباعة، مما يوفر وقتك ويضمن دقة بياناتك الإدارية.
+            </p>
         </div>
     </header>
 
-    <main class="container mx-auto py-10 px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="container mx-auto my-6 text-center text-gray-400 text-xs border border-dashed p-4">
+        مساحة إعلانية
+    </div>
+
+    <main id="categories" class="container mx-auto py-10 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100">
-                <div class="p-6">
-                    <div class="text-blue-600 text-xs font-bold uppercase mb-2">الموارد البشرية</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">نموذج طلب إجازة سنوية</h3>
-                    <p class="text-gray-600 text-sm mb-6">نموذج رسمي لتقديم طلب إجازة مع الحساب التلقائي للأيام المتبقية.</p>
-                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg flex justify-center items-center gap-2">
-                        <span>فتح النموذج لتعبئته</span>
-                        <span>📄</span>
-                    </button>
+            <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition border p-6">
+                <div class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">قسم الموارد البشرية</div>
+                <h3 class="text-xl font-bold mb-2">نموذج طلب إجازة</h3>
+                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+                    يستخدم هذا النموذج لتقديم طلبات الإجازة السنوية أو المرضية. يتيح لك النظام إدخال التواريخ والبيانات الشخصية ليتم توليد ملف PDF رسمي موقع.
+                </p>
+                <div class="group relative">
+                    <button class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700">تعبئة البيانات الآن</button>
+                    <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-[10px] p-1 rounded">اضغط للانتقال لصفحة إدخال البيانات وتصدير PDF</span>
                 </div>
-            </div>
+            </article>
 
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100">
-                <div class="p-6">
-                    <div class="text-green-600 text-xs font-bold uppercase mb-2">القسم المالي</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">نموذج عهدة مالية</h3>
-                    <p class="text-gray-600 text-sm mb-6">تعبئة بيانات العهدة النقدية والمصاريف النثرية للموظفين.</p>
-                    <button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg flex justify-center items-center gap-2">
-                        <span>فتح النموذج لتعبئته</span>
-                        <span>💰</span>
-                    </button>
+            <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition border p-6">
+                <div class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">القسم المالي</div>
+                <h3 class="text-xl font-bold mb-2">كشف مصاريف العمل</h3>
+                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+                    أداة احترافية مخصصة للموظفين لتسجيل المصاريف النثرية وفواتير العمل بوضوح لضمان سرعة صرف المستحقات المالية.
+                </p>
+                <div class="group relative">
+                    <button class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700">تعبئة البيانات الآن</button>
+                    <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-[10px] p-1 rounded">سيتم فتح محرر البيانات الخاص بالعهدة المالية</span>
                 </div>
-            </div>
+            </article>
 
-            </div>
+            <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition border p-6">
+                <div class="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">الإدارة العامة</div>
+                <h3 class="text-xl font-bold mb-2">نموذج استقالة رسمي</h3>
+                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+                    صيغة قانونية وإدارية سليمة لتقديم الاستقالة، تتضمن كافة البيانات المطلوبة لضمان حفظ حقوق الطرفين عند انتهاء التعاقد.
+                </p>
+                <div class="group relative">
+                    <button class="w-full bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700">تعبئة البيانات الآن</button>
+                    <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-[10px] p-1 rounded">اضغط لبدء كتابة خطاب الاستقالة وتنسيقه</span>
+                </div>
+            </article>
+
+        </div>
     </main>
 
-    <footer class="bg-gray-800 text-gray-400 py-8 text-center text-sm">
-        <p>حقوق النشر © 2026 - نظام الإدارة الذكي</p>
+    <section id="about" class="bg-white py-12 border-t mt-10">
+        <div class="container mx-auto px-4 max-w-4xl text-center">
+            <h2 class="text-2xl font-bold mb-4 italic text-blue-800">لماذا نستخدم منصة النماذج؟</h2>
+            <p class="text-gray-600 leading-relaxed mb-6">
+                هدفنا هو رقمنة المعاملات الورقية التقليدية. من خلال واجهة سهلة الاستخدام، نقوم بمعالجة البيانات التي تدخلها وتحويلها فوراً إلى مستندات رسمية (PDF). جميع العمليات تتم داخل متصفحك لضمان أعلى مستويات الخصوصية والأمان.
+            </p>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 border-b border-gray-700 pb-8 mb-8 text-sm">
+            <div>
+                <h4 class="font-bold mb-4">روابط سريعة</h4>
+                <ul>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">الرئيسية</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">جميع النماذج</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">قانوني</h4>
+                <ul>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">سياسة الخصوصية</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">شروط الاستخدام</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">تواصل معنا</h4>
+                <p class="text-gray-400">للاقتراحات: support@yourdomain.com</p>
+            </div>
+        </div>
+        <p class="text-center text-gray-500 text-xs">© 2026 منصة النماذج الإدارية - جميع الحقوق محفوظة</p>
     </footer>
 
 </body>
