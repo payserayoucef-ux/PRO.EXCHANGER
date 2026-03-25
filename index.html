@@ -2,349 +2,229 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نماذجي - منصة النماذج الإدارية الجزائرية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Wadknisse - منصة البيع والشراء</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Tajawal', 'Arial', sans-serif;
+            font-family: 'Tajawal', 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            position: relative;
+            direction: rtl;
         }
 
-        /* الخلفية المزخرفة */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M20 20 L80 20 L80 80 L20 80 Z" fill="none" stroke="white" stroke-width="2"/><circle cx="50" cy="50" r="20" fill="none" stroke="white" stroke-width="2"/></svg>');
-            background-size: 50px 50px;
-            pointer-events: none;
+        /* أنيميشنات */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        /* الرأس */
+        /* هيدر */
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            padding: 20px;
+            padding: 15px 25px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 100;
             border-bottom: 3px solid #667eea;
         }
-
         .header-container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
-
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .logo i {
-            font-size: 2.5rem;
-            color: #667eea;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .logo h1 {
+            gap: 8px;
             font-size: 1.8rem;
-            color: #333;
-        }
-
-        .logo span {
-            color: #667eea;
             font-weight: bold;
+            color: #333;
+            transition: all 0.3s;
         }
-
-        /* أزرار الاشتراك في الرأس */
-        .header-buttons {
-            display: flex;
-            gap: 15px;
+        .logo i {
+            font-size: 2rem;
+            color: #667eea;
+            animation: float 3s ease infinite;
         }
-
-        .subscribe-btn {
-            padding: 12px 25px;
+        .lang-switch {
+            background: #f0f0f0;
             border: none;
-            border-radius: 50px;
-            font-size: 1rem;
+            border-radius: 30px;
+            padding: 5px 12px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            transition: 0.2s;
+        }
+        .lang-switch:hover {
+            background: #e0e0e0;
+        }
+        .user-actions {
+            display: flex;
+            gap: 12px;
+        }
+        .btn {
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #667eea;
+            color: white;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            gap: 8px;
         }
-
-        .monthly-btn {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+        .btn-outline:hover {
+            background: #667eea;
             color: white;
         }
-
-        .yearly-btn {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
         }
-
-        .subscribe-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        .btn-sm {
+            padding: 6px 15px;
+            font-size: 0.9rem;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
         }
 
         /* الحاوية الرئيسية */
         .container {
-            max-width: 1200px;
-            margin: 40px auto;
+            max-width: 1300px;
+            margin: 30px auto;
             padding: 0 20px;
         }
 
-        /* بطاقة المعلومات الشخصية */
-        .info-card {
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
-            animation: slideIn 0.5s ease-out;
-            border: 1px solid rgba(102, 126, 234, 0.2);
-        }
-
-        .info-card h2 {
-            color: #667eea;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-        }
-
-        .form-grid {
+        /* بطاقات الإعلانات */
+        .ads-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            animation: fadeIn 0.4s ease;
         }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        /* أزرار النماذج */
-        .models-section {
+        .ad-card {
             background: white;
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
-        }
-
-        .models-section h2 {
-            color: #667eea;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-        }
-
-        .models-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .model-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 20px;
-            padding: 25px;
-            cursor: pointer;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: 0.3s;
-            border: 3px solid transparent;
+            border: 1px solid rgba(102,126,234,0.2);
         }
-
-        .model-card:hover {
+        .ad-card:hover {
             transform: translateY(-5px);
-            border-color: #667eea;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 20px 35px rgba(0,0,0,0.15);
         }
-
-        .model-card i {
-            font-size: 2.5rem;
-            color: #667eea;
-            margin-bottom: 15px;
-        }
-
-        .model-card h3 {
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .model-card p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* النماذج المعروضة */
-        .documents-section {
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .documents-section h2 {
-            color: #667eea;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-        }
-
-        .documents-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
-        }
-
-        .document-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            border-right: 5px solid #667eea;
-            animation: slideIn 0.3s ease-out;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .document-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .document-header h3 {
-            color: #667eea;
-            font-size: 1.2rem;
-        }
-
-        .document-header i {
-            font-size: 2rem;
-            color: #667eea;
-        }
-
-        .document-preview {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            border: 1px dashed #667eea;
-            font-family: monospace;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .document-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
+        .ad-image {
+            height: 200px;
+            background: #f0f0f0;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        .ad-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .no-img {
+            font-size: 3rem;
+            color: #ccc;
+        }
+        .ad-content {
+            padding: 20px;
+        }
+        .ad-title {
+            font-size: 1.2rem;
             font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .ad-category {
+            display: inline-block;
+            background: #e9ecef;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+        .ad-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        .ad-desc {
+            color: #666;
+            margin: 10px 0;
+            line-height: 1.5;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+        .ad-condition {
+            font-size: 0.8rem;
+            background: #f8f9fa;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .ad-contact {
+            font-size: 0.85rem;
+            color: #28a745;
+            margin-top: 10px;
+            word-break: break-word;
+        }
+        .ad-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .ad-actions button {
+            flex: 1;
         }
 
-        .print-btn {
-            background: #667eea;
-            color: white;
-        }
-
-        .pdf-btn {
-            background: #dc3545;
-            color: white;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        /* نافذة الاشتراك المنبثقة */
+        /* مودال */
         .modal {
             display: none;
             position: fixed;
@@ -352,27 +232,25 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
         }
-
         .modal.active {
             display: flex;
-            animation: slideIn 0.3s ease-out;
+            animation: fadeIn 0.2s ease;
         }
-
         .modal-content {
             background: white;
             border-radius: 30px;
-            padding: 40px;
             max-width: 500px;
             width: 90%;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
-
         .modal-content h2 {
             color: #667eea;
             margin-bottom: 20px;
@@ -380,1230 +258,645 @@
             align-items: center;
             gap: 10px;
         }
-
-        .pricing-option {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 2px solid transparent;
+        .form-group {
+            margin-bottom: 18px;
         }
-
-        .pricing-option:hover {
-            border-color: #667eea;
-            transform: translateX(-5px);
-        }
-
-        .pricing-option.selected {
-            border-color: #667eea;
-            background: #e7f4ff;
-        }
-
-        .pricing-option h3 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .price {
-            font-size: 1.5rem;
-            color: #667eea;
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
             font-weight: bold;
+            color: #555;
         }
-
-        .discount {
-            background: #28a745;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 50px;
-            font-size: 0.8rem;
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            font-size: 1rem;
+            transition: 0.2s;
         }
-
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
+        }
+        .image-preview {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .image-preview img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+        }
+        .checkbox-group {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+        .checkbox-group input {
+            width: auto;
+        }
         .modal-buttons {
             display: flex;
             gap: 15px;
             margin-top: 25px;
         }
-
-        .confirm-btn {
+        .modal-buttons button {
             flex: 1;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
+            padding: 12px;
+            border-radius: 40px;
             font-weight: bold;
-        }
-
-        .cancel-btn {
-            flex: 1;
-            padding: 15px;
-            background: #e0e0e0;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* شريط التحميل */
-        .loading {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255,255,255,0.9);
-            padding: 20px 40px;
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 2000;
-            backdrop-filter: blur(5px);
-        }
-
-        .loading.active {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .spinner {
-            width: 30px;
-            height: 30px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* رسالة للمستخدم غير مشترك */
-        .locked-message {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .locked-message i {
-            font-size: 4rem;
-            color: #ffc107;
-            margin-bottom: 15px;
-        }
-
-        .locked-message h3 {
-            color: #856404;
-            margin-bottom: 10px;
-        }
-
-        .locked-message p {
-            color: #856404;
-            margin-bottom: 20px;
-        }
-
-        .locked-message button {
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.1rem;
         }
 
         /* تذييل */
         footer {
-            background: #333;
+            background: #1e1e2f;
             color: white;
             padding: 30px 20px;
-            margin-top: 60px;
+            margin-top: 50px;
         }
-
         .footer-container {
             max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
             gap: 30px;
         }
-
         .footer-section h3 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #667eea;
         }
-
         .footer-section a {
-            color: white;
-            text-decoration: none;
             display: block;
+            color: #ccc;
+            text-decoration: none;
             margin-bottom: 10px;
+            cursor: pointer;
         }
-
         .footer-section a:hover {
-            color: #667eea;
+            color: white;
         }
 
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
-                gap: 15px;
             }
-            
-            .models-grid,
-            .documents-grid {
+            .ads-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
+        }
+
+        /* رسائل التنبيه */
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            z-index: 1100;
+            animation: fadeIn 0.3s;
         }
     </style>
 </head>
 <body>
     <header>
         <div class="header-container">
-            <div class="logo">
-                <i class="fas fa-file-signature"></i>
-                <h1>نموذج<span>جي</span></h1>
+            <div class="logo-area">
+                <div class="logo" id="logo">
+                    <i class="fas fa-store"></i>
+                    <span id="logoText">Wadknisse</span>
+                </div>
+                <button class="lang-switch" id="langToggle"><i class="fas fa-globe"></i> <span id="langLabel">🇩🇿 عربي</span></button>
             </div>
-            <div class="header-buttons">
-                <button class="subscribe-btn monthly-btn" onclick="openSubscriptionModal('monthly')">
-                    <i class="fas fa-calendar-alt"></i> اشتراك شهري: 500 دج
-                </button>
-                <button class="subscribe-btn yearly-btn" onclick="openSubscriptionModal('yearly')">
-                    <i class="fas fa-calendar-check"></i> اشتراك سنوي: 3000 دج
-                </button>
+            <div class="user-actions" id="userActions">
+                <!-- سيتم تعبئته بواسطة JS -->
             </div>
         </div>
     </header>
 
     <div class="container">
-        <!-- بطاقة المعلومات الشخصية -->
-        <div class="info-card">
-            <h2><i class="fas fa-user-edit"></i> المعلومات الشخصية</h2>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label><i class="fas fa-user"></i> الاسم الكامل</label>
-                    <input type="text" id="fullName" placeholder="أدخل اسمك الكامل" onchange="updateAllDocuments()">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-id-card"></i> رقم بطاقة التعريف</label>
-                    <input type="text" id="idNumber" placeholder="أدخل رقم بطاقة التعريف" onchange="updateAllDocuments()">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-calendar"></i> تاريخ الميلاد</label>
-                    <input type="date" id="birthDate" onchange="updateAllDocuments()">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-map-marker-alt"></i> مكان الميلاد</label>
-                    <input type="text" id="birthPlace" placeholder="أدخل مكان الميلاد" onchange="updateAllDocuments()">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-flag"></i> الجنسية</label>
-                    <select id="nationality" onchange="updateAllDocuments()">
-                        <option value="جزائري">جزائري</option>
-                        <option value="أجنبي">أجنبي</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-venus-mars"></i> الجنس</label>
-                    <select id="gender" onchange="updateAllDocuments()">
-                        <option value="ذكر">ذكر</option>
-                        <option value="أنثى">أنثى</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-phone"></i> رقم الهاتف</label>
-                    <input type="tel" id="phone" placeholder="أدخل رقم الهاتف" onchange="updateAllDocuments()">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
-                    <input type="email" id="email" placeholder="أدخل البريد الإلكتروني" onchange="updateAllDocuments()">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-home"></i> العنوان الكامل</label>
-                    <textarea id="address" rows="2" placeholder="أدخل العنوان الكامل" onchange="updateAllDocuments()"></textarea>
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-city"></i> الولاية</label>
-                    <select id="wilaya" onchange="updateAllDocuments()">
-                        <option value="أدرار">أدرار</option>
-                        <option value="الشلف">الشلف</option>
-                        <option value="الأغواط">الأغواط</option>
-                        <option value="أم البواقي">أم البواقي</option>
-                        <option value="باتنة">باتنة</option>
-                        <option value="بجاية">بجاية</option>
-                        <option value="بسكرة">بسكرة</option>
-                        <option value="بشار">بشار</option>
-                        <option value="البليدة">البليدة</option>
-                        <option value="البويرة">البويرة</option>
-                        <option value="تمنراست">تمنراست</option>
-                        <option value="تبسة">تبسة</option>
-                        <option value="تلمسان">تلمسان</option>
-                        <option value="تيارت">تيارت</option>
-                        <option value="تيزي وزو">تيزي وزو</option>
-                        <option value="الجزائر">الجزائر</option>
-                        <option value="الجلفة">الجلفة</option>
-                        <option value="جيجل">جيجل</option>
-                        <option value="سطيف">سطيف</option>
-                        <option value="سعيدة">سعيدة</option>
-                        <option value="سكيكدة">سكيكدة</option>
-                        <option value="سيدي بلعباس">سيدي بلعباس</option>
-                        <option value="عنابة">عنابة</option>
-                        <option value="قالمة">قالمة</option>
-                        <option value="قسنطينة">قسنطينة</option>
-                        <option value="المدية">المدية</option>
-                        <option value="مستغانم">مستغانم</option>
-                        <option value="المسيلة">المسيلة</option>
-                        <option value="معسكر">معسكر</option>
-                        <option value="ورقلة">ورقلة</option>
-                        <option value="وهران">وهران</option>
-                        <option value="البيض">البيض</option>
-                        <option value="إليزي">إليزي</option>
-                        <option value="برج بوعريريج">برج بوعريريج</option>
-                        <option value="بومرداس">بومرداس</option>
-                        <option value="الطارف">الطارف</option>
-                        <option value="تندوف">تندوف</option>
-                        <option value="تيسمسيلت">تيسمسيلت</option>
-                        <option value="الوادي">الوادي</option>
-                        <option value="خنشلة">خنشلة</option>
-                        <option value="سوق أهراس">سوق أهراس</option>
-                        <option value="تيبازة">تيبازة</option>
-                        <option value="ميلة">ميلة</option>
-                        <option value="عين الدفلى">عين الدفلى</option>
-                        <option value="النعامة">النعامة</option>
-                        <option value="عين تموشنت">عين تموشنت</option>
-                        <option value="غرداية">غرداية</option>
-                        <option value="غليزان">غليزان</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-mail-bulk"></i> الرمز البريدي</label>
-                    <input type="text" id="postalCode" placeholder="أدخل الرمز البريدي" onchange="updateAllDocuments()">
-                </div>
-            </div>
+        <div id="adsContainer" class="ads-grid">
+            <!-- الإعلانات ستظهر هنا -->
         </div>
-
-        <!-- أزرار النماذج -->
-        <div class="models-section">
-            <h2><i class="fas fa-file-alt"></i> اختر النموذج الذي تريده</h2>
-            <div class="models-grid" id="modelsGrid"></div>
-        </div>
-
-        <!-- النماذج المعروضة -->
-        <div class="documents-section">
-            <h2><i class="fas fa-file-pdf"></i> نماذجك الجاهزة</h2>
-            <div id="documentsContainer"></div>
-        </div>
-    </div>
-
-    <!-- نافذة الاشتراك المنبثقة -->
-    <div class="modal" id="subscriptionModal">
-        <div class="modal-content">
-            <h2><i class="fas fa-crown"></i> اختر باقة الاشتراك</h2>
-            <div class="pricing-option" id="monthlyOption" onclick="selectSubscription('monthly')">
-                <h3>
-                    <span><i class="fas fa-calendar-alt"></i> اشتراك شهري</span>
-                    <span class="price">500 دج</span>
-                </h3>
-                <p>✓ جميع النماذج الإدارية</p>
-                <p>✓ تحميل بصيغة PDF</p>
-                <p>✓ طباعة مباشرة</p>
-                <p>✓ دعم فني</p>
-            </div>
-            <div class="pricing-option" id="yearlyOption" onclick="selectSubscription('yearly')">
-                <h3>
-                    <span><i class="fas fa-calendar-check"></i> اشتراك سنوي</span>
-                    <span class="price">3000 دج</span>
-                </h3>
-                <span class="discount">وفر 3000 دج</span>
-                <p>✓ جميع مميزات الشهري</p>
-                <p>✓ 4 أشهر مجاناً</p>
-                <p>✓ أولوية الدعم الفني</p>
-                <p>✓ تحديثات مجانية</p>
-            </div>
-            <div class="modal-buttons">
-                <button class="confirm-btn" onclick="confirmSubscription()">تأكيد الاشتراك</button>
-                <button class="cancel-btn" onclick="closeModal()">إلغاء</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- شريط التحميل -->
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <span>جارٍ التحميل...</span>
     </div>
 
     <footer>
         <div class="footer-container">
             <div class="footer-section">
-                <h3>نموذجي</h3>
-                <p>منصة النماذج الإدارية الجزائرية الأولى</p>
+                <h3><i class="fas fa-phone-alt"></i> اتصل بنا</h3>
+                <p>البريد الإلكتروني: support@wadknisse.dz</p>
+                <p>الهاتف: 0555 12 34 56</p>
             </div>
             <div class="footer-section">
-                <h3>روابط سريعة</h3>
-                <a href="#">الرئيسية</a>
-                <a href="#">النماذج</a>
-                <a href="#">الاشتراكات</a>
-                <a href="#">اتصل بنا</a>
+                <h3>من نحن</h3>
+                <p>منصة Wadknisse تتيح لك بيع وشراء كل ما تحتاجه بسهولة وأمان.</p>
             </div>
             <div class="footer-section">
-                <h3>معلومات الاتصال</h3>
-                <p><i class="fas fa-phone"></i> 213665074666+</p>
-                <p><i class="fas fa-envelope"></i> contact@namudaji.dz</p>
-                <p><i class="fas fa-map-marker-alt"></i> الجزائر</p>
+                <h3>سياسة الخصوصية</h3>
+                <p>نحن نحمي بياناتك ولا نشاركها مع أي طرف ثالث.</p>
             </div>
         </div>
     </footer>
 
+    <!-- مودال تسجيل الدخول -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-sign-in-alt"></i> <span data-ar="تسجيل الدخول" data-fr="Connexion">تسجيل الدخول</span></h2>
+            <div class="form-group">
+                <label>البريد الإلكتروني / Email</label>
+                <input type="email" id="loginEmail" placeholder="example@mail.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور / Mot de passe</label>
+                <input type="password" id="loginPassword">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-primary" id="loginBtn">دخول</button>
+                <button class="btn-outline" onclick="closeModal('loginModal')">إلغاء</button>
+            </div>
+            <p style="margin-top:15px; text-align:center;">
+                <span data-ar="ليس لديك حساب؟" data-fr="Pas de compte ?">ليس لديك حساب؟</span>
+                <a href="#" id="showSignupLink">إنشاء حساب</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- مودال التسجيل -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-user-plus"></i> <span data-ar="إنشاء حساب" data-fr="Créer un compte">إنشاء حساب</span></h2>
+            <div class="form-group">
+                <label>الاسم الأول / Prénom</label>
+                <input type="text" id="signupFirst">
+            </div>
+            <div class="form-group">
+                <label>اللقب / Nom</label>
+                <input type="text" id="signupLast">
+            </div>
+            <div class="form-group">
+                <label>تاريخ الميلاد / Date de naissance</label>
+                <input type="date" id="signupBirth">
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني / Email</label>
+                <input type="email" id="signupEmail">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور / Mot de passe</label>
+                <input type="password" id="signupPassword">
+                <small>يجب أن تحتوي على حرف كبير وحرف صغير ورقم على الأقل</small>
+            </div>
+            <div class="form-group">
+                <label>تأكيد كلمة المرور</label>
+                <input type="password" id="signupConfirm">
+            </div>
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="termsCheckbox">
+                <label>أوافق على الشروط والالتزامات</label>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-primary" id="signupBtn">تسجيل</button>
+                <button class="btn-outline" onclick="closeModal('signupModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال تفعيل الحساب (محاكاة) -->
+    <div id="activateModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-envelope"></i> تفعيل الحساب</h2>
+            <p>تم إرسال رمز التفعيل إلى بريدك الإلكتروني (محاكاة). الرمز هو: <strong id="activationCodeSpan"></strong></p>
+            <div class="form-group">
+                <label>أدخل رمز التفعيل</label>
+                <input type="text" id="activationCodeInput" placeholder="رمز التفعيل">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-primary" id="activateBtn">تفعيل</button>
+                <button class="btn-outline" onclick="closeModal('activateModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال إضافة منشور -->
+    <div id="addPostModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-plus-circle"></i> إضافة منشور جديد</h2>
+            <div class="form-group">
+                <label>الفئة</label>
+                <select id="postCategory">
+                    <option value="عقارات">عقارات</option>
+                    <option value="سيارة">سيارة</option>
+                    <option value="دراجة نارية">دراجة نارية</option>
+                    <option value="دراجة هوائية">دراجة هوائية</option>
+                    <option value="دراجة كهربائية">دراجة كهربائية</option>
+                    <option value="اجهزة كهرومنزلية">اجهزة كهرومنزلية</option>
+                    <option value="اجهزة اخرى">اجهزة اخرى</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>السعر (دج) - على الأقل 3 أرقام</label>
+                <input type="number" id="postPrice" min="100">
+            </div>
+            <div class="form-group">
+                <label>الوصف</label>
+                <textarea id="postDesc" rows="3" placeholder="تفاصيل المنتج..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>الحالة</label>
+                <select id="postCondition">
+                    <option value="جديدة">جديدة</option>
+                    <option value="شبه جديدة">شبه جديدة</option>
+                    <option value="مستعملة">مستعملة</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>صور (حد أقصى 3)</label>
+                <input type="file" id="postImages" accept="image/*" multiple>
+                <div id="imagePreview" class="image-preview"></div>
+            </div>
+            <div class="form-group">
+                <label>معلومات التواصل (رقم هاتف / واتساب / رابط فيسبوك)</label>
+                <input type="text" id="postContact" placeholder="مثال: 0555123456 أو رابط">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-primary" id="submitPostBtn">نشر الإعلان</button>
+                <button class="btn-outline" onclick="closeModal('addPostModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // بيانات المستخدم
-        let userData = {
-            fullName: '',
-            idNumber: '',
-            birthDate: '',
-            birthPlace: '',
-            nationality: 'جزائري',
-            gender: 'ذكر',
-            phone: '',
-            email: '',
-            address: '',
-            wilaya: 'الجزائر',
-            postalCode: ''
-        };
+        // ---------- البيانات المخزنة ----------
+        let users = JSON.parse(localStorage.getItem('wadknisse_users')) || [];
+        let ads = JSON.parse(localStorage.getItem('wadknisse_ads')) || [];
+        let currentUser = null; // كائن المستخدم الحالي
 
-        // حالة الاشتراك
-        let subscription = {
-            isActive: false,
-            type: null,
-            expiryDate: null
-        };
+        // متغيرات اللغة (عربي/فرنسي) لتحديد موقع الاسم
+        let currentLang = 'ar'; // 'ar' or 'fr'
 
-        // النماذج المتاحة
-        const models = [
-            {
-                id: 1,
-                title: 'طلب توظيف',
-                icon: 'fas fa-briefcase',
-                description: 'نموذج طلب توظيف في القطاع العام أو الخاص',
-                template: generateEmploymentRequest
-            },
-            {
-                id: 2,
-                title: 'شهادة ميلاد',
-                icon: 'fas fa-baby',
-                description: 'استخراج شهادة ميلاد رسمية',
-                template: generateBirthCertificate
-            },
-            {
-                id: 3,
-                title: 'عقد زواج',
-                icon: 'fas fa-heart',
-                description: 'نموذج عقد زواج رسمي',
-                template: generateMarriageContract
-            },
-            {
-                id: 4,
-                title: 'شهادة إقامة',
-                icon: 'fas fa-home',
-                description: 'شهادة إقامة لشخص أو عائلة',
-                template: generateResidenceCertificate
-            },
-            {
-                id: 5,
-                title: 'طلب جواز سفر',
-                icon: 'fas fa-passport',
-                description: 'نموذج طلب جواز سفر بيومتري',
-                template: generatePassportRequest
-            },
-            {
-                id: 6,
-                title: 'شهادة مدرسية',
-                icon: 'fas fa-graduation-cap',
-                description: 'شهادة مدرسية لطالب',
-                template: generateSchoolCertificate
-            },
-            {
-                id: 7,
-                title: 'عقد إيجار',
-                icon: 'fas fa-file-contract',
-                description: 'نموذج عقد إيجار سكني أو تجاري',
-                template: generateRentalContract
-            },
-            {
-                id: 8,
-                title: 'وكالة خاصة',
-                icon: 'fas fa-gavel',
-                description: 'نموذج وكالة خاصة لمحامي',
-                template: generatePowerOfAttorney
-            },
-            {
-                id: 9,
-                title: 'طلب رخصة بناء',
-                icon: 'fas fa-hard-hat',
-                description: 'نموذج طلب رخصة بناء',
-                template: generateBuildingPermit
-            },
-            {
-                id: 10,
-                title: 'شهادة طبية',
-                icon: 'fas fa-notes-medical',
-                description: 'شهادة طبية رسمية',
-                template: generateMedicalCertificate
-            },
-            {
-                id: 11,
-                title: 'إفادة شرفية',
-                icon: 'fas fa-file-signature',
-                description: 'إفادة شرفية لأغراض مختلفة',
-                template: generateAffidavit
-            },
-            {
-                id: 12,
-                title: 'طلب إعانة مالية',
-                icon: 'fas fa-hand-holding-heart',
-                description: 'نموذج طلب إعانة مالية',
-                template: generateFinancialAid
-            },
-            {
-                id: 13,
-                title: 'عقد عمل',
-                icon: 'fas fa-handshake',
-                description: 'نموذج عقد عمل رسمي',
-                template: generateEmploymentContract
-            },
-            {
-                id: 14,
-                title: 'شهادة وفاة',
-                icon: 'fas fa-cross',
-                description: 'شهادة وفاة رسمية',
-                template: generateDeathCertificate
-            },
-            {
-                id: 15,
-                title: 'طلب رخصة سياقة',
-                icon: 'fas fa-car',
-                description: 'نموذج طلب رخصة سياقة',
-                template: generateDrivingLicense
-            }
-        ];
+        // دوال مساعدة
+        function saveUsers() { localStorage.setItem('wadknisse_users', JSON.stringify(users)); }
+        function saveAds() { localStorage.setItem('wadknisse_ads', JSON.stringify(ads)); }
 
-        // عرض أزرار النماذج
-        function displayModels() {
-            const grid = document.getElementById('modelsGrid');
-            grid.innerHTML = '';
-            
-            models.forEach(model => {
-                const card = document.createElement('div');
-                card.className = 'model-card';
-                card.onclick = () => addDocument(model.id);
-                card.innerHTML = `
-                    <i class="${model.icon}"></i>
-                    <h3>${model.title}</h3>
-                    <p>${model.description}</p>
+        // تحديث واجهة المستخدم حسب الحالة
+        function updateUI() {
+            const userActionsDiv = document.getElementById('userActions');
+            if (currentUser && currentUser.isActivated) {
+                userActionsDiv.innerHTML = `
+                    <span style="display: flex; align-items: center; gap: 8px; background:#f0f0f0; padding: 5px 15px; border-radius: 40px;">
+                        <i class="fas fa-user-circle"></i> ${currentUser.firstName} ${currentUser.lastName}
+                    </span>
+                    <button class="btn btn-primary" id="addPostBtn"><i class="fas fa-plus"></i> إضافة منشور</button>
+                    <button class="btn btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> تسجيل خروج</button>
                 `;
-                grid.appendChild(card);
-            });
+                document.getElementById('addPostBtn')?.addEventListener('click', () => openModal('addPostModal'));
+                document.getElementById('logoutBtn')?.addEventListener('click', logout);
+            } else {
+                userActionsDiv.innerHTML = `
+                    <button class="btn btn-outline" id="loginUIBtn"><i class="fas fa-sign-in-alt"></i> دخول</button>
+                    <button class="btn btn-primary" id="signupUIBtn"><i class="fas fa-user-plus"></i> إنشاء حساب</button>
+                `;
+                document.getElementById('loginUIBtn')?.addEventListener('click', () => openModal('loginModal'));
+                document.getElementById('signupUIBtn')?.addEventListener('click', () => openModal('signupModal'));
+            }
+            renderAds();
+            applyLanguage();
         }
 
-        // النماذج المضافة
-        let addedDocuments = [];
-
-        // إضافة نموذج
-        function addDocument(modelId) {
-            if (!subscription.isActive) {
-                openSubscriptionModal();
+        // عرض الإعلانات
+        function renderAds() {
+            const container = document.getElementById('adsContainer');
+            if (!ads.length) {
+                container.innerHTML = `<div style="text-align:center; background:white; padding:40px; border-radius:30px;">🚀 لا توجد إعلانات حالياً. كن أول من ينشر!</div>`;
                 return;
             }
-            
-            const model = models.find(m => m.id === modelId);
-            if (model && !addedDocuments.find(d => d.id === modelId)) {
-                addedDocuments.push({
-                    id: modelId,
-                    title: model.title,
-                    icon: model.icon,
-                    content: model.template(userData)
-                });
-                displayDocuments();
+            container.innerHTML = ads.map(ad => `
+                <div class="ad-card">
+                    <div class="ad-image">
+                        ${ad.images && ad.images[0] ? `<img src="${ad.images[0]}" alt="صورة">` : `<div class="no-img"><i class="fas fa-image"></i></div>`}
+                    </div>
+                    <div class="ad-content">
+                        <div class="ad-category"><i class="fas fa-tag"></i> ${ad.category}</div>
+                        <div class="ad-title">${ad.title || ad.category}</div>
+                        <div class="ad-price">${ad.price} دج</div>
+                        <div class="ad-desc">${ad.description.substring(0, 150)}</div>
+                        <div class="ad-condition"><i class="fas fa-check-circle"></i> ${ad.condition}</div>
+                        <div class="ad-contact"><i class="fas fa-phone-alt"></i> ${ad.contact}</div>
+                        ${currentUser && currentUser.id === ad.userId && currentUser.isActivated ? `
+                        <div class="ad-actions">
+                            <button class="btn btn-danger btn-sm" onclick="deleteAd(${ad.id})">تم البيع (حذف)</button>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // حذف إعلان (تم بيعه)
+        window.deleteAd = function(adId) {
+            if (confirm('هل أنت متأكد أن هذا المنتج تم بيعه؟ سيتم حذف الإعلان.')) {
+                ads = ads.filter(ad => ad.id !== adId);
+                saveAds();
+                renderAds();
+                showToast('تم حذف الإعلان بنجاح');
             }
         }
 
-        // عرض النماذج المضافة
-        function displayDocuments() {
-            const container = document.getElementById('documentsContainer');
-            
-            if (addedDocuments.length === 0) {
-                container.innerHTML = `
-                    <div class="locked-message">
-                        <i class="fas fa-file-alt"></i>
-                        <h3>لا توجد نماذج بعد</h3>
-                        <p>اختر النماذج التي تريدها من الأعلى</p>
-                    </div>
-                `;
+        // تسجيل خروج
+        function logout() {
+            currentUser = null;
+            updateUI();
+            showToast('تم تسجيل الخروج');
+        }
+
+        // دوال المودال
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+        window.closeModal = function(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // محاكاة إرسال رمز التفعيل (توليد رقم عشوائي)
+        let pendingActivationUser = null;
+        let generatedCode = '';
+
+        // التسجيل
+        function register() {
+            const firstName = document.getElementById('signupFirst').value.trim();
+            const lastName = document.getElementById('signupLast').value.trim();
+            const birthDate = document.getElementById('signupBirth').value;
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirm').value;
+            const terms = document.getElementById('termsCheckbox').checked;
+
+            if (!firstName || !lastName || !birthDate || !email || !password) {
+                alert('يرجى ملء جميع الحقول');
                 return;
             }
-            
-            container.innerHTML = `
-                <div class="documents-grid" id="documentsGrid"></div>
-            `;
-            
-            const grid = document.getElementById('documentsGrid');
-            
-            addedDocuments.forEach(doc => {
-                const card = document.createElement('div');
-                card.className = 'document-card';
-                card.innerHTML = `
-                    <div class="document-header">
-                        <h3><i class="${doc.icon}"></i> ${doc.title}</h3>
-                        <i class="fas fa-file-pdf"></i>
-                    </div>
-                    <div class="document-preview" id="preview-${doc.id}">
-                        ${doc.content.replace(/\n/g, '<br>')}
-                    </div>
-                    <div class="document-actions">
-                        <button class="action-btn print-btn" onclick="printDocument(${doc.id})">
-                            <i class="fas fa-print"></i> طباعة
-                        </button>
-                        <button class="action-btn pdf-btn" onclick="downloadPDF(${doc.id})">
-                            <i class="fas fa-file-pdf"></i> تحميل PDF
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
+            // التحقق من العمر >=18
+            const today = new Date();
+            const birth = new Date(birthDate);
+            let age = today.getFullYear() - birth.getFullYear();
+            const m = today.getMonth() - birth.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+            if (age < 18) {
+                alert('عذراً، يجب أن يكون عمرك 18 سنة على الأقل للتسجيل');
+                return;
+            }
+            if (password !== confirm) {
+                alert('كلمة المرور غير متطابقة');
+                return;
+            }
+            const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+            if (!passRegex.test(password)) {
+                alert('يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم واحد على الأقل');
+                return;
+            }
+            if (!terms) {
+                alert('يجب الموافقة على الشروط والالتزامات');
+                return;
+            }
+            if (users.find(u => u.email === email)) {
+                alert('البريد الإلكتروني مسجل بالفعل');
+                return;
+            }
 
-        // تحديث جميع النماذج عند تغيير البيانات
-        function updateAllDocuments() {
-            userData = {
-                fullName: document.getElementById('fullName').value,
-                idNumber: document.getElementById('idNumber').value,
-                birthDate: document.getElementById('birthDate').value,
-                birthPlace: document.getElementById('birthPlace').value,
-                nationality: document.getElementById('nationality').value,
-                gender: document.getElementById('gender').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                address: document.getElementById('address').value,
-                wilaya: document.getElementById('wilaya').value,
-                postalCode: document.getElementById('postalCode').value
+            // إنشاء حساب غير مفعل
+            const newId = Date.now();
+            const activationCode = Math.floor(100000 + Math.random() * 900000).toString();
+            const newUser = {
+                id: newId,
+                firstName, lastName, birthDate, email, password,
+                isActivated: false,
+                activationCode: activationCode
             };
-            
-            addedDocuments = addedDocuments.map(doc => {
-                const model = models.find(m => m.id === doc.id);
-                return {
-                    ...doc,
-                    content: model.template(userData)
-                };
-            });
-            
-            displayDocuments();
+            users.push(newUser);
+            saveUsers();
+
+            // فتح مودال التفعيل
+            pendingActivationUser = newUser;
+            generatedCode = activationCode;
+            document.getElementById('activationCodeSpan').innerText = generatedCode;
+            document.getElementById('activationCodeInput').value = '';
+            closeModal('signupModal');
+            openModal('activateModal');
         }
 
-        // دوال إنشاء النماذج
-        function generateEmploymentRequest(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة الداخلية والجماعات المحلية
-ولاية ${data.wilaya || '______'}
-
-طلب توظيف
-
-الاسم واللقب: ${data.fullName || '______'}
-رقم بطاقة التعريف: ${data.idNumber || '______'}
-تاريخ ومكان الميلاد: ${data.birthDate || '______'} / ${data.birthPlace || '______'}
-الجنس: ${data.gender || '______'}
-العنوان: ${data.address || '______'}
-رقم الهاتف: ${data.phone || '______'}
-البريد الإلكتروني: ${data.email || '______'}
-
-أتشرف بتقديم طلب توظيف في مؤسستكم الموقرة،
-راجياً منكم قبول طلبي ومنحي فرصة للعمل.
-
-التاريخ: ${date}
-التوقيع: _______________`;
-        }
-
-        function generateBirthCertificate(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة الداخلية والجماعات المحلية
-بلدية: ${data.birthPlace || '______'}
-ولاية: ${data.wilaya || '______'}
-
-شهادة ميلاد
-
-يشهد رئيس المجلس الشعبي البلدي بأن:
-
-الاسم واللقب: ${data.fullName || '______'}
-تاريخ الميلاد: ${data.birthDate || '______'}
-مكان الميلاد: ${data.birthPlace || '______'}
-الجنس: ${data.gender || '______'}
-اسم الأب: _______________
-اسم الأم: _______________
-رقم القيد: _______________
-
-هذه الشهادة مسلمة للمعني للأغراض الإدارية.
-
-التاريخ: ${date}
-ختم البلدية والتوقيع: _______________`;
-        }
-
-        function generateMarriageContract(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `بسم الله الرحمن الرحيم
-الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة العدل
-محكمة: _______________
-
-عقد زواج
-
-الزوج:
-الاسم واللقب: ${data.fullName || '______'}
-تاريخ ومكان الميلاد: ${data.birthDate || '______'} / ${data.birthPlace || '______'}
-المهنة: _______________
-العنوان: ${data.address || '______'}
-
-الزوجة:
-الاسم واللقب: _______________
-تاريخ ومكان الميلاد: _______________
-المهنة: _______________
-العنوان: _______________
-
-تم الزواج بتاريخ: ${date}
-بعد استيفاء جميع الشروط الشرعية والقانونية.
-
-توقيع الزوج: _______________    توقيع الزوجة: _______________
-الشهود: _______________`;
-        }
-
-        function generateResidenceCertificate(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة الداخلية والجماعات المحلية
-بلدية: ${data.wilaya || '______'}
-
-شهادة إقامة
-
-يشهد رئيس المجلس الشعبي البلدي بأن:
-
-السيد(ة): ${data.fullName || '______'}
-المولود(ة) في: ${data.birthDate || '______'} ب: ${data.birthPlace || '______'}
-الجنس: ${data.gender || '______'}
-رقم بطاقة التعريف: ${data.idNumber || '______'}
-
-يقيم(تقيم) في العنوان التالي:
-${data.address || '______'}
-الرمز البريدي: ${data.postalCode || '______'}
-ولاية: ${data.wilaya || '______'}
-
-هذه الشهادة مسلمة للمعني للأغراض الإدارية.
-
-التاريخ: ${date}
-ختم البلدية والتوقيع: _______________`;
-        }
-
-        function generatePassportRequest(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة الداخلية والجماعات المحلية
-مديرية الشرطة - مصلحة الجوازات
-
-طلب جواز سفر بيومتري
-
-البيانات الشخصية:
-الاسم واللقب: ${data.fullName || '______'}
-تاريخ ومكان الميلاد: ${data.birthDate || '______'} / ${data.birthPlace || '______'}
-الجنس: ${data.gender || '______'}
-رقم بطاقة التعريف: ${data.idNumber || '______'}
-العنوان: ${data.address || '______'}
-رقم الهاتف: ${data.phone || '______'}
-
-المستندات المرفقة:
-□ صور شمسية
-□ نسخة من بطاقة التعريف
-□ شهادة ميلاد
-□ وصل الدفع
-
-أتعهد بصحة المعلومات المذكورة أعلاه.
-
-التاريخ: ${date}
-توقيع المعني: _______________`;
-        }
-
-        function generateSchoolCertificate(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة التربية الوطنية
-مديرية التربية لولاية ${data.wilaya || '______'}
-مؤسسة التربية والتعليم: _______________
-
-شهادة مدرسية
-
-تشهد إدارة المؤسسة أن التلميذ(ة):
-
-الاسم واللقب: ${data.fullName || '______'}
-تاريخ ومكان الميلاد: ${data.birthDate || '______'} ب: ${data.birthPlace || '______'}
-الجنس: ${data.gender || '______'}
-
-مسجل(ة) بالسنة: _______________
-الشعبة: _______________
-تحت الرقم: _______________
-
-للموسم الدراسي: 2025/2024
-
-هذه الشهادة مسلمة له(ها) بناءً على طلبه(ها).
-
-التاريخ: ${date}
-مدير المؤسسة: _______________
-الختم: _______________`;
-        }
-
-        function generateRentalContract(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `بسم الله الرحمن الرحيم
-الجمهورية الجزائرية الديمقراطية الشعبية
-ولاية: ${data.wilaya || '______'}
-
-عقد إيجار
-
-المؤجر:
-الاسم واللقب: _______________
-رقم بطاقة التعريف: _______________
-العنوان: _______________
-
-المستأجر:
-الاسم واللقب: ${data.fullName || '______'}
-رقم بطاقة التعريف: ${data.idNumber || '______'}
-العنوان: ${data.address || '______'}
-رقم الهاتف: ${data.phone || '______'}
-
-العين المؤجرة:
-وصف العقار: _______________
-العنوان: _______________
-المساحة: _______________
-
-مدة الإيجار: سنة قابلة للتجديد
-بدءاً من: ${date}
-
-بدل الإيجار الشهري: _______________ دج
-يؤدى في بداية كل شهر.
-
-تحرر هذا العقد من نسختين.
-
-توقيع المؤجر: _______________    توقيع المستأجر: _______________
-الشهود: _______________`;
-        }
-
-        function generatePowerOfAttorney(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `بسم الله الرحمن الرحيم
-الجمهورية الجزائرية الديمقراطية الشعبية
-ولاية: ${data.wilaya || '______'}
-
-وكالة خاصة
-
-أنا الموقع أسفله:
-الاسم واللقب: ${data.fullName || '______'}
-المولود(ة) في: ${data.birthDate || '______'} ب: ${data.birthPlace || '______'}
-المهنة: _______________
-العنوان: ${data.address || '______'}
-رقم بطاقة التعريف: ${data.idNumber || '______'}
-
-أفوض بموجب هذه الوكالة:
-السيد(ة): _______________
-المهنة: _______________
-العنوان: _______________
-رقم بطاقة التعريف: _______________
-
-للقيام بالمهام التالية:
-□ البيع والشراء
-□ التقاضي أمام المحاكم
-□ إدارة الأملاك
-□ استخراج الوثائق الإدارية
-
-هذه الوكالة صالحة لمدة: _______________
-
-التاريخ: ${date}
-توقيع الموكل: _______________
-توقيع الوكيل: _______________`;
-        }
-
-        function generateBuildingPermit(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة السكن والعمران والمدينة
-مديرية التعمير والهندسة المعمارية والبناء لولاية ${data.wilaya || '______'}
-دائرة: _______________
-بلدية: _______________
-
-طلب رخصة بناء
-
-المالك:
-الاسم واللقب: ${data.fullName || '______'}
-العنوان: ${data.address || '______'}
-رقم الهاتف: ${data.phone || '______'}
-
-وصف المشروع:
-طبيعة البناء: _______________
-المساحة الإجمالية: _______________
-ارتفاع البناء: _______________
-عنوان قطعة الأرض: _______________
-رقم العقار: _______________
-
-الوثائق المرفقة:
-□ مخطط الموقع
-□ المخططات المعمارية
-□ دراسة التربة
-□ وصل الدفع
-
-أتعهد بالالتزام بقوانين التعمير.
-
-التاريخ: ${date}
-توقيع المالك: _______________`;
-        }
-
-        function generateMedicalCertificate(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة الصحة والسكان وإصلاح المستشفيات
-مؤسسة عمومية للصحة: _______________
-ولاية: ${data.wilaya || '______'}
-
-شهادة طبية
-
-يشهد الطبيب الموقع أسفله بأنه فحص:
-
-المريض(ة): ${data.fullName || '______'}
-العمر: _______________
-الجنس: ${data.gender || '______'}
-العنوان: ${data.address || '______'}
-
-وتبين ما يلي:
-□ بحاجة إلى راحة لمدة: _______________
-□ بحاجة إلى متابعة طبية
-□ بحاجة إلى علاج
-
-التشخيص: _______________
-العلاج الموصوف: _______________
-
-التاريخ: ${date}
-ختم وتوقيع الطبيب: _______________
-رقم التسجيل: _______________`;
-        }
-
-        function generateAffidavit(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `بسم الله الرحمن الرحيم
-الجمهورية الجزائرية الديمقراطية الشعبية
-ولاية: ${data.wilaya || '______'}
-بلدية: _______________
-
-إفادة شرفية
-
-أنا الموقع أسفله:
-الاسم واللقب: ${data.fullName || '______'}
-المولود(ة) في: ${data.birthDate || '______'} ب: ${data.birthPlace || '______'}
-المهنة: _______________
-العنوان: ${data.address || '______'}
-رقم بطاقة التعريف: ${data.idNumber || '______'}
-
-أشهد بشرفي أن جميع المعلومات المذكورة أعلاه صحيحة،
-وأنني أتحمل المسؤولية القانونية كاملة في حالة ثبوت عكس ذلك.
-
-الغرض من الإفادة: _______________
-
-التاريخ: ${date}
-توقيع المعني: _______________
-بصمة الإبهام: _______________`;
-        }
-
-        function generateFinancialAid(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة التضامن الوطني والأسرة وقضايا المرأة
-مديرية النشاط الاجتماعي لولاية ${data.wilaya || '______'}
-
-طلب إعانة مالية
-
-المستفيد:
-الاسم واللقب: ${data.fullName || '______'}
-تاريخ ومكان الميلاد: ${data.birthDate || '______'} / ${data.birthPlace || '______'}
-الجنس: ${data.gender || '______'}
-الحالة العائلية: _______________
-عدد أفراد العائلة: _______________
-العنوان: ${data.address || '______'}
-رقم الهاتف: ${data.phone || '______'}
-
-الوضعية الاجتماعية:
-□ عائلة معوزة
-□ شخص مسن
-□ شخص معاق
-□ يتيم
-□ مطلقة
-
-مبررات الطلب: _______________
-
-الوثائق المرفقة:
-□ شهادة ميلاد
-□ شهادة إقامة
-□ شهادة عائلية
-□ تقرير طبي
-
-التاريخ: ${date}
-توقيع المعني: _______________`;
-        }
-
-        function generateEmploymentContract(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `بسم الله الرحمن الرحيم
-الجمهورية الجزائرية الديمقراطية الشعبية
-ولاية: ${data.wilaya || '______'}
-
-عقد عمل
-
-المؤسسة:
-الاسم: _______________
-العنوان: _______________
-الممثل القانوني: _______________
-
-العامل:
-الاسم واللقب: ${data.fullName || '______'}
-تاريخ ومكان الميلاد: ${data.birthDate || '______'} / ${data.birthPlace || '______'}
-العنوان: ${data.address || '______'}
-رقم بطاقة التعريف: ${data.idNumber || '______'}
-رقم الضمان الاجتماعي: _______________
-
-طبيعة العمل: _______________
-مدة العقد: _______________
-الأجر الشهري: _______________ دج
-ساعات العمل: _______________
-
-التاريخ: ${date}
-توقيع المؤسسة: _______________    توقيع العامل: _______________`;
-        }
-
-        function generateDeathCertificate(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة الداخلية والجماعات المحلية
-بلدية: _______________
-ولاية: _______________
-
-شهادة وفاة
-
-يشهد رئيس المجلس الشعبي البلدي بأن:
-
-اسم المتوفى: _______________
-تاريخ الوفاة: _______________
-مكان الوفاة: _______________
-الجنس: _______________
-اسم الأب: _______________
-اسم الأم: _______________
-رقم القيد: _______________
-
-المصرح بالوفاة:
-الاسم واللقب: ${data.fullName || '______'}
-رقم بطاقة التعريف: ${data.idNumber || '______'}
-العنوان: ${data.address || '______'}
-صلة القرابة: _______________
-
-هذه الشهادة مسلمة للمصرح للأغراض الإدارية.
-
-التاريخ: ${date}
-ختم البلدية والتوقيع: _______________`;
-        }
-
-        function generateDrivingLicense(data) {
-            const date = new Date().toLocaleDateString('ar-DZ');
-            return `الجمهورية الجزائرية الديمقراطية الشعبية
-وزارة النقل
-مديرية النقل لولاية ${data.wilaya || '______'}
-مصلحة رخص السياقة
-
-طلب رخصة سياقة
-
-المعني:
-الاسم واللقب: ${data.fullName || '______'}
-تاريخ ومكان الميلاد: ${data.birthDate || '______'} / ${data.birthPlace || '______'}
-الجنس: ${data.gender || '______'}
-العنوان: ${data.address || '______'}
-رقم الهاتف: ${data.phone || '______'}
-رقم بطاقة التعريف: ${data.idNumber || '______'}
-
-الصنف المطلوب:
-□ ب (سياحية)
-□ ج (شاحنات)
-□ د (حافلات)
-□ هـ (مقطورات)
-
-الوثائق المرفقة:
-□ 4 صور شمسية
-□ شهادة طبية
-□ وصل دفع الرسوم
-□ نسخة من بطاقة التعريف
-
-أتصرح بصحة المعلومات وألتزم بالقوانين.
-
-التاريخ: ${date}
-توقيع المعني: _______________`;
-        }
-
-        // طباعة نموذج
-        function printDocument(docId) {
-            if (!subscription.isActive) {
-                openSubscriptionModal();
+        // تفعيل الحساب
+        function activateAccount() {
+            const code = document.getElementById('activationCodeInput').value.trim();
+            if (!pendingActivationUser) {
+                alert('لا يوجد حساب قيد التفعيل');
                 return;
             }
-            
-            const doc = addedDocuments.find(d => d.id === docId);
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html dir="rtl">
-                <head>
-                    <title>${doc.title}</title>
-                    <style>
-                        body {
-                            font-family: 'Arial', sans-serif;
-                            padding: 40px;
-                            line-height: 1.6;
-                        }
-                        .document {
-                            max-width: 800px;
-                            margin: 0 auto;
-                            padding: 40px;
-                            border: 1px solid #000;
-                        }
-                        h1 {
-                            text-align: center;
-                            margin-bottom: 30px;
-                        }
-                        pre {
-                            white-space: pre-wrap;
-                            font-family: 'Arial', sans-serif;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="document">
-                        <h1>${doc.title}</h1>
-                        <pre>${doc.content}</pre>
-                    </div>
-                    <script>
-                        window.print();
-                    </script>
-                </body>
-                </html>
-            `);
-        }
-
-        // تحميل PDF
-        async function downloadPDF(docId) {
-            if (!subscription.isActive) {
-                openSubscriptionModal();
-                return;
-            }
-            
-            const doc = addedDocuments.find(d => d.id === docId);
-            const preview = document.getElementById(`preview-${docId}`);
-            
-            showLoading();
-            
-            try {
-                const canvas = await html2canvas(preview, {
-                    scale: 2,
-                    backgroundColor: '#ffffff'
-                });
-                
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jspdf.jsPDF({
-                    orientation: 'portrait',
-                    unit: 'px',
-                    format: 'a4'
-                });
-                
-                const imgWidth = 400;
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                
-                pdf.addImage(imgData, 'PNG', 20, 20, imgWidth, imgHeight);
-                pdf.save(`${doc.title}.pdf`);
-            } catch (error) {
-                alert('حدث خطأ أثناء إنشاء PDF');
-            }
-            
-            hideLoading();
-        }
-
-        // دوال الاشتراك
-        let selectedSubscription = null;
-
-        function openSubscriptionModal(type = null) {
-            document.getElementById('subscriptionModal').classList.add('active');
-            if (type) {
-                selectSubscription(type);
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('subscriptionModal').classList.remove('active');
-            selectedSubscription = null;
-            document.getElementById('monthlyOption').classList.remove('selected');
-            document.getElementById('yearlyOption').classList.remove('selected');
-        }
-
-        function selectSubscription(type) {
-            selectedSubscription = type;
-            document.getElementById('monthlyOption').classList.remove('selected');
-            document.getElementById('yearlyOption').classList.remove('selected');
-            document.getElementById(`${type}Option`).classList.add('selected');
-        }
-
-        function confirmSubscription() {
-            if (!selectedSubscription) {
-                alert('الرجاء اختيار نوع الاشتراك');
-                return;
-            }
-            
-            showLoading();
-            
-            setTimeout(() => {
-                subscription.isActive = true;
-                subscription.type = selectedSubscription;
-                subscription.expiryDate = new Date();
-                
-                if (selectedSubscription === 'monthly') {
-                    subscription.expiryDate.setMonth(subscription.expiryDate.getMonth() + 1);
+            if (code === pendingActivationUser.activationCode) {
+                // تفعيل المستخدم
+                const index = users.findIndex(u => u.id === pendingActivationUser.id);
+                if (index !== -1) {
+                    users[index].isActivated = true;
+                    saveUsers();
+                    currentUser = users[index];
+                    updateUI();
+                    closeModal('activateModal');
+                    pendingActivationUser = null;
+                    showToast('تم تفعيل حسابك بنجاح! يمكنك الآن الدخول.');
                 } else {
-                    subscription.expiryDate.setFullYear(subscription.expiryDate.getFullYear() + 1);
+                    alert('حدث خطأ، يرجى المحاولة مرة أخرى');
                 }
-                
-                hideLoading();
-                closeModal();
-                alert(`تم تفعيل الاشتراك ${selectedSubscription === 'monthly' ? 'الشهري' : 'السنوي'} بنجاح!`);
-            }, 1500);
+            } else {
+                alert('رمز التفعيل غير صحيح');
+            }
         }
 
-        function showLoading() {
-            document.getElementById('loading').classList.add('active');
+        // تسجيل الدخول
+        function login() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const user = users.find(u => u.email === email);
+            if (!user) {
+                alert('لا يوجد حساب بهذا البريد الإلكتروني');
+                return;
+            }
+            if (user.password !== password) {
+                alert('كلمة المرور خاطئة');
+                return;
+            }
+            if (!user.isActivated) {
+                alert('الحساب غير مفعّل. يرجى تفعيله عبر البريد الإلكتروني (تم إرسال رمز عند التسجيل)');
+                return;
+            }
+            currentUser = user;
+            updateUI();
+            closeModal('loginModal');
+            showToast(`مرحباً ${user.firstName}`);
         }
 
-        function hideLoading() {
-            document.getElementById('loading').classList.remove('active');
+        // نشر إعلان
+        function publishAd() {
+            if (!currentUser || !currentUser.isActivated) {
+                alert('يجب تسجيل الدخول وتفعيل الحساب أولاً');
+                closeModal('addPostModal');
+                return;
+            }
+            const category = document.getElementById('postCategory').value;
+            let price = parseInt(document.getElementById('postPrice').value);
+            const description = document.getElementById('postDesc').value.trim();
+            const condition = document.getElementById('postCondition').value;
+            const contact = document.getElementById('postContact').value.trim();
+            const imagesInput = document.getElementById('postImages');
+            const files = imagesInput.files;
+
+            if (isNaN(price) || price < 100 || price.toString().length < 3) {
+                alert('السعر يجب أن يكون على الأقل 100 دج (3 أرقام)');
+                return;
+            }
+            if (!description) {
+                alert('الرجاء كتابة وصف للمنتج');
+                return;
+            }
+            if (!contact) {
+                alert('الرجاء إدخال معلومات التواصل');
+                return;
+            }
+
+            // معالجة الصور
+            let imageUrls = [];
+            const maxImages = Math.min(files.length, 3);
+            const promises = [];
+            for (let i = 0; i < maxImages; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                const promise = new Promise((resolve) => {
+                    reader.onload = (e) => {
+                        imageUrls.push(e.target.result);
+                        resolve();
+                    };
+                });
+                reader.readAsDataURL(file);
+                promises.push(promise);
+            }
+
+            Promise.all(promises).then(() => {
+                const newAd = {
+                    id: Date.now(),
+                    userId: currentUser.id,
+                    category,
+                    price,
+                    description,
+                    condition,
+                    contact,
+                    images: imageUrls,
+                    title: category,
+                    createdAt: new Date().toISOString()
+                };
+                ads.unshift(newAd);
+                saveAds();
+                renderAds();
+                closeModal('addPostModal');
+                document.getElementById('postImages').value = '';
+                document.getElementById('imagePreview').innerHTML = '';
+                showToast('تم نشر إعلانك بنجاح!');
+            });
         }
 
-        // تهيئة الصفحة
-        displayModels();
+        // معاينة الصور
+        document.getElementById('postImages')?.addEventListener('change', function(e) {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+            const files = e.target.files;
+            for (let i = 0; i < Math.min(files.length, 3); i++) {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const img = document.createElement('img');
+                    img.src = ev.target.result;
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        });
+
+        // ----- اللغة وتوجيه الشعار -----
+        function applyLanguage() {
+            const logoText = document.getElementById('logoText');
+            const logoDiv = document.getElementById('logo');
+            if (currentLang === 'ar') {
+                logoText.innerText = 'Wadknisse';
+                logoDiv.style.order = '0';
+                document.body.dir = 'rtl';
+                // تحريك الشعار لليمين (في الـ header-container الشعار في أول العناصر)
+                document.querySelector('.logo-area').style.justifyContent = 'flex-start';
+            } else {
+                logoText.innerText = 'Wadknisse';
+                logoDiv.style.order = '1';
+                document.body.dir = 'ltr';
+                document.querySelector('.logo-area').style.justifyContent = 'flex-end';
+            }
+            // تحديث نصوص الأزرار الثابتة إذا أردنا (بسيط)
+            const langSpan = document.getElementById('langLabel');
+            langSpan.innerText = currentLang === 'ar' ? '🇩🇿 عربي' : '🇫🇷 Français';
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'fr' : 'ar';
+            applyLanguage();
+        }
+
+        // رسالة منبثقة
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-msg';
+            toast.innerText = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ربط الأحداث
+        document.getElementById('loginBtn')?.addEventListener('click', login);
+        document.getElementById('signupBtn')?.addEventListener('click', register);
+        document.getElementById('activateBtn')?.addEventListener('click', activateAccount);
+        document.getElementById('submitPostBtn')?.addEventListener('click', publishAd);
+        document.getElementById('langToggle')?.addEventListener('click', toggleLanguage);
+        document.getElementById('showSignupLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal('loginModal');
+            openModal('signupModal');
+        });
+
+        // تهيئة الصفحة: جلب المستخدم الحالي من الجلسة (نحتفظ به في localStorage بسيط)
+        let storedUser = localStorage.getItem('wadknisse_currentUser');
+        if (storedUser) {
+            try {
+                const parsed = JSON.parse(storedUser);
+                const found = users.find(u => u.id === parsed.id && u.isActivated);
+                if (found) currentUser = found;
+                else localStorage.removeItem('wadknisse_currentUser');
+            } catch(e) {}
+        }
+
+        function saveCurrentUser() {
+            if (currentUser) localStorage.setItem('wadknisse_currentUser', JSON.stringify({ id: currentUser.id }));
+            else localStorage.removeItem('wadknisse_currentUser');
+        }
+
+        // تجاوز حفظ المستخدم الحالي عند أي تغيير
+        const origUpdateUI = updateUI;
+        window.updateUI = function() {
+            saveCurrentUser();
+            origUpdateUI();
+        };
+        updateUI = window.updateUI;
+        updateUI();
+
+        // إضافة نمط الفوتر ليس له تأثير على الوظائف
     </script>
 </body>
 </html>
