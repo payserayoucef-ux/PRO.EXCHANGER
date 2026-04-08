@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>النعامة للتسوق | Shoping Naama</title>
-    <meta name="description" content="أفضل متجر إلكتروني في الجزائر - اكتشف أحدث المنتجات والعروض">
+    <title>سوق النعامة | Shoping Naama - إعلانات مبوبة مجانية</title>
+    <meta name="description" content="أكبر سوق إلكتروني في الجزائر - بيع وشراء كل شيء: سيارات، دراجات، أجهزة، عقارات، وخدمات">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -51,7 +51,6 @@
             min-height: 100vh;
         }
 
-        /* أنيميشنات */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -121,51 +120,72 @@
             align-items: center;
             gap: 20px;
         }
-        .cart-icon, .user-icon, .dark-toggle {
+        .user-icon, .dark-toggle, .add-icon {
             font-size: 1.4rem;
             cursor: pointer;
             color: var(--text-primary);
             position: relative;
-        }
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -12px;
-            background: var(--btn-primary);
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 0.7rem;
-            font-weight: bold;
         }
         .dark-toggle {
             background: none;
             border: none;
         }
 
-        /* NAVIGATION */
-        nav {
-            background: var(--bg-header);
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 0;
+        /* NAVIGATION - SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100%;
+            background: var(--card-bg);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            z-index: 1100;
+            padding: 80px 20px 20px;
+            overflow-y: auto;
         }
-        .nav-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
+        .sidebar.open {
+            right: 0;
         }
-        .nav-links a {
+        .sidebar .close-sidebar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+        .sidebar h3 {
+            margin-bottom: 20px;
+            color: var(--btn-primary);
+        }
+        .sidebar .category-list {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar .category-list li {
+            margin-bottom: 12px;
+        }
+        .sidebar .category-list a {
             text-decoration: none;
             color: var(--text-primary);
-            font-weight: 500;
-            padding: 5px 12px;
-            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 10px;
             transition: 0.2s;
         }
-        .nav-links a:hover, .nav-links a.active {
-            background: var(--btn-primary);
-            color: white;
+        .sidebar .category-list a:hover {
+            background: var(--border-color);
+        }
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
         }
 
         /* الصفحات */
@@ -186,7 +206,7 @@
             color: var(--btn-primary);
         }
 
-        /* بطاقات المنتجات */
+        /* بطاقات الإعلانات */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -213,6 +233,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
         }
         .product-img img {
             width: 100%;
@@ -245,7 +266,12 @@
             color: var(--text-secondary);
             font-size: 0.85rem;
             line-height: 1.4;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+        }
+        .product-contact {
+            font-size: 0.8rem;
+            color: #28a745;
+            margin-bottom: 10px;
         }
         .rating {
             display: flex;
@@ -293,7 +319,7 @@
             font-size: 0.8rem;
         }
 
-        /* نماذج */
+        /* نموذج إضافة منتج */
         .form-group {
             margin-bottom: 20px;
         }
@@ -305,20 +331,69 @@
             background: var(--card-bg);
             color: var(--text-primary);
         }
-
-        /* سلة التسوق */
-        .cart-item {
+        .image-preview {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border-color);
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
         }
-        .cart-total {
-            text-align: left;
-            font-size: 1.3rem;
+        .image-preview img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* التعليقات */
+        .comments-section {
             margin-top: 20px;
-            font-weight: bold;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+        .comment {
+            background: var(--bg-body);
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .comment strong {
+            color: var(--btn-primary);
+        }
+
+        /* مودال */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 30px;
+            max-width: 500px;
+            width: 90%;
+            padding: 30px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .captcha-box {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid #ccc;
         }
 
         /* تذييل */
@@ -343,6 +418,7 @@
             color: var(--footer-text);
             text-decoration: none;
             margin-bottom: 10px;
+            cursor: pointer;
         }
         .footer-col a:hover {
             color: white;
@@ -353,34 +429,6 @@
             border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* مودال */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal.active {
-            display: flex;
-        }
-        .modal-content {
-            background: var(--card-bg);
-            border-radius: 30px;
-            max-width: 450px;
-            width: 90%;
-            padding: 30px;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        /* تحسينات للهواتف */
         @media (max-width: 768px) {
             .header-wrapper {
                 flex-direction: column;
@@ -389,27 +437,8 @@
             .search-bar {
                 max-width: none;
             }
-            .header-actions {
-                justify-content: space-between;
-            }
-            .nav-links {
-                gap: 8px;
-            }
-            .nav-links a {
-                padding: 5px 10px;
-                font-size: 0.85rem;
-            }
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 15px;
-            }
-        }
-        @media (max-width: 480px) {
             .products-grid {
                 grid-template-columns: 1fr;
-            }
-            .product-img {
-                height: 180px;
             }
         }
     </style>
@@ -419,7 +448,7 @@
         <div class="container">
             <div class="header-wrapper">
                 <div class="logo">
-                    <h1>النعامة <span>للتسوق</span></h1>
+                    <h1>سوق <span>النعامة</span></h1>
                     <small>Shoping Naama</small>
                 </div>
                 <div class="search-bar">
@@ -428,351 +457,309 @@
                 </div>
                 <div class="header-actions">
                     <button class="dark-toggle" id="darkModeToggle"><i class="fas fa-moon"></i></button>
-                    <div class="cart-icon" id="cartIcon">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </div>
-                    <div class="user-icon" id="userIcon">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
+                    <div class="add-icon" id="addProductBtn"><i class="fas fa-plus-circle"></i></div>
+                    <div class="user-icon" id="userIcon"><i class="fas fa-user-circle"></i></div>
+                    <button class="menu-btn" id="menuToggle"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
         </div>
     </header>
-    <nav>
-        <div class="container">
-            <div class="nav-links">
-                <a href="#" data-page="home" class="active">الرئيسية</a>
-                <a href="#" data-page="categories">الأقسام</a>
-                <a href="#" data-page="about">من نحن</a>
-                <a href="#" data-page="contact">اتصل بنا</a>
-                <a href="#" data-page="privacy">سياسة الخصوصية</a>
-                <a href="#" data-page="terms">الشروط والأحكام</a>
-                <a href="#" data-page="blog">المدونة</a>
-                <a href="#" data-page="cart">سلة التسوق</a>
-                <a href="#" data-page="account">حسابي</a>
-            </div>
-        </div>
-    </nav>
+
+    <!-- القائمة الجانبية للأقسام -->
+    <div class="sidebar" id="sidebar">
+        <div class="close-sidebar" id="closeSidebar"><i class="fas fa-times"></i></div>
+        <h3><i class="fas fa-tags"></i> الأقسام</h3>
+        <ul class="category-list" id="categoryList"></ul>
+    </div>
 
     <div class="container">
-        <!-- الصفحات -->
+        <!-- الصفحة الرئيسية -->
         <div id="homePage" class="page active-page">
-            <div class="page-header"><h2>أحدث المنتجات</h2></div>
+            <div class="page-header"><h2>آخر الإعلانات</h2></div>
             <div class="products-grid" id="productsGrid"></div>
         </div>
 
-        <div id="categoriesPage" class="page">
-            <div class="page-header"><h2>الأقسام</h2></div>
-            <div id="categoriesList" style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;"></div>
-            <div id="categoryProducts" class="products-grid"></div>
-        </div>
-
-        <div id="aboutPage" class="page">
-            <div class="page-header"><h2>من نحن</h2></div>
-            <div class="product-card" style="padding: 30px; background: var(--card-bg);">
-                <p>نحن "النعامة للتسوق" – متجر إلكتروني جزائري يقدم أفضل المنتجات بأسعار تنافسية. نسعى لتوفير تجربة تسوق سلسة وآمنة لعملائنا في جميع أنحاء الجزائر. نتميز بالجودة والسرعة والثقة.</p>
-                <p>تأسس متجرنا عام 2025 بهدف ربط المستهلكين بأفضل العلامات التجارية.</p>
-            </div>
-        </div>
-
-        <div id="contactPage" class="page">
-            <div class="page-header"><h2>اتصل بنا</h2></div>
-            <div class="product-card" style="padding: 30px;">
-                <p><i class="fas fa-envelope"></i> البريد الإلكتروني: contact@naamashop.dz</p>
-                <p><i class="fas fa-phone"></i> الهاتف: 0555 12 34 56</p>
-                <p><i class="fas fa-map-marker-alt"></i> العنوان: الجزائر العاصمة، الجزائر</p>
-                <form id="contactForm" style="margin-top: 30px;">
-                    <div class="form-group"><input type="text" placeholder="الاسم الكامل" required></div>
-                    <div class="form-group"><input type="email" placeholder="البريد الإلكتروني" required></div>
-                    <div class="form-group"><textarea rows="4" placeholder="رسالتك"></textarea></div>
-                    <button type="submit" class="btn btn-primary">إرسال</button>
-                </form>
-            </div>
-        </div>
-
-        <div id="privacyPage" class="page">
-            <div class="page-header"><h2>سياسة الخصوصية</h2></div>
-            <div class="product-card" style="padding: 30px;">
-                <p>نحن نلتزم بحماية بياناتك الشخصية. لن نشارك معلوماتك مع أي طرف ثالث دون موافقتك. يتم استخدام معلوماتك فقط لتجهيز طلباتك وتحسين تجربتك في الموقع.</p>
-            </div>
-        </div>
-
-        <div id="termsPage" class="page">
-            <div class="page-header"><h2>الشروط والأحكام</h2></div>
-            <div class="product-card" style="padding: 30px;">
-                <p>باستخدامك لهذا الموقع، فإنك توافق على الالتزام بجميع الشروط المذكورة هنا. نحن نحتفظ بالحق في تعديل هذه الشروط في أي وقت. يرجى مراجعتها دورياً.</p>
-            </div>
-        </div>
-
-        <div id="blogPage" class="page">
-            <div class="page-header"><h2>المدونة</h2></div>
-            <div class="products-grid" style="grid-template-columns: 1fr;">
-                <div class="product-card" style="padding: 20px;">
-                    <h3>كيف تختار هاتفك الذكي المثالي؟</h3>
-                    <p>نصائح حول البطارية، الكاميرا، والمعالج لمساعدتك في اختيار الهاتف المناسب.</p>
-                </div>
-                <div class="product-card" style="padding: 20px;">
-                    <h3>أحدث صيحات الموضة ربيع 2025</h3>
-                    <p>تعرف على ألوان وتصاميم هذا الموسم لتكون على الموضة.</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="cartPage" class="page">
-            <div class="page-header"><h2>سلة التسوق</h2></div>
-            <div class="product-card" style="padding: 30px;">
-                <div id="cartItems"></div>
-                <div class="cart-total" id="cartTotal"></div>
-                <button id="checkoutBtn" class="btn btn-primary" style="margin-top: 20px;">إتمام الشراء</button>
-            </div>
-        </div>
-
-        <div id="accountPage" class="page">
-            <div class="page-header"><h2>حسابي</h2></div>
-            <div class="product-card" style="padding: 30px;">
-                <div id="accountInfo"></div>
-            </div>
-        </div>
+        <!-- صفحات أخرى -->
+        <div id="categoriesPage" class="page"><div class="page-header"><h2>الأقسام</h2></div><div id="categoryProducts" class="products-grid"></div></div>
+        <div id="aboutPage" class="page"><div class="page-header"><h2>من نحن</h2></div><div class="product-card" style="padding:30px;"><p>سوق النعامة هو منصة إعلانات مبوبة جزائرية تتيح لك بيع وشراء كل شيء بسهولة وأمان.</p></div></div>
+        <div id="contactPage" class="page"><div class="page-header"><h2>اتصل بنا</h2></div><div class="product-card" style="padding:30px;"><p><i class="fas fa-phone"></i> الهاتف: +213 665 07 46 66</p><p><i class="fab fa-whatsapp"></i> واتساب: +213 665 07 46 66</p><p><i class="fas fa-envelope"></i> البريد: shopingnaama@suport.com</p></div></div>
+        <div id="privacyPage" class="page"><div class="page-header"><h2>سياسة الخصوصية</h2></div><div class="product-card" style="padding:30px;"><p>نحن نحمي بياناتك ولا نشاركها مع أي طرف ثالث.</p></div></div>
+        <div id="termsPage" class="page"><div class="page-header"><h2>الشروط والأحكام</h2></div><div class="product-card" style="padding:30px;"><p>باستخدامك للموقع أنت توافق على الشروط.</p></div></div>
+        <div id="blogPage" class="page"><div class="page-header"><h2>المدونة</h2></div><div class="products-grid"><div class="product-card"><h3>نصائح البيع</h3><p>كيف تبيع سلعتك بسرعة؟</p></div></div></div>
+        <div id="accountPage" class="page"><div class="page-header"><h2>حسابي</h2></div><div class="product-card" id="accountInfo"></div></div>
     </div>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>النعامة للتسوق</h3>
-                    <p>أفضل تجربة تسوق في الجزائر</p>
-                </div>
-                <div class="footer-col">
-                    <h3>روابط سريعة</h3>
-                    <a href="#" data-page="home">الرئيسية</a>
-                    <a href="#" data-page="about">من نحن</a>
-                    <a href="#" data-page="contact">اتصل بنا</a>
-                    <a href="#" data-page="privacy">سياسة الخصوصية</a>
-                </div>
-                <div class="footer-col">
-                    <h3>معلومات الاتصال</h3>
-                    <p><i class="fas fa-phone"></i> 0555 12 34 56</p>
-                    <p><i class="fas fa-envelope"></i> contact@naamashop.dz</p>
-                </div>
-            </div>
-            <div class="copyright">
-                &copy; 2025 النعامة للتسوق - جميع الحقوق محفوظة
-            </div>
-        </div>
-    </footer>
 
     <!-- مودال تسجيل الدخول -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <h2><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</h2>
-            <div class="form-group"><input type="email" id="loginEmail" placeholder="البريد الإلكتروني"></div>
+            <div class="form-group"><input type="text" id="loginEmail" placeholder="البريد الإلكتروني أو رقم الهاتف"></div>
             <div class="form-group"><input type="password" id="loginPassword" placeholder="كلمة المرور"></div>
-            <div class="modal-buttons" style="display: flex; gap: 10px;">
+            <div class="captcha-box" id="loginCaptcha">✔ أنا لست روبوت</div>
+            <div class="modal-buttons" style="display: flex; gap: 10px; margin-top:15px;">
                 <button id="loginBtn" class="btn btn-primary">دخول</button>
                 <button onclick="closeModal('loginModal')" class="btn btn-outline">إلغاء</button>
             </div>
-            <p style="margin-top: 15px; text-align:center;">ليس لديك حساب؟ <a href="#" id="showSignupLink">إنشاء حساب</a></p>
+            <p style="margin-top:15px; text-align:center;">ليس لديك حساب؟ <a href="#" id="showSignupLink">إنشاء حساب</a></p>
         </div>
     </div>
 
+    <!-- مودال التسجيل -->
     <div id="signupModal" class="modal">
         <div class="modal-content">
             <h2><i class="fas fa-user-plus"></i> إنشاء حساب</h2>
             <div class="form-group"><input type="text" id="signupFirst" placeholder="الاسم الأول"></div>
             <div class="form-group"><input type="text" id="signupLast" placeholder="اللقب"></div>
+            <div class="form-group"><select id="signupWilaya"><option value="">اختر الولاية</option><option>أدرار</option><option>الشلف</option><option>الجزائر</option><option>وهران</option><option>قسنطينة</option><option>عنابة</option></select></div>
             <div class="form-group"><input type="date" id="signupBirth"></div>
+            <div class="form-group"><input type="tel" id="signupPhone" placeholder="رقم الهاتف"></div>
             <div class="form-group"><input type="email" id="signupEmail" placeholder="البريد الإلكتروني"></div>
             <div class="form-group"><input type="password" id="signupPassword" placeholder="كلمة المرور"></div>
             <div class="form-group"><input type="password" id="signupConfirm" placeholder="تأكيد كلمة المرور"></div>
-            <div class="form-group"><label><input type="checkbox" id="termsCheckbox"> أوافق على الشروط والأحكام</label></div>
-            <div class="modal-buttons" style="display: flex; gap: 10px;">
+            <div class="captcha-box" id="signupCaptcha">✔ أنا لست روبوت</div>
+            <div class="modal-buttons" style="display: flex; gap: 10px; margin-top:15px;">
                 <button id="signupBtn" class="btn btn-primary">تسجيل</button>
                 <button onclick="closeModal('signupModal')" class="btn btn-outline">إلغاء</button>
             </div>
         </div>
     </div>
 
+    <!-- مودال إضافة منتج -->
+    <div id="addProductModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-plus-circle"></i> إضافة إعلان جديد</h2>
+            <div class="form-group"><select id="productCategory" required><option value="">اختر الفئة</option></select></div>
+            <div class="form-group"><input type="text" id="productTitle" placeholder="عنوان الإعلان" required></div>
+            <div class="form-group"><textarea id="productDesc" rows="3" placeholder="وصف المنتج" required></textarea></div>
+            <div class="form-group"><input type="number" id="productPrice" placeholder="السعر (دج)" required></div>
+            <div class="form-group"><input type="tel" id="productPhone" placeholder="رقم الهاتف (إجباري)" required></div>
+            <div class="form-group"><input type="url" id="productFacebook" placeholder="رابط فيسبوك (اختياري)"></div>
+            <div class="form-group"><label>صور المنتج (حد أقصى 3)</label><input type="file" id="productImages" accept="image/*" multiple></div>
+            <div id="imagePreview" class="image-preview"></div>
+            <div class="modal-buttons" style="display: flex; gap: 10px;">
+                <button id="submitProductBtn" class="btn btn-primary">نشر الإعلان</button>
+                <button onclick="closeModal('addProductModal')" class="btn btn-outline">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال عرض المنتج مع التعليقات -->
+    <div id="productModal" class="modal">
+        <div class="modal-content" id="productModalContent"></div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col"><h3>سوق النعامة</h3><p>أكبر سوق إلكتروني في الجزائر</p></div>
+                <div class="footer-col"><h3>روابط سريعة</h3><a href="#" data-page="home">الرئيسية</a><a href="#" data-page="about">من نحن</a><a href="#" data-page="contact">اتصل بنا</a><a href="#" data-page="privacy">سياسة الخصوصية</a><a href="#" data-page="terms">الشروط والأحكام</a></div>
+                <div class="footer-col"><h3>معلومات الاتصال</h3><p><i class="fas fa-phone"></i> +213 665 07 46 66</p><p><i class="fab fa-whatsapp"></i> واتساب: +213 665 07 46 66</p><p><i class="fas fa-envelope"></i> shopingnaama@suport.com</p></div>
+            </div>
+            <div class="copyright">&copy; 2025 سوق النعامة - جميع الحقوق محفوظة</div>
+        </div>
+    </footer>
+
     <script>
-        // ---------- بيانات المنتجات (عربية) ----------
-        let products = [
-            { id: 1, name: "هاتف ذكي X10", category: "إلكترونيات", price: 35000, description: "شاشة 6.5 بوصة، كاميرا 48 ميجابكسل، بطارية 5000 مللي أمبير.", image: "https://picsum.photos/id/0/300/200", rating: 4.5, ratingsCount: 12 },
-            { id: 2, name: "حذاء رياضي", category: "ملابس", price: 4500, description: "حذاء مريح للجري والمشي، مقاسات متنوعة.", image: "https://picsum.photos/id/20/300/200", rating: 4.2, ratingsCount: 8 },
-            { id: 3, name: "سماعة لاسلكية", category: "إلكترونيات", price: 2800, description: "بلوتوث، جودة صوت عالية، تعمل 8 ساعات.", image: "https://picsum.photos/id/1/300/200", rating: 4.7, ratingsCount: 15 },
-            { id: 4, name: "حقيبة ظهر", category: "إكسسوارات", price: 3200, description: "متعددة الجيوب، عملية للاستخدام اليومي.", image: "https://picsum.photos/id/100/300/200", rating: 4.0, ratingsCount: 5 },
-            { id: 5, name: "ساعة ذكية", category: "إلكترونيات", price: 12000, description: "تتبع النشاط، نبضات القلب، مقاومة للماء.", image: "https://picsum.photos/id/82/300/200", rating: 4.8, ratingsCount: 20 },
-            { id: 6, name: "قميص رجالي", category: "ملابس", price: 1800, description: "قطني مريح، ألوان متعددة.", image: "https://picsum.photos/id/26/300/200", rating: 4.1, ratingsCount: 7 },
-            { id: 7, name: "طقم قدور", category: "منزلية", price: 8900, description: "طقم من 5 قطع، غير لاصق، مناسب للطهي.", image: "https://picsum.photos/id/30/300/200", rating: 4.3, ratingsCount: 10 },
-            { id: 8, name: "خلاط كهربائي", category: "منزلية", price: 5500, description: "700 واط، سرعات متعددة، وعاء زجاجي.", image: "https://picsum.photos/id/31/300/200", rating: 4.6, ratingsCount: 14 }
+        // ========== الفئات ==========
+        const categories = [
+            "سيارات", "دراجات نارية", "دراجات هوائية", "دراجات كهربائية", "هواتف نقالة", 
+            "أجهزة كهرومنزلية", "أواني منزلية", "أجهزة إلكترونية", "أجهزة مستعملة", "عقارات", 
+            "خدمات", "ملابس", "إكسسوارات", "ألعاب", "كتب", "حيوانات", "أخرى"
         ];
 
         // بيانات التخزين
         let users = JSON.parse(localStorage.getItem('naama_users')) || [];
+        let ads = JSON.parse(localStorage.getItem('naama_ads')) || [];
+        let comments = JSON.parse(localStorage.getItem('naama_comments')) || {};
         let currentUser = null;
-        let cart = JSON.parse(localStorage.getItem('naama_cart')) || [];
-        let ratings = JSON.parse(localStorage.getItem('naama_ratings')) || {};
+        let captchaValid = false;
 
-        // دوال مساعدة
         function saveUsers() { localStorage.setItem('naama_users', JSON.stringify(users)); }
-        function saveCart() { localStorage.setItem('naama_cart', JSON.stringify(cart)); updateCartCount(); }
-        function saveRatings() { localStorage.setItem('naama_ratings', JSON.stringify(ratings)); }
+        function saveAds() { localStorage.setItem('naama_ads', JSON.stringify(ads)); }
+        function saveComments() { localStorage.setItem('naama_comments', JSON.stringify(comments)); }
 
-        function updateCartCount() {
-            let total = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cartCount').innerText = total;
-        }
-
-        // عرض المنتجات
+        // عرض الإعلانات
         function renderProducts(containerId = 'productsGrid', filterCategory = null, searchTerm = '') {
             let container = document.getElementById(containerId);
             if (!container) return;
-            let filtered = products.filter(p => {
-                let matchCat = filterCategory ? p.category === filterCategory : true;
-                let matchSearch = searchTerm ? p.name.includes(searchTerm) || p.description.includes(searchTerm) : true;
+            let filtered = ads.filter(ad => {
+                let matchCat = filterCategory ? ad.category === filterCategory : true;
+                let matchSearch = searchTerm ? ad.title.includes(searchTerm) || ad.description.includes(searchTerm) : true;
                 return matchCat && matchSearch;
-            });
+            }).sort((a,b)=>b.id - a.id);
             if (filtered.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding:40px;">لا توجد منتجات</div>';
+                container.innerHTML = '<div style="text-align:center; padding:40px;">لا توجد إعلانات مطابقة</div>';
                 return;
             }
-            container.innerHTML = filtered.map(p => {
-                let avgRating = p.rating;
+            container.innerHTML = filtered.map(ad => {
+                let avgRating = ad.rating || 0;
                 let fullStars = Math.floor(avgRating);
                 let halfStar = avgRating % 1 >= 0.5 ? 1 : 0;
                 let emptyStars = 5 - fullStars - halfStar;
                 let starsHtml = '';
-                for (let i=0; i<fullStars; i++) starsHtml += '<i class="fas fa-star"></i>';
+                for (let i=0;i<fullStars;i++) starsHtml += '<i class="fas fa-star"></i>';
                 if (halfStar) starsHtml += '<i class="fas fa-star-half-alt"></i>';
-                for (let i=0; i<emptyStars; i++) starsHtml += '<i class="far fa-star"></i>';
+                for (let i=0;i<emptyStars;i++) starsHtml += '<i class="far fa-star"></i>';
                 return `
-                    <div class="product-card">
-                        <div class="product-img"><img src="${p.image}" alt="${p.name}"></div>
+                    <div class="product-card" data-id="${ad.id}">
+                        <div class="product-img"><img src="${ad.images && ad.images[0] ? ad.images[0] : 'https://picsum.photos/id/1/300/200'}" alt="صورة"></div>
                         <div class="product-info">
-                            <div class="product-title">${p.name}</div>
-                            <div class="product-category">${p.category}</div>
-                            <div class="product-price">${p.price} دج</div>
-                            <div class="product-desc">${p.description}</div>
-                            <div class="rating"><div class="stars">${starsHtml}</div><span>(${p.ratingsCount})</span></div>
+                            <div class="product-title">${ad.title}</div>
+                            <div class="product-category">${ad.category}</div>
+                            <div class="product-price">${ad.price} دج</div>
+                            <div class="product-desc">${ad.description.substring(0,100)}...</div>
+                            <div class="product-contact"><i class="fas fa-phone"></i> ${ad.phone}</div>
+                            <div class="rating"><div class="stars">${starsHtml}</div><span>(${ad.ratingsCount || 0})</span></div>
                             <div class="product-actions">
-                                <button class="btn btn-primary add-to-cart" data-id="${p.id}"><i class="fas fa-cart-plus"></i> أضف للسلة</button>
-                                ${currentUser ? `<button class="btn btn-outline rate-btn" data-id="${p.id}"><i class="fas fa-star"></i> قيم</button>` : ''}
+                                <button class="btn btn-primary view-details" data-id="${ad.id}">تفاصيل</button>
                             </div>
                         </div>
                     </div>
                 `;
             }).join('');
-            // إضافة الأحداث
-            document.querySelectorAll('.add-to-cart').forEach(btn => {
-                btn.addEventListener('click', (e) => addToCart(parseInt(btn.dataset.id)));
-            });
-            document.querySelectorAll('.rate-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => rateProduct(parseInt(btn.dataset.id)));
+            document.querySelectorAll('.view-details').forEach(btn => {
+                btn.addEventListener('click', (e) => showProductDetails(parseInt(btn.dataset.id)));
             });
         }
 
-        function addToCart(productId) {
-            let product = products.find(p => p.id === productId);
-            if (!product) return;
-            let existing = cart.find(item => item.id === productId);
-            if (existing) existing.quantity++;
-            else cart.push({ id: productId, name: product.name, price: product.price, quantity: 1, image: product.image });
-            saveCart();
-            showToast('تمت إضافة المنتج إلى السلة');
-            renderCart();
-        }
-
-        function renderCart() {
-            let container = document.getElementById('cartItems');
-            if (!container) return;
-            if (cart.length === 0) {
-                container.innerHTML = '<p>سلة التسوق فارغة</p>';
-                document.getElementById('cartTotal').innerHTML = '';
-                return;
-            }
-            let total = 0;
-            let itemsHtml = '';
-            cart.forEach((item, idx) => {
-                total += item.price * item.quantity;
-                itemsHtml += `
-                    <div class="cart-item">
-                        <div><strong>${item.name}</strong> x ${item.quantity}</div>
-                        <div>${item.price * item.quantity} دج</div>
-                        <div><button class="btn btn-sm btn-outline" onclick="removeFromCart(${idx})">حذف</button></div>
+        function showProductDetails(adId) {
+            let ad = ads.find(a => a.id === adId);
+            if (!ad) return;
+            let adComments = comments[adId] || [];
+            let avgRating = ad.rating || 0;
+            let fullStars = Math.floor(avgRating);
+            let halfStar = avgRating % 1 >= 0.5 ? 1 : 0;
+            let emptyStars = 5 - fullStars - halfStar;
+            let starsHtml = '';
+            for (let i=0;i<fullStars;i++) starsHtml += '<i class="fas fa-star"></i>';
+            if (halfStar) starsHtml += '<i class="fas fa-star-half-alt"></i>';
+            for (let i=0;i<emptyStars;i++) starsHtml += '<i class="far fa-star"></i>';
+            let commentsHtml = adComments.map(c => `<div class="comment"><strong>${c.userName}</strong><br>⭐ ${c.rating}/5<br>${c.text}</div>`).join('');
+            let modalContent = document.getElementById('productModalContent');
+            modalContent.innerHTML = `
+                <h2>${ad.title}</h2>
+                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+                    ${ad.images && ad.images.map(img => `<img src="${img}" style="width:100px; height:100px; object-fit:cover; border-radius:10px;">`).join('')}
+                </div>
+                <p><strong>القسم:</strong> ${ad.category}</p>
+                <p><strong>السعر:</strong> ${ad.price} دج</p>
+                <p><strong>الوصف:</strong> ${ad.description}</p>
+                <p><strong>رقم الهاتف:</strong> ${ad.phone}</p>
+                ${ad.facebook ? `<p><strong>فيسبوك:</strong> <a href="${ad.facebook}" target="_blank">رابط</a></p>` : ''}
+                <div class="rating"><div class="stars">${starsHtml}</div><span>(${ad.ratingsCount || 0})</span></div>
+                <h3>التعليقات والتقييمات</h3>
+                <div id="commentsList">${commentsHtml || 'لا توجد تعليقات'}</div>
+                ${currentUser ? `
+                    <div class="form-group" style="margin-top:15px;">
+                        <textarea id="commentText" rows="2" placeholder="اكتب تعليقك..."></textarea>
+                        <select id="commentRating"><option value="5">5 نجوم</option><option value="4">4 نجوم</option><option value="3">3 نجوم</option><option value="2">2 نجوم</option><option value="1">1 نجمة</option></select>
+                        <button id="submitComment" class="btn btn-primary" style="margin-top:10px;">أضف تعليقاً</button>
                     </div>
-                `;
-            });
-            container.innerHTML = itemsHtml;
-            document.getElementById('cartTotal').innerHTML = `المجموع: ${total} دج`;
-        }
-        window.removeFromCart = function(idx) {
-            cart.splice(idx, 1);
-            saveCart();
-            renderCart();
-            renderProducts('productsGrid');
-        };
-
-        function rateProduct(productId) {
-            let rating = prompt("أدخل تقييمك من 1 إلى 5 نجوم:");
-            rating = parseFloat(rating);
-            if (isNaN(rating) || rating < 1 || rating > 5) return alert("الرجاء إدخال رقم بين 1 و5");
-            let product = products.find(p => p.id === productId);
-            if (!product) return;
-            let key = productId;
-            if (!ratings[key]) ratings[key] = { total: 0, count: 0 };
-            ratings[key].total += rating;
-            ratings[key].count++;
-            product.rating = ratings[key].total / ratings[key].count;
-            product.ratingsCount = ratings[key].count;
-            saveRatings();
-            renderProducts('productsGrid');
-            showToast("شكراً لتقييمك");
-        }
-
-        // عرض الأقسام
-        function renderCategories() {
-            let categories = [...new Set(products.map(p => p.category))];
-            let container = document.getElementById('categoriesList');
-            if (container) {
-                container.innerHTML = categories.map(cat => `<button class="btn btn-outline" data-cat="${cat}">${cat}</button>`).join('');
-                document.querySelectorAll('[data-cat]').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        let cat = btn.dataset.cat;
-                        renderProducts('categoryProducts', cat);
-                    });
+                ` : '<p>لإضافة تعليق، يرجى <a href="#" onclick="openModal(\'loginModal\')">تسجيل الدخول</a></p>'}
+                <button class="btn btn-outline" onclick="closeModal('productModal')" style="margin-top:15px;">إغلاق</button>
+            `;
+            if (currentUser) {
+                document.getElementById('submitComment')?.addEventListener('click', () => {
+                    let text = document.getElementById('commentText').value;
+                    let rating = parseInt(document.getElementById('commentRating').value);
+                    if (!text) return alert('الرجاء كتابة تعليق');
+                    if (!comments[adId]) comments[adId] = [];
+                    comments[adId].push({ userName: currentUser.firstName + ' ' + currentUser.lastName, rating, text, date: new Date() });
+                    // تحديث متوسط التقييم للإعلان
+                    let total = comments[adId].reduce((sum,c)=> sum + c.rating,0);
+                    ad.rating = total / comments[adId].length;
+                    ad.ratingsCount = comments[adId].length;
+                    saveComments();
+                    saveAds();
+                    showProductDetails(adId);
+                    renderProducts('productsGrid');
                 });
             }
-            renderProducts('categoryProducts');
+            openModal('productModal');
         }
 
-        // المستخدمين (نظام مبسط)
+        // إضافة منتج
+        function addProduct() {
+            if (!currentUser) { alert('يجب تسجيل الدخول أولاً'); openModal('loginModal'); return; }
+            let category = document.getElementById('productCategory').value;
+            let title = document.getElementById('productTitle').value;
+            let desc = document.getElementById('productDesc').value;
+            let price = document.getElementById('productPrice').value;
+            let phone = document.getElementById('productPhone').value;
+            let facebook = document.getElementById('productFacebook').value;
+            let files = document.getElementById('productImages').files;
+            if (!category || !title || !desc || !price || !phone) { alert('جميع الحقول مطلوبة'); return; }
+            let images = [];
+            for (let i=0; i<Math.min(files.length,3); i++) {
+                let reader = new FileReader();
+                reader.readAsDataURL(files[i]);
+                reader.onload = (e) => { images.push(e.target.result); if(images.length === Math.min(files.length,3)) finalize(); };
+            }
+            if (files.length === 0) finalize();
+            function finalize() {
+                let newAd = { id: Date.now(), userId: currentUser.id, category, title, description: desc, price, phone, facebook, images, rating: 0, ratingsCount: 0, createdAt: new Date() };
+                ads.unshift(newAd);
+                saveAds();
+                renderProducts('productsGrid');
+                closeModal('addProductModal');
+                alert('تم نشر إعلانك بنجاح');
+                document.getElementById('productImages').value = '';
+                document.getElementById('imagePreview').innerHTML = '';
+            }
+        }
+
+        // عرض الأقسام في القائمة الجانبية
+        function buildCategorySidebar() {
+            let list = document.getElementById('categoryList');
+            list.innerHTML = categories.map(cat => `<li><a href="#" data-cat="${cat}"><i class="fas fa-tag"></i> ${cat}</a></li>`).join('');
+            document.querySelectorAll('[data-cat]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    let cat = link.dataset.cat;
+                    document.getElementById('categoriesPage').classList.add('active-page');
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+                    document.getElementById('categoriesPage').classList.add('active-page');
+                    renderProducts('categoryProducts', cat);
+                    document.getElementById('sidebar').classList.remove('open');
+                });
+            });
+        }
+
+        // تحميل الفئات في مودال الإضافة
+        function loadCategoriesSelect() {
+            let select = document.getElementById('productCategory');
+            select.innerHTML = '<option value="">اختر الفئة</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
+        }
+
+        // دوال المستخدم
         function login() {
+            if (!captchaValid) { alert('يرجى التحقق من أنك لست روبوت'); return; }
             let email = document.getElementById('loginEmail').value;
-            let password = document.getElementById('loginPassword').value;
-            let user = users.find(u => u.email === email);
-            if (!user) { alert('لا يوجد حساب بهذا البريد'); return; }
-            if (user.password !== password) { alert('كلمة مرور خاطئة'); return; }
-            if (!user.isActivated) { alert('الحساب غير مفعل (محاكاة: جميع الحسابات مفعلة تلقائياً)'); return; }
+            let pass = document.getElementById('loginPassword').value;
+            let user = users.find(u => (u.email === email || u.phone === email) && u.password === pass);
+            if (!user) { alert('بيانات غير صحيحة'); return; }
             currentUser = user;
             localStorage.setItem('naama_currentUser', JSON.stringify({ id: user.id }));
             updateUI();
             closeModal('loginModal');
             showToast(`مرحباً ${user.firstName}`);
-            showPage('home');
         }
-
         function register() {
-            let firstName = document.getElementById('signupFirst').value;
-            let lastName = document.getElementById('signupLast').value;
-            let birthDate = document.getElementById('signupBirth').value;
+            if (!captchaValid) { alert('يرجى التحقق من أنك لست روبوت'); return; }
+            let first = document.getElementById('signupFirst').value;
+            let last = document.getElementById('signupLast').value;
+            let wilaya = document.getElementById('signupWilaya').value;
+            let birth = document.getElementById('signupBirth').value;
+            let phone = document.getElementById('signupPhone').value;
             let email = document.getElementById('signupEmail').value;
-            let password = document.getElementById('signupPassword').value;
+            let pass = document.getElementById('signupPassword').value;
             let confirm = document.getElementById('signupConfirm').value;
-            let terms = document.getElementById('termsCheckbox').checked;
-            if (!firstName || !lastName || !birthDate || !email || !password) { alert('يرجى ملء جميع الحقول'); return; }
-            if (password !== confirm) { alert('كلمة المرور غير متطابقة'); return; }
-            if (!terms) { alert('يجب الموافقة على الشروط'); return; }
-            if (users.find(u => u.email === email)) { alert('البريد موجود'); return; }
-            let newUser = { id: Date.now(), firstName, lastName, birthDate, email, password, isActivated: true };
+            if (!first || !last || !wilaya || !birth || !phone || !email || !pass) { alert('يرجى ملء جميع الحقول'); return; }
+            if (pass !== confirm) { alert('كلمة المرور غير متطابقة'); return; }
+            if (users.find(u => u.email === email || u.phone === phone)) { alert('البريد أو الهاتف موجود مسبقاً'); return; }
+            let age = new Date().getFullYear() - new Date(birth).getFullYear();
+            if (age < 18) { alert('يجب أن يكون عمرك 18 سنة على الأقل'); return; }
+            let newUser = { id: Date.now(), firstName: first, lastName: last, wilaya, birthDate: birth, phone, email, password: pass, isActivated: true };
             users.push(newUser);
             saveUsers();
             currentUser = newUser;
@@ -780,108 +767,134 @@
             updateUI();
             closeModal('signupModal');
             showToast('تم إنشاء الحساب بنجاح');
-            showPage('home');
         }
-
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('naama_currentUser');
-            updateUI();
-            showToast('تم تسجيل الخروج');
-            showPage('home');
-        }
-
-        function updateUI() {
-            let userActionsDiv = document.getElementById('userActions'); // not used directly, but account page update
-            updateAccountPage();
-            renderProducts('productsGrid');
-            renderCart();
-        }
-
+        function logout() { currentUser = null; localStorage.removeItem('naama_currentUser'); updateUI(); showToast('تم تسجيل الخروج'); showPage('home'); }
+        function updateUI() { updateAccountPage(); renderProducts('productsGrid'); }
         function updateAccountPage() {
             let container = document.getElementById('accountInfo');
-            if (!container) return;
             if (currentUser) {
-                container.innerHTML = `<p>الاسم: ${currentUser.firstName} ${currentUser.lastName}</p><p>البريد: ${currentUser.email}</p><button id="logoutBtnAccount" class="btn btn-outline">تسجيل خروج</button>`;
+                container.innerHTML = `<p>الاسم: ${currentUser.firstName} ${currentUser.lastName}</p><p>الهاتف: ${currentUser.phone}</p><p>البريد: ${currentUser.email}</p><button id="logoutBtnAccount" class="btn btn-outline">تسجيل خروج</button>`;
                 document.getElementById('logoutBtnAccount')?.addEventListener('click', logout);
             } else {
                 container.innerHTML = `<p>غير مسجل دخول. <a href="#" id="loginPrompt">سجل دخول</a> أو <a href="#" id="signupPrompt">أنشئ حساباً</a></p>`;
                 document.getElementById('loginPrompt')?.addEventListener('click', () => openModal('loginModal'));
+                document.getElementById('signupPrompt')?. دخول. <a href="#" id="loginPrompt">سجل دخول</a> أو <a href="#" id="signupPrompt">أنشئ حساباً</a></p>`;
+                document.getElementById('loginPrompt')?.addEventListener('click', () => openModal('loginModal'));
                 document.getElementById('signupPrompt')?.addEventListener('click', () => openModal('signupModal'));
             }
         }
-
-        // التنقل بين الصفحات
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.getElementById(pageId + 'Page').classList.add('active-page');
             if (pageId === 'home') renderProducts('productsGrid');
-            if (pageId === 'cart') renderCart();
-            if (pageId === 'categories') renderCategories();
+            if (pageId === 'categories') renderProducts('categoryProducts');
             if (pageId === 'account') updateAccountPage();
-            // تحديث active في الناف بار
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-                if (link.dataset.page === pageId) link.classList.add('active');
-            });
         }
 
         // مودال
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); }
 
-        // البحث
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            let term = e.target.value;
-            if (document.getElementById('homePage').classList.contains('active-page')) {
-                renderProducts('productsGrid', null, term);
-            } else if (document.getElementById('categoriesPage').classList.contains('active-page')) {
-                renderProducts('categoryProducts', null, term);
-            }
-        });
-
-        // أحداث عامة
-        document.getElementById('cartIcon').addEventListener('click', () => showPage('cart'));
-        document.getElementById('userIcon').addEventListener('click', () => showPage('account'));
-        document.querySelectorAll('[data-page]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                let page = link.dataset.page;
-                showPage(page);
+        // كابتشا
+        function setupCaptcha() {
+            let captchas = [document.getElementById('loginCaptcha'), document.getElementById('signupCaptcha')];
+            captchas.forEach(cap => {
+                if(cap) cap.addEventListener('click', () => { cap.style.backgroundColor = '#d4edda'; captchaValid = true; });
             });
-        });
-        document.getElementById('loginBtn').addEventListener('click', login);
-        document.getElementById('signupBtn').addEventListener('click', register);
-        document.getElementById('checkoutBtn').addEventListener('click', () => alert('تم إتمام الشراء بنجاح (محاكاة)'));
-        document.getElementById('contactForm').addEventListener('submit', (e) => { e.preventDefault(); alert('تم إرسال رسالتك'); });
-        document.getElementById('showSignupLink').addEventListener('click', (e) => { e.preventDefault(); closeModal('loginModal'); openModal('signupModal'); });
-
-        // الوضع الليلي
-        const darkToggle = document.getElementById('darkModeToggle');
-        darkToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            localStorage.setItem('naama_dark', document.body.classList.contains('dark'));
-        });
-        if (localStorage.getItem('naama_dark') === 'true') document.body.classList.add('dark');
-
-        // تحميل المستخدم الحالي
-        let storedUser = localStorage.getItem('naama_currentUser');
-        if (storedUser) {
-            let parsed = JSON.parse(storedUser);
-            let found = users.find(u => u.id === parsed.id && u.isActivated);
-            if (found) currentUser = found;
         }
-        updateUI();
-        renderProducts('productsGrid');
-        renderCart();
-        updateCartCount();
-        showToast = function(msg) {
-            let toast = document.createElement('div');
-            toast.style.cssText = 'position:fixed; bottom:20px; left:20px; background:#333; color:#fff; padding:12px 24px; border-radius:50px; z-index:9999; animation:fadeIn 0.3s;';
-            toast.innerText = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        };
+
+        // أحداث
+        function init() {
+            buildCategorySidebar();
+            loadCategoriesSelect();
+            setupCaptcha();
+            let stored = localStorage.getItem('naama_currentUser');
+            if (stored) { let parsed = JSON.parse(stored); let found = users.find(u => u.id === parsed.id); if (found) currentUser = found; }
+            updateUI();
+            renderProducts('productsGrid');
+            document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+            document.getElementById('closeSidebar').addEventListener('click', () => document.getElementById('sidebar').classList.remove('open'));
+            document.getElementById('addProductBtn').addEventListener('click', () => { if(currentUser) openModal('addProductModal'); else openModal('loginModal'); });
+            document.getElementById('userIcon').addEventListener('click', () => showPage('account'));
+            document.getElementById('loginBtn').addEventListener('click', login);
+            document.getElementById('signupBtn').addEventListener('click', register);
+            document.getElementById('submitProductBtn').addEventListener('click', addProduct);
+            document.getElementById('showSignupLink').addEventListener('click', (e) => { e.preventDefault(); closeModal('loginModal'); openModal('signupModal'); });
+            document.querySelectorAll('[data-page]').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); showPage(link.dataset.page); }));
+            document.getElementById('searchInput').addEventListener('input', (e) => renderProducts('productsGrid', null, e.target.value));
+            document.getElementById('darkModeToggle').addEventListener('click', () => { document.body.classList.toggle('dark'); localStorage.setItem('naama_dark', document.body.classList.contains('dark')); });
+            if (localStorage.getItem('naama_dark') === 'true') document.body.classList.add('dark');
+            document.getElementById('productImages').addEventListener('change', function(e) {
+                let preview = document.getElementById('imagePreview');
+                preview.innerHTML = '';
+                for(let f of e.target.files) {
+                    let reader = new FileReader();
+                    reader.onload = (ev) => { let img = document.createElement('img'); img.src = ev.target.result; preview.appendChild(img); };
+                    reader.readAsDataURL(f);
+                }
+            });
+        }
+        function showToast(msg) { let t = document.createElement('div'); t.style.cssText = 'position:fixed; bottom:20px; left:20px; background:#333; color:#fff; padding:12px 24px; border-radius:50px; z-index:9999;'; t.innerText = msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+        init();
+    </script>
+</body>
+</html>
+```addEventListener('click', () => openModal('signupModal'));
+            }
+        }
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(pageId + 'Page').classList.add('active-page');
+            if (pageId === 'home') renderProducts('productsGrid');
+            if (pageId === 'categories') renderProducts('categoryProducts');
+            if (pageId === 'account') updateAccountPage();
+        }
+
+        // مودال
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); }
+
+        // كابتشا
+        function setupCaptcha() {
+            let captchas = [document.getElementById('loginCaptcha'), document.getElementById('signupCaptcha')];
+            captchas.forEach(cap => {
+                if(cap) cap.addEventListener('click', () => { cap.style.backgroundColor = '#d4edda'; captchaValid = true; });
+            });
+        }
+
+        // أحداث
+        function init() {
+            buildCategorySidebar();
+            loadCategoriesSelect();
+            setupCaptcha();
+            let stored = localStorage.getItem('naama_currentUser');
+            if (stored) { let parsed = JSON.parse(stored); let found = users.find(u => u.id === parsed.id); if (found) currentUser = found; }
+            updateUI();
+            renderProducts('productsGrid');
+            document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+            document.getElementById('closeSidebar').addEventListener('click', () => document.getElementById('sidebar').classList.remove('open'));
+            document.getElementById('addProductBtn').addEventListener('click', () => { if(currentUser) openModal('addProductModal'); else openModal('loginModal'); });
+            document.getElementById('userIcon').addEventListener('click', () => showPage('account'));
+            document.getElementById('loginBtn').addEventListener('click', login);
+            document.getElementById('signupBtn').addEventListener('click', register);
+            document.getElementById('submitProductBtn').addEventListener('click', addProduct);
+            document.getElementById('showSignupLink').addEventListener('click', (e) => { e.preventDefault(); closeModal('loginModal'); openModal('signupModal'); });
+            document.querySelectorAll('[data-page]').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); showPage(link.dataset.page); }));
+            document.getElementById('searchInput').addEventListener('input', (e) => renderProducts('productsGrid', null, e.target.value));
+            document.getElementById('darkModeToggle').addEventListener('click', () => { document.body.classList.toggle('dark'); localStorage.setItem('naama_dark', document.body.classList.contains('dark')); });
+            if (localStorage.getItem('naama_dark') === 'true') document.body.classList.add('dark');
+            document.getElementById('productImages').addEventListener('change', function(e) {
+                let preview = document.getElementById('imagePreview');
+                preview.innerHTML = '';
+                for(let f of e.target.files) {
+                    let reader = new FileReader();
+                    reader.onload = (ev) => { let img = document.createElement('img'); img.src = ev.target.result; preview.appendChild(img); };
+                    reader.readAsDataURL(f);
+                }
+            });
+        }
+        function showToast(msg) { let t = document.createElement('div'); t.style.cssText = 'position:fixed; bottom:20px; left:20px; background:#333; color:#fff; padding:12px 24px; border-radius:50px; z-index:9999;'; t.innerText = msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+        init();
     </script>
 </body>
 </html>
