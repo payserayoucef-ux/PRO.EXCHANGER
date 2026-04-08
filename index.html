@@ -2,899 +2,584 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>سوق النعامة | Shoping Naama - إعلانات مبوبة مجانية</title>
-    <meta name="description" content="أكبر سوق إلكتروني في الجزائر - بيع وشراء كل شيء: سيارات، دراجات، أجهزة، عقارات، وخدمات">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="البوابة الشاملة لخدمات الديوان الوطني للتعليم والتكوين عن بعد (ONEFD) في الجزائر: التسجيل، الفروض، الامتحانات، النتائج، المراكز الولائية، وأدوات مفيدة للطلاب.">
+    <meta name="keywords" content="ONEFD, الدراسة بالمراسلة, فروض المراسلة, الفرض الإلكتروني, امتحان المستوى, نتائج المراسلة, مراكز ONEFD, الجزائر">
+    <meta name="author" content="يوسف">
+    <meta name="robots" content="index, follow">
+    <meta name="google-adsense-account" content="ca-pub-4719018034232696">
+    <title>الدراسة بالمراسلة - دليل شامل لخدمات ONEFD</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --primary: #1e3c72;
+            --secondary: #2a5298;
+            --accent: #ff9800;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Tajawal', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', 'Tajawal', 'Arial', sans-serif;
         }
-
-        /* متغيرات الألوان */
-        :root {
-            --bg-body: #f8f9fa;
-            --bg-header: #ffffff;
-            --text-primary: #2c3e50;
-            --text-secondary: #6c757d;
-            --card-bg: #ffffff;
-            --border-color: #e9ecef;
-            --shadow: 0 5px 20px rgba(0,0,0,0.05);
-            --btn-primary: #e67e22;
-            --btn-hover: #d35400;
-            --footer-bg: #1e272e;
-            --footer-text: #d2dae2;
-            --rating-color: #f39c12;
-        }
-
-        body.dark {
-            --bg-body: #121212;
-            --bg-header: #1e1e1e;
-            --text-primary: #f0f0f0;
-            --text-secondary: #b0b0b0;
-            --card-bg: #2c2c2c;
-            --border-color: #444;
-            --shadow: 0 5px 20px rgba(0,0,0,0.3);
-            --btn-primary: #f39c12;
-            --btn-hover: #e67e22;
-            --footer-bg: #0a0a0a;
-            --footer-text: #aaa;
-        }
-
+        
         body {
-            background: var(--bg-body);
-            color: var(--text-primary);
-            transition: background 0.3s, color 0.3s;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            color: var(--dark);
+            direction: rtl;
+            text-align: right;
+            line-height: 1.6;
             min-height: 100vh;
         }
-
+        
+        /* شريط الكوكيز */
+        .cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            font-size: 14px;
+        }
+        .cookie-consent a { color: var(--warning); text-decoration: underline; }
+        .cookie-buttons button {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header-title { font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+        .clock-container { background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 30px; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
+        .menu-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 1.3rem; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .menu-btn:hover { background: rgba(255,255,255,0.3); }
+        
+        /* القائمة الجانبية */
+        #sidebar {
+            position: fixed;
+            right: -280px;
+            top: 0;
+            width: 280px;
+            height: 100%;
+            background: white;
+            z-index: 200;
+            transition: 0.3s;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            padding-top: 20px;
+        }
+        #sidebar.open { right: 0; }
+        .close-btn { position: absolute; left: 20px; top: 15px; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: var(--primary); }
+        .sidebar-header { text-align: center; padding: 20px; border-bottom: 1px solid #ddd; margin-bottom: 15px; }
+        #sidebar a { display: block; padding: 12px 20px; color: var(--dark); text-decoration: none; border-bottom: 1px solid #eee; transition: 0.2s; }
+        #sidebar a:hover { background: var(--primary); color: white; }
+        #sidebar a i { margin-left: 10px; width: 25px; }
+        
+        /* المحتوى الرئيسي - تصميم تحويلاتي */
+        #main-content { padding: 30px 20px; max-width: 1200px; margin: 0 auto; animation: fadeIn 0.5s ease; }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 20px;
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
-
-        /* HEADER */
-        header {
-            background: var(--bg-header);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .logo h1 {
-            font-size: 1.5rem;
-            margin: 0;
-        }
-        .logo span {
-            color: var(--btn-primary);
-        }
-        .logo small {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            display: block;
-        }
-
-        .search-bar {
-            flex: 1;
-            max-width: 350px;
-            position: relative;
-        }
-        .search-bar input {
-            width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            background: var(--card-bg);
-            color: var(--text-primary);
-        }
-        .search-bar i {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .user-icon, .dark-toggle, .add-icon {
-            font-size: 1.4rem;
-            cursor: pointer;
-            color: var(--text-primary);
-            position: relative;
-        }
-        .dark-toggle {
-            background: none;
-            border: none;
-        }
-
-        /* NAVIGATION - SIDEBAR */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 280px;
-            height: 100%;
-            background: var(--card-bg);
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-            transition: 0.3s;
-            z-index: 1100;
-            padding: 80px 20px 20px;
-            overflow-y: auto;
-        }
-        .sidebar.open {
-            right: 0;
-        }
-        .sidebar .close-sidebar {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-primary);
-        }
-        .sidebar h3 {
-            margin-bottom: 20px;
-            color: var(--btn-primary);
-        }
-        .sidebar .category-list {
-            list-style: none;
-            padding: 0;
-        }
-        .sidebar .category-list li {
-            margin-bottom: 12px;
-        }
-        .sidebar .category-list a {
-            text-decoration: none;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px;
-            border-radius: 10px;
-            transition: 0.2s;
-        }
-        .sidebar .category-list a:hover {
-            background: var(--border-color);
-        }
-        .menu-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-primary);
-        }
-
-        /* الصفحات */
-        .page {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        .page.active-page {
-            display: block;
-        }
-
-        .page-header {
-            margin: 30px 0 20px;
+        
+        .welcome-section {
+            background: white;
+            border-radius: 25px;
+            padding: 35px 25px;
             text-align: center;
-        }
-        .page-header h2 {
-            font-size: 2rem;
-            color: var(--btn-primary);
-        }
-
-        /* بطاقات الإعلانات */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
             margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
         }
-
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: 0.3s;
-            border: 1px solid var(--border-color);
+        .welcome-section h1 { color: var(--primary); margin-bottom: 15px; font-size: 1.8rem; }
+        .welcome-section h2 { font-size: 1rem; font-weight: normal; color: #666; }
+        
+        /* شبكة الأزرار - مثل تحويلاتي */
+        .main-buttons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
         }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        .product-img {
-            height: 220px;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-        .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .product-info {
-            padding: 20px;
-        }
-        .product-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        .product-category {
-            display: inline-block;
-            background: var(--border-color);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            margin-bottom: 10px;
-        }
-        .product-price {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--btn-primary);
-            margin: 10px 0;
-        }
-        .product-desc {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-        .product-contact {
-            font-size: 0.8rem;
-            color: #28a745;
-            margin-bottom: 10px;
-        }
-        .rating {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        .stars {
-            color: var(--rating-color);
-        }
-        .product-actions {
-            display: flex;
-            gap: 10px;
-        }
-        .btn {
-            padding: 10px 15px;
+        
+        .main-btn {
+            background: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 5px;
+        }
+        
+        .main-btn i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+        
+        .main-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .main-btn:hover i {
+            transform: scale(1.1);
+        }
+        
+        /* ألوان مختلفة لكل زر */
+        .main-btn:nth-child(1)::before { background: #10b981; }
+        .main-btn:nth-child(1) i { color: #10b981; }
+        .main-btn:nth-child(1):hover { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .main-btn:nth-child(1):hover i { color: white; }
+        
+        .main-btn:nth-child(2)::before { background: #f59e0b; }
+        .main-btn:nth-child(2) i { color: #f59e0b; }
+        .main-btn:nth-child(2):hover { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .main-btn:nth-child(2):hover i { color: white; }
+        
+        .main-btn:nth-child(3)::before { background: #3b82f6; }
+        .main-btn:nth-child(3) i { color: #3b82f6; }
+        .main-btn:nth-child(3):hover { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
+        .main-btn:nth-child(3):hover i { color: white; }
+        
+        .main-btn:nth-child(4)::before { background: #ef4444; }
+        .main-btn:nth-child(4) i { color: #ef4444; }
+        .main-btn:nth-child(4):hover { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .main-btn:nth-child(4):hover i { color: white; }
+        
+        .main-btn:nth-child(5)::before { background: #8b5cf6; }
+        .main-btn:nth-child(5) i { color: #8b5cf6; }
+        .main-btn:nth-child(5):hover { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
+        .main-btn:nth-child(5):hover i { color: white; }
+        
+        .main-btn:nth-child(6)::before { background: #14b8a6; }
+        .main-btn:nth-child(6) i { color: #14b8a6; }
+        .main-btn:nth-child(6):hover { background: linear-gradient(135deg, #14b8a6, #0d9488); color: white; }
+        .main-btn:nth-child(6):hover i { color: white; }
+        
+        /* السوشال ميديا */
+        .social-media-container {
+            background: white;
+            border-radius: 60px;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
             justify-content: center;
-        }
-        .btn-primary {
-            background: var(--btn-primary);
             color: white;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
         }
-        .btn-primary:hover {
-            background: var(--btn-hover);
-        }
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--btn-primary);
-            color: var(--btn-primary);
-        }
-        .btn-outline:hover {
-            background: var(--btn-primary);
-            color: white;
-        }
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 0.8rem;
-        }
-
-        /* نموذج إضافة منتج */
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            background: var(--card-bg);
-            color: var(--text-primary);
-        }
-        .image-preview {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-        .image-preview img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        /* التعليقات */
-        .comments-section {
-            margin-top: 20px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-        }
-        .comment {
-            background: var(--bg-body);
-            padding: 10px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-        }
-        .comment strong {
-            color: var(--btn-primary);
-        }
-
-        /* مودال */
-        .modal {
-            display: none;
+        .social-icon:hover { transform: scale(1.15) translateY(-3px); }
+        .telegram { background: #0088cc; }
+        .whatsapp { background: #25d366; }
+        .instagram { background: #e1306c; }
+        .facebook { background: #4267b2; }
+        .youtube { background: #ff0000; }
+        
+        /* الصفحات الفرعية */
+        #pages-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal.active {
-            display: flex;
-        }
-        .modal-content {
-            background: var(--card-bg);
-            border-radius: 30px;
-            max-width: 500px;
-            width: 90%;
-            padding: 30px;
-            max-height: 85vh;
+            background: rgba(255,255,255,0.98);
+            z-index: 300;
             overflow-y: auto;
+            display: none;
+            padding: 20px;
         }
-        .captcha-box {
-            background: #f0f0f0;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
+        .sub-page {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .sub-page h2 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+        }
+        .back-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
             cursor: pointer;
-            user-select: none;
-            border: 1px solid #ccc;
+            margin-bottom: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
         }
-
-        /* تذييل */
-        footer {
-            background: var(--footer-bg);
-            color: var(--footer-text);
-            padding: 40px 0 20px;
-            margin-top: 60px;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        .footer-col h3 {
-            color: var(--btn-primary);
-            margin-bottom: 15px;
-        }
-        .footer-col a {
+        .back-btn:hover { background: var(--primary); color: white; }
+        .sub-page-btn {
             display: block;
-            color: var(--footer-text);
-            text-decoration: none;
-            margin-bottom: 10px;
+            width: 100%;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-right: 4px solid var(--primary);
+            padding: 14px;
+            margin-bottom: 12px;
+            text-align: right;
+            border-radius: 12px;
             cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
         }
-        .footer-col a:hover {
-            color: white;
-        }
-        .copyright {
+        .sub-page-btn:hover { background: var(--primary); color: white; transform: translateX(-5px); }
+        .sub-page-btn i { margin-left: 10px; }
+        
+        /* تذييل مثل تحويلاتي */
+        footer {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #a0a0a0;
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 40px 20px;
+            margin-top: 60px;
+            font-size: 0.85rem;
         }
-
+        footer a {
+            color: #ffd700;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: 0.2s;
+        }
+        footer a:hover { color: white; }
+        .footer-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        /* زر تثبيت التطبيق */
+        .install-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .install-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+        
+        .marquee-container {
+            background: linear-gradient(135deg, #ffc107, #ff9800);
+            text-align: center;
+            padding: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
         @media (max-width: 768px) {
-            .header-wrapper {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .search-bar {
-                max-width: none;
-            }
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
+            .main-buttons-container { grid-template-columns: 1fr; gap: 15px; }
+            .sub-page { padding: 20px; margin: 10px; }
+            .install-btn { padding: 10px 18px; font-size: 0.85rem; bottom: 15px; left: 15px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-wrapper">
-                <div class="logo">
-                    <h1>سوق <span>النعامة</span></h1>
-                    <small>Shoping Naama</small>
-                </div>
-                <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="ابحث عن منتج...">
-                    <i class="fas fa-search"></i>
-                </div>
-                <div class="header-actions">
-                    <button class="dark-toggle" id="darkModeToggle"><i class="fas fa-moon"></i></button>
-                    <div class="add-icon" id="addProductBtn"><i class="fas fa-plus-circle"></i></div>
-                    <div class="user-icon" id="userIcon"><i class="fas fa-user-circle"></i></div>
-                    <button class="menu-btn" id="menuToggle"><i class="fas fa-bars"></i></button>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <!-- القائمة الجانبية للأقسام -->
-    <div class="sidebar" id="sidebar">
-        <div class="close-sidebar" id="closeSidebar"><i class="fas fa-times"></i></div>
-        <h3><i class="fas fa-tags"></i> الأقسام</h3>
-        <ul class="category-list" id="categoryList"></ul>
+<div id="cookieConsent" class="cookie-consent" style="display: none;">
+    <span>🔒 نستخدم ملفات تعريف الارتباط (Cookies) لتحسين تجربتك. <a href="#" onclick="showPage('privacy-policy-page'); return false;">سياسة الخصوصية</a></span>
+    <div class="cookie-buttons">
+        <button id="acceptCookies">موافق</button>
+        <button id="declineCookies">رفض</button>
     </div>
+</div>
 
-    <div class="container">
-        <!-- الصفحة الرئيسية -->
-        <div id="homePage" class="page active-page">
-            <div class="page-header"><h2>آخر الإعلانات</h2></div>
-            <div class="products-grid" id="productsGrid"></div>
-        </div>
+<div id="sidebar">
+    <button class="close-btn" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+    <div class="sidebar-header"><i class="fas fa-graduation-cap fa-2x"></i><h3>القائمة الرئيسية</h3></div>
+    <a href="#" onclick="showPage('about-page'); return false;"><i class="fas fa-info-circle"></i> ما هي الدراسة بالمراسلة؟</a>
+    <a href="#" onclick="showPage('deadlines-page'); return false;"><i class="fas fa-calendar-alt"></i> 📅 مواعيد الفروض والامتحانات</a>
+    <a href="#" onclick="showPage('check-level-page'); return false;"><i class="fas fa-chart-line"></i> التحقق من القبول بالمستوى الأعلى</a>
+    <a href="#" onclick="showPage('centers-page'); return false;"><i class="fas fa-phone-alt"></i> الاتصال بالمراكز الولائية</a>
+    <a href="#" onclick="showPage('donation-page'); return false;"><i class="fas fa-heart"></i> دعم الموقع (تبرع)</a>
+    <a href="#" onclick="showPage('contact-page'); return false;"><i class="fas fa-envelope"></i> اتصل بنا</a>
+    <a href="#" onclick="showPage('privacy-policy-page'); return false;"><i class="fas fa-shield-alt"></i> سياسة الخصوصية</a>
+    <a href="#" onclick="showPage('who-we-are-page'); return false;"><i class="fas fa-users"></i> من نحن</a>
+    <a href="#" onclick="shareApp(); return false;"><i class="fas fa-share-alt"></i> مشاركة الموقع</a>
+    <a href="mailto:paserayoucef@gmail.com?subject=مشكلة في الموقع" style="background:#dc3545; color:white;"><i class="fas fa-exclamation-triangle"></i> الإبلاغ عن مشكلة</a>
+</div>
 
-        <!-- صفحات أخرى -->
-        <div id="categoriesPage" class="page"><div class="page-header"><h2>الأقسام</h2></div><div id="categoryProducts" class="products-grid"></div></div>
-        <div id="aboutPage" class="page"><div class="page-header"><h2>من نحن</h2></div><div class="product-card" style="padding:30px;"><p>سوق النعامة هو منصة إعلانات مبوبة جزائرية تتيح لك بيع وشراء كل شيء بسهولة وأمان.</p></div></div>
-        <div id="contactPage" class="page"><div class="page-header"><h2>اتصل بنا</h2></div><div class="product-card" style="padding:30px;"><p><i class="fas fa-phone"></i> الهاتف: +213 665 07 46 66</p><p><i class="fab fa-whatsapp"></i> واتساب: +213 665 07 46 66</p><p><i class="fas fa-envelope"></i> البريد: shopingnaama@suport.com</p></div></div>
-        <div id="privacyPage" class="page"><div class="page-header"><h2>سياسة الخصوصية</h2></div><div class="product-card" style="padding:30px;"><p>نحن نحمي بياناتك ولا نشاركها مع أي طرف ثالث.</p></div></div>
-        <div id="termsPage" class="page"><div class="page-header"><h2>الشروط والأحكام</h2></div><div class="product-card" style="padding:30px;"><p>باستخدامك للموقع أنت توافق على الشروط.</p></div></div>
-        <div id="blogPage" class="page"><div class="page-header"><h2>المدونة</h2></div><div class="products-grid"><div class="product-card"><h3>نصائح البيع</h3><p>كيف تبيع سلعتك بسرعة؟</p></div></div></div>
-        <div id="accountPage" class="page"><div class="page-header"><h2>حسابي</h2></div><div class="product-card" id="accountInfo"></div></div>
+<header>
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <button class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <div class="clock-container"><span>🇩🇿</span><span id="algeriaClock">--:--:--</span></div>
     </div>
+    <h1 class="header-title"><i class="fas fa-graduation-cap"></i> الدراسة بالمراسلة</h1>
+</header>
 
-    <!-- مودال تسجيل الدخول -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <h2><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</h2>
-            <div class="form-group"><input type="text" id="loginEmail" placeholder="البريد الإلكتروني أو رقم الهاتف"></div>
-            <div class="form-group"><input type="password" id="loginPassword" placeholder="كلمة المرور"></div>
-            <div class="captcha-box" id="loginCaptcha">✔ أنا لست روبوت</div>
-            <div class="modal-buttons" style="display: flex; gap: 10px; margin-top:15px;">
-                <button id="loginBtn" class="btn btn-primary">دخول</button>
-                <button onclick="closeModal('loginModal')" class="btn btn-outline">إلغاء</button>
-            </div>
-            <p style="margin-top:15px; text-align:center;">ليس لديك حساب؟ <a href="#" id="showSignupLink">إنشاء حساب</a></p>
-        </div>
+<div class="marquee-container">📢 منصة شاملة لخدمات ONEFD: التسجيل، الفروض، الامتحانات، النتائج وأدوات مساعدة</div>
+<div id="upcomingEventsContainer" class="upcoming-buttons"></div>
+
+<main id="main-content">
+    <div class="welcome-section">
+        <h1><i class="fas fa-smile-wink"></i> أهلاً بك في دليل الدراسة بالمراسلة</h1>
+        <h2>كل ما تحتاجه في مكان واحد: التسجيل، الفروض الذاتية، الفرض الإلكتروني، استدعاءات الامتحانات، النتائج، والمراكز الولائية</h2>
     </div>
-
-    <!-- مودال التسجيل -->
-    <div id="signupModal" class="modal">
-        <div class="modal-content">
-            <h2><i class="fas fa-user-plus"></i> إنشاء حساب</h2>
-            <div class="form-group"><input type="text" id="signupFirst" placeholder="الاسم الأول"></div>
-            <div class="form-group"><input type="text" id="signupLast" placeholder="اللقب"></div>
-            <div class="form-group"><select id="signupWilaya"><option value="">اختر الولاية</option><option>أدرار</option><option>الشلف</option><option>الجزائر</option><option>وهران</option><option>قسنطينة</option><option>عنابة</option></select></div>
-            <div class="form-group"><input type="date" id="signupBirth"></div>
-            <div class="form-group"><input type="tel" id="signupPhone" placeholder="رقم الهاتف"></div>
-            <div class="form-group"><input type="email" id="signupEmail" placeholder="البريد الإلكتروني"></div>
-            <div class="form-group"><input type="password" id="signupPassword" placeholder="كلمة المرور"></div>
-            <div class="form-group"><input type="password" id="signupConfirm" placeholder="تأكيد كلمة المرور"></div>
-            <div class="captcha-box" id="signupCaptcha">✔ أنا لست روبوت</div>
-            <div class="modal-buttons" style="display: flex; gap: 10px; margin-top:15px;">
-                <button id="signupBtn" class="btn btn-primary">تسجيل</button>
-                <button onclick="closeModal('signupModal')" class="btn btn-outline">إلغاء</button>
-            </div>
-        </div>
+    <div class="main-buttons-container">
+        <button class="main-btn" onclick="showPage('registration-page')"><i class="fas fa-user-plus"></i> التسجيل في المراسلة</button>
+        <button class="main-btn" onclick="showPage('documents-page')"><i class="fas fa-file-alt"></i> سحب الوثائق</button>
+        <button class="main-btn" onclick="showPage('platforms-page')"><i class="fas fa-chalkboard-user"></i> الأرضيات التعليمية</button>
+        <button class="main-btn" onclick="showPage('e-homework-page')"><i class="fas fa-laptop-code"></i> الفرض الإلكتروني</button>
+        <button class="main-btn" onclick="showPage('exam-registration-page')"><i class="fas fa-certificate"></i> التسجيل في الشهادة</button>
+        <button class="main-btn" onclick="showPage('exam-info-page')"><i class="fas fa-bullhorn"></i> معلومات الامتحانات</button>
     </div>
-
-    <!-- مودال إضافة منتج -->
-    <div id="addProductModal" class="modal">
-        <div class="modal-content">
-            <h2><i class="fas fa-plus-circle"></i> إضافة إعلان جديد</h2>
-            <div class="form-group"><select id="productCategory" required><option value="">اختر الفئة</option></select></div>
-            <div class="form-group"><input type="text" id="productTitle" placeholder="عنوان الإعلان" required></div>
-            <div class="form-group"><textarea id="productDesc" rows="3" placeholder="وصف المنتج" required></textarea></div>
-            <div class="form-group"><input type="number" id="productPrice" placeholder="السعر (دج)" required></div>
-            <div class="form-group"><input type="tel" id="productPhone" placeholder="رقم الهاتف (إجباري)" required></div>
-            <div class="form-group"><input type="url" id="productFacebook" placeholder="رابط فيسبوك (اختياري)"></div>
-            <div class="form-group"><label>صور المنتج (حد أقصى 3)</label><input type="file" id="productImages" accept="image/*" multiple></div>
-            <div id="imagePreview" class="image-preview"></div>
-            <div class="modal-buttons" style="display: flex; gap: 10px;">
-                <button id="submitProductBtn" class="btn btn-primary">نشر الإعلان</button>
-                <button onclick="closeModal('addProductModal')" class="btn btn-outline">إلغاء</button>
-            </div>
-        </div>
+    <div class="social-media-container">
+        <span>📱 تابعنا على:</span>
+        <a href="https://t.me/youcef_info_2" target="_blank" rel="noopener noreferrer" class="social-icon telegram"><i class="fab fa-telegram-plane"></i></a>
+        <a href="https://wa.me/213665074666" target="_blank" rel="noopener noreferrer" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.instagram.com/youcef.info2" target="_blank" rel="noopener noreferrer" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/g/1BfUsNqXFf/" target="_blank" rel="noopener noreferrer" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://youtube.com/channel/UCWorEGsMcnwrSPYEFXhnfkw" target="_blank" rel="noopener noreferrer" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
     </div>
+</main>
 
-    <!-- مودال عرض المنتج مع التعليقات -->
-    <div id="productModal" class="modal">
-        <div class="modal-content" id="productModalContent"></div>
+<div id="pages-container"></div>
+
+<footer>
+    <div>جميع الحقوق محفوظة © 2026 الدراسة بالمراسلة</div>
+    <div class="footer-links">
+        <a href="#" onclick="showPage('who-we-are-page'); return false;">من نحن</a>
+        <a href="#" onclick="showPage('privacy-policy-page'); return false;">سياسة الخصوصية</a>
+        <a href="#" onclick="showPage('contact-page'); return false;">اتصل بنا</a>
     </div>
+    <div style="font-size: 0.75rem; margin-top: 15px;">
+        موقع تطوعي غير رسمي (غير تابع لـ ONEFD) - جميع الروابط تؤدي إلى خدمات رسمية
+    </div>
+</footer>
 
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col"><h3>سوق النعامة</h3><p>أكبر سوق إلكتروني في الجزائر</p></div>
-                <div class="footer-col"><h3>روابط سريعة</h3><a href="#" data-page="home">الرئيسية</a><a href="#" data-page="about">من نحن</a><a href="#" data-page="contact">اتصل بنا</a><a href="#" data-page="privacy">سياسة الخصوصية</a><a href="#" data-page="terms">الشروط والأحكام</a></div>
-                <div class="footer-col"><h3>معلومات الاتصال</h3><p><i class="fas fa-phone"></i> +213 665 07 46 66</p><p><i class="fab fa-whatsapp"></i> واتساب: +213 665 07 46 66</p><p><i class="fas fa-envelope"></i> shopingnaama@suport.com</p></div>
-            </div>
-            <div class="copyright">&copy; 2025 سوق النعامة - جميع الحقوق محفوظة</div>
-        </div>
-    </footer>
+<button class="install-btn" id="installBtn">
+    <i class="fas fa-download"></i> تثبيت التطبيق
+</button>
 
-    <script>
-        // ========== الفئات ==========
-        const categories = [
-            "سيارات", "دراجات نارية", "دراجات هوائية", "دراجات كهربائية", "هواتف نقالة", 
-            "أجهزة كهرومنزلية", "أواني منزلية", "أجهزة إلكترونية", "أجهزة مستعملة", "عقارات", 
-            "خدمات", "ملابس", "إكسسوارات", "ألعاب", "كتب", "حيوانات", "أخرى"
-        ];
+<script>
+    // ساعة الجزائر
+    function updateClock() {
+        const now = new Date();
+        const algiersTime = now.toLocaleTimeString('ar-EG', { timeZone: 'Africa/Algiers', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        document.getElementById('algeriaClock').textContent = algiersTime;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-        // بيانات التخزين
-        let users = JSON.parse(localStorage.getItem('naama_users')) || [];
-        let ads = JSON.parse(localStorage.getItem('naama_ads')) || [];
-        let comments = JSON.parse(localStorage.getItem('naama_comments')) || {};
-        let currentUser = null;
-        let captchaValid = false;
-
-        function saveUsers() { localStorage.setItem('naama_users', JSON.stringify(users)); }
-        function saveAds() { localStorage.setItem('naama_ads', JSON.stringify(ads)); }
-        function saveComments() { localStorage.setItem('naama_comments', JSON.stringify(comments)); }
-
-        // عرض الإعلانات
-        function renderProducts(containerId = 'productsGrid', filterCategory = null, searchTerm = '') {
-            let container = document.getElementById(containerId);
-            if (!container) return;
-            let filtered = ads.filter(ad => {
-                let matchCat = filterCategory ? ad.category === filterCategory : true;
-                let matchSearch = searchTerm ? ad.title.includes(searchTerm) || ad.description.includes(searchTerm) : true;
-                return matchCat && matchSearch;
-            }).sort((a,b)=>b.id - a.id);
-            if (filtered.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding:40px;">لا توجد إعلانات مطابقة</div>';
-                return;
-            }
-            container.innerHTML = filtered.map(ad => {
-                let avgRating = ad.rating || 0;
-                let fullStars = Math.floor(avgRating);
-                let halfStar = avgRating % 1 >= 0.5 ? 1 : 0;
-                let emptyStars = 5 - fullStars - halfStar;
-                let starsHtml = '';
-                for (let i=0;i<fullStars;i++) starsHtml += '<i class="fas fa-star"></i>';
-                if (halfStar) starsHtml += '<i class="fas fa-star-half-alt"></i>';
-                for (let i=0;i<emptyStars;i++) starsHtml += '<i class="far fa-star"></i>';
-                return `
-                    <div class="product-card" data-id="${ad.id}">
-                        <div class="product-img"><img src="${ad.images && ad.images[0] ? ad.images[0] : 'https://picsum.photos/id/1/300/200'}" alt="صورة"></div>
-                        <div class="product-info">
-                            <div class="product-title">${ad.title}</div>
-                            <div class="product-category">${ad.category}</div>
-                            <div class="product-price">${ad.price} دج</div>
-                            <div class="product-desc">${ad.description.substring(0,100)}...</div>
-                            <div class="product-contact"><i class="fas fa-phone"></i> ${ad.phone}</div>
-                            <div class="rating"><div class="stars">${starsHtml}</div><span>(${ad.ratingsCount || 0})</span></div>
-                            <div class="product-actions">
-                                <button class="btn btn-primary view-details" data-id="${ad.id}">تفاصيل</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            document.querySelectorAll('.view-details').forEach(btn => {
-                btn.addEventListener('click', (e) => showProductDetails(parseInt(btn.dataset.id)));
-            });
-        }
-
-        function showProductDetails(adId) {
-            let ad = ads.find(a => a.id === adId);
-            if (!ad) return;
-            let adComments = comments[adId] || [];
-            let avgRating = ad.rating || 0;
-            let fullStars = Math.floor(avgRating);
-            let halfStar = avgRating % 1 >= 0.5 ? 1 : 0;
-            let emptyStars = 5 - fullStars - halfStar;
-            let starsHtml = '';
-            for (let i=0;i<fullStars;i++) starsHtml += '<i class="fas fa-star"></i>';
-            if (halfStar) starsHtml += '<i class="fas fa-star-half-alt"></i>';
-            for (let i=0;i<emptyStars;i++) starsHtml += '<i class="far fa-star"></i>';
-            let commentsHtml = adComments.map(c => `<div class="comment"><strong>${c.userName}</strong><br>⭐ ${c.rating}/5<br>${c.text}</div>`).join('');
-            let modalContent = document.getElementById('productModalContent');
-            modalContent.innerHTML = `
-                <h2>${ad.title}</h2>
-                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
-                    ${ad.images && ad.images.map(img => `<img src="${img}" style="width:100px; height:100px; object-fit:cover; border-radius:10px;">`).join('')}
-                </div>
-                <p><strong>القسم:</strong> ${ad.category}</p>
-                <p><strong>السعر:</strong> ${ad.price} دج</p>
-                <p><strong>الوصف:</strong> ${ad.description}</p>
-                <p><strong>رقم الهاتف:</strong> ${ad.phone}</p>
-                ${ad.facebook ? `<p><strong>فيسبوك:</strong> <a href="${ad.facebook}" target="_blank">رابط</a></p>` : ''}
-                <div class="rating"><div class="stars">${starsHtml}</div><span>(${ad.ratingsCount || 0})</span></div>
-                <h3>التعليقات والتقييمات</h3>
-                <div id="commentsList">${commentsHtml || 'لا توجد تعليقات'}</div>
-                ${currentUser ? `
-                    <div class="form-group" style="margin-top:15px;">
-                        <textarea id="commentText" rows="2" placeholder="اكتب تعليقك..."></textarea>
-                        <select id="commentRating"><option value="5">5 نجوم</option><option value="4">4 نجوم</option><option value="3">3 نجوم</option><option value="2">2 نجوم</option><option value="1">1 نجمة</option></select>
-                        <button id="submitComment" class="btn btn-primary" style="margin-top:10px;">أضف تعليقاً</button>
-                    </div>
-                ` : '<p>لإضافة تعليق، يرجى <a href="#" onclick="openModal(\'loginModal\')">تسجيل الدخول</a></p>'}
-                <button class="btn btn-outline" onclick="closeModal('productModal')" style="margin-top:15px;">إغلاق</button>
-            `;
-            if (currentUser) {
-                document.getElementById('submitComment')?.addEventListener('click', () => {
-                    let text = document.getElementById('commentText').value;
-                    let rating = parseInt(document.getElementById('commentRating').value);
-                    if (!text) return alert('الرجاء كتابة تعليق');
-                    if (!comments[adId]) comments[adId] = [];
-                    comments[adId].push({ userName: currentUser.firstName + ' ' + currentUser.lastName, rating, text, date: new Date() });
-                    // تحديث متوسط التقييم للإعلان
-                    let total = comments[adId].reduce((sum,c)=> sum + c.rating,0);
-                    ad.rating = total / comments[adId].length;
-                    ad.ratingsCount = comments[adId].length;
-                    saveComments();
-                    saveAds();
-                    showProductDetails(adId);
-                    renderProducts('productsGrid');
-                });
-            }
-            openModal('productModal');
-        }
-
-        // إضافة منتج
-        function addProduct() {
-            if (!currentUser) { alert('يجب تسجيل الدخول أولاً'); openModal('loginModal'); return; }
-            let category = document.getElementById('productCategory').value;
-            let title = document.getElementById('productTitle').value;
-            let desc = document.getElementById('productDesc').value;
-            let price = document.getElementById('productPrice').value;
-            let phone = document.getElementById('productPhone').value;
-            let facebook = document.getElementById('productFacebook').value;
-            let files = document.getElementById('productImages').files;
-            if (!category || !title || !desc || !price || !phone) { alert('جميع الحقول مطلوبة'); return; }
-            let images = [];
-            for (let i=0; i<Math.min(files.length,3); i++) {
-                let reader = new FileReader();
-                reader.readAsDataURL(files[i]);
-                reader.onload = (e) => { images.push(e.target.result); if(images.length === Math.min(files.length,3)) finalize(); };
-            }
-            if (files.length === 0) finalize();
-            function finalize() {
-                let newAd = { id: Date.now(), userId: currentUser.id, category, title, description: desc, price, phone, facebook, images, rating: 0, ratingsCount: 0, createdAt: new Date() };
-                ads.unshift(newAd);
-                saveAds();
-                renderProducts('productsGrid');
-                closeModal('addProductModal');
-                alert('تم نشر إعلانك بنجاح');
-                document.getElementById('productImages').value = '';
-                document.getElementById('imagePreview').innerHTML = '';
-            }
-        }
-
-        // عرض الأقسام في القائمة الجانبية
-        function buildCategorySidebar() {
-            let list = document.getElementById('categoryList');
-            list.innerHTML = categories.map(cat => `<li><a href="#" data-cat="${cat}"><i class="fas fa-tag"></i> ${cat}</a></li>`).join('');
-            document.querySelectorAll('[data-cat]').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    let cat = link.dataset.cat;
-                    document.getElementById('categoriesPage').classList.add('active-page');
-                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-                    document.getElementById('categoriesPage').classList.add('active-page');
-                    renderProducts('categoryProducts', cat);
-                    document.getElementById('sidebar').classList.remove('open');
-                });
-            });
-        }
-
-        // تحميل الفئات في مودال الإضافة
-        function loadCategoriesSelect() {
-            let select = document.getElementById('productCategory');
-            select.innerHTML = '<option value="">اختر الفئة</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
-        }
-
-        // دوال المستخدم
-        function login() {
-            if (!captchaValid) { alert('يرجى التحقق من أنك لست روبوت'); return; }
-            let email = document.getElementById('loginEmail').value;
-            let pass = document.getElementById('loginPassword').value;
-            let user = users.find(u => (u.email === email || u.phone === email) && u.password === pass);
-            if (!user) { alert('بيانات غير صحيحة'); return; }
-            currentUser = user;
-            localStorage.setItem('naama_currentUser', JSON.stringify({ id: user.id }));
-            updateUI();
-            closeModal('loginModal');
-            showToast(`مرحباً ${user.firstName}`);
-        }
-        function register() {
-            if (!captchaValid) { alert('يرجى التحقق من أنك لست روبوت'); return; }
-            let first = document.getElementById('signupFirst').value;
-            let last = document.getElementById('signupLast').value;
-            let wilaya = document.getElementById('signupWilaya').value;
-            let birth = document.getElementById('signupBirth').value;
-            let phone = document.getElementById('signupPhone').value;
-            let email = document.getElementById('signupEmail').value;
-            let pass = document.getElementById('signupPassword').value;
-            let confirm = document.getElementById('signupConfirm').value;
-            if (!first || !last || !wilaya || !birth || !phone || !email || !pass) { alert('يرجى ملء جميع الحقول'); return; }
-            if (pass !== confirm) { alert('كلمة المرور غير متطابقة'); return; }
-            if (users.find(u => u.email === email || u.phone === phone)) { alert('البريد أو الهاتف موجود مسبقاً'); return; }
-            let age = new Date().getFullYear() - new Date(birth).getFullYear();
-            if (age < 18) { alert('يجب أن يكون عمرك 18 سنة على الأقل'); return; }
-            let newUser = { id: Date.now(), firstName: first, lastName: last, wilaya, birthDate: birth, phone, email, password: pass, isActivated: true };
-            users.push(newUser);
-            saveUsers();
-            currentUser = newUser;
-            localStorage.setItem('naama_currentUser', JSON.stringify({ id: newUser.id }));
-            updateUI();
-            closeModal('signupModal');
-            showToast('تم إنشاء الحساب بنجاح');
-        }
-        function logout() { currentUser = null; localStorage.removeItem('naama_currentUser'); updateUI(); showToast('تم تسجيل الخروج'); showPage('home'); }
-        function updateUI() { updateAccountPage(); renderProducts('productsGrid'); }
-        function updateAccountPage() {
-            let container = document.getElementById('accountInfo');
-            if (currentUser) {
-                container.innerHTML = `<p>الاسم: ${currentUser.firstName} ${currentUser.lastName}</p><p>الهاتف: ${currentUser.phone}</p><p>البريد: ${currentUser.email}</p><button id="logoutBtnAccount" class="btn btn-outline">تسجيل خروج</button>`;
-                document.getElementById('logoutBtnAccount')?.addEventListener('click', logout);
-            } else {
-                container.innerHTML = `<p>غير مسجل دخول. <a href="#" id="loginPrompt">سجل دخول</a> أو <a href="#" id="signupPrompt">أنشئ حساباً</a></p>`;
-                document.getElementById('loginPrompt')?.addEventListener('click', () => openModal('loginModal'));
-                document.getElementById('signupPrompt')?. دخول. <a href="#" id="loginPrompt">سجل دخول</a> أو <a href="#" id="signupPrompt">أنشئ حساباً</a></p>`;
-                document.getElementById('loginPrompt')?.addEventListener('click', () => openModal('loginModal'));
-                document.getElementById('signupPrompt')?.addEventListener('click', () => openModal('signupModal'));
-            }
-        }
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(pageId + 'Page').classList.add('active-page');
-            if (pageId === 'home') renderProducts('productsGrid');
-            if (pageId === 'categories') renderProducts('categoryProducts');
-            if (pageId === 'account') updateAccountPage();
-        }
-
-        // مودال
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); }
-
-        // كابتشا
-        function setupCaptcha() {
-            let captchas = [document.getElementById('loginCaptcha'), document.getElementById('signupCaptcha')];
-            captchas.forEach(cap => {
-                if(cap) cap.addEventListener('click', () => { cap.style.backgroundColor = '#d4edda'; captchaValid = true; });
-            });
-        }
-
-        // أحداث
-        function init() {
-            buildCategorySidebar();
-            loadCategoriesSelect();
-            setupCaptcha();
-            let stored = localStorage.getItem('naama_currentUser');
-            if (stored) { let parsed = JSON.parse(stored); let found = users.find(u => u.id === parsed.id); if (found) currentUser = found; }
-            updateUI();
-            renderProducts('productsGrid');
-            document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
-            document.getElementById('closeSidebar').addEventListener('click', () => document.getElementById('sidebar').classList.remove('open'));
-            document.getElementById('addProductBtn').addEventListener('click', () => { if(currentUser) openModal('addProductModal'); else openModal('loginModal'); });
-            document.getElementById('userIcon').addEventListener('click', () => showPage('account'));
-            document.getElementById('loginBtn').addEventListener('click', login);
-            document.getElementById('signupBtn').addEventListener('click', register);
-            document.getElementById('submitProductBtn').addEventListener('click', addProduct);
-            document.getElementById('showSignupLink').addEventListener('click', (e) => { e.preventDefault(); closeModal('loginModal'); openModal('signupModal'); });
-            document.querySelectorAll('[data-page]').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); showPage(link.dataset.page); }));
-            document.getElementById('searchInput').addEventListener('input', (e) => renderProducts('productsGrid', null, e.target.value));
-            document.getElementById('darkModeToggle').addEventListener('click', () => { document.body.classList.toggle('dark'); localStorage.setItem('naama_dark', document.body.classList.contains('dark')); });
-            if (localStorage.getItem('naama_dark') === 'true') document.body.classList.add('dark');
-            document.getElementById('productImages').addEventListener('change', function(e) {
-                let preview = document.getElementById('imagePreview');
-                preview.innerHTML = '';
-                for(let f of e.target.files) {
-                    let reader = new FileReader();
-                    reader.onload = (ev) => { let img = document.createElement('img'); img.src = ev.target.result; preview.appendChild(img); };
-                    reader.readAsDataURL(f);
+    // PWA Installation
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        document.getElementById('installBtn').style.display = 'flex';
+    });
+    
+    document.getElementById('installBtn').addEventListener('click', () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted install');
                 }
+                deferredPrompt = null;
             });
+        } else {
+            alert("يمكنك إضافة الموقع إلى الشاشة الرئيسية من خلال قائمة المتصفح 📱");
         }
-        function showToast(msg) { let t = document.createElement('div'); t.style.cssText = 'position:fixed; bottom:20px; left:20px; background:#333; color:#fff; padding:12px 24px; border-radius:50px; z-index:9999;'; t.innerText = msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
-        init();
-    </script>
-</body>
-</html>
-```addEventListener('click', () => openModal('signupModal'));
-            }
-        }
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(pageId + 'Page').classList.add('active-page');
-            if (pageId === 'home') renderProducts('productsGrid');
-            if (pageId === 'categories') renderProducts('categoryProducts');
-            if (pageId === 'account') updateAccountPage();
-        }
+    });
 
-        // مودال
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); }
+    // Cookie consent
+    if(!localStorage.getItem('cookieConsent')) {
+        document.getElementById('cookieConsent').style.display = 'flex';
+    }
+    document.getElementById('acceptCookies').onclick = () => {
+        localStorage.setItem('cookieConsent', 'accepted');
+        document.getElementById('cookieConsent').style.display = 'none';
+    };
+    document.getElementById('declineCookies').onclick = () => {
+        localStorage.setItem('cookieConsent', 'declined');
+        document.getElementById('cookieConsent').style.display = 'none';
+    };
 
-        // كابتشا
-        function setupCaptcha() {
-            let captchas = [document.getElementById('loginCaptcha'), document.getElementById('signupCaptcha')];
-            captchas.forEach(cap => {
-                if(cap) cap.addEventListener('click', () => { cap.style.backgroundColor = '#d4edda'; captchaValid = true; });
-            });
+    // Functions
+    const pagesContainer = document.getElementById('pages-container');
+    function toggleSidebar() { document.getElementById("sidebar").classList.toggle("open"); }
+    function goBack() { pagesContainer.style.display = 'none'; document.getElementById('main-content').style.display = 'block'; pagesContainer.innerHTML = ''; }
+    function openExternalLink(url) { window.open(url, '_blank', 'noopener noreferrer'); }
+    function shareApp() { if(navigator.share) navigator.share({title:'الدراسة بالمراسلة', text:'دليل شامل لخدمات ONEFD', url:window.location.href}); else alert('انسخ الرابط: '+window.location.href); }
+    function createLinkButton(text, url) { return `<button class="sub-page-btn" onclick="openExternalLink('${url}')"><i class="fas fa-external-link-alt"></i> ${text}</button>`; }
+    
+    function showPage(pageId) {
+        toggleSidebar();
+        document.getElementById('main-content').style.display = 'none';
+        pagesContainer.style.display = 'block';
+        if(pageId === 'registration-page') buildRegistrationPage();
+        else if(pageId === 'documents-page') buildDocumentsPage();
+        else if(pageId === 'platforms-page') buildPlatformsPage();
+        else if(pageId === 'e-homework-page') buildEHomeworkPage();
+        else if(pageId === 'exam-registration-page') buildExamRegistrationPage();
+        else if(pageId === 'exam-info-page') buildExamInfoPage();
+        else if(pageId === 'about-page') buildAboutPage();
+        else if(pageId === 'check-level-page') buildCheckLevelPage();
+        else if(pageId === 'centers-page') buildCentersPage();
+        else if(pageId === 'donation-page') buildDonationPage();
+        else if(pageId === 'privacy-policy-page') buildPrivacyPolicyPage();
+        else if(pageId === 'who-we-are-page') buildWhoWeArePage();
+        else if(pageId === 'deadlines-page') buildDeadlinesPage();
+        else if(pageId === 'contact-page') buildContactPage();
+    }
+    
+    function buildRegistrationPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-user-plus"></i> التسجيل في المراسلة</h2><p>خطوات التسجيل الإلكتروني، دفع الرسوم، وإيداع الملف الورقي. يجب اختيار المستوى المناسب وإدخال البيانات بدقة.</p>${createLinkButton('تسجيل متعلم جديد', 'https://inscriptic.onefd.edu.dz/preinscription/')}${createLinkButton('تسجيل متعلم سابق', 'https://inscriptic.onefd.edu.dz/preinscription/')}</div>`;
+    }
+    function buildDocumentsPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-file-alt"></i> سحب الوثائق</h2><p>استخراج استدعاءات الفروض، امتحان المستوى، كشوف النقاط، وشهادات التسجيل.</p>${createLinkButton('معلومات الحساب', 'https://inscriptic.onefd.edu.dz/preinscription/')}${createLinkButton('حساب المستخدم', 'https://inscriptic.onefd.edu.dz/preinscription/auth/login/')}${createLinkButton('ارفاق وثائق الثبوتية', 'https://e-devoir-3am.onefd.edu.dz/preinscription/index.php/upload_documents/')}${createLinkButton('استخراج رقم التسجيل', 'https://inscriptic.onefd.edu.dz/numins/num_ins_index.php')}${createLinkButton('استخراج استدعاء امتحان المستوى', 'https://inscriptic.onefd.edu.dz/preinscription/')}${createLinkButton('استخراج كشف النقاط', 'http://inscriptic.onefd.edu.dz/releve/matricule.php')}${createLinkButton('استخراج شهادة إثبات المستوى', 'https://www.onefd.edu.dz/att_niv_2025/')}</div>`;
+    }
+    function buildPlatformsPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-chalkboard-user"></i> الأرضيات التعليمية Scolarium</h2><p>منصة الدروس والتمارين التفاعلية حسب المستوى.</p>${createLinkButton('المستوى المتوسط', 'http://scolarium-moyen.onefd.edu.dz/login/index.php')}${createLinkButton('أولى ثانوي', 'http://scolarium-1as.onefd.edu.dz/login/index.php')}${createLinkButton('الثانية ثانوي', 'http://scolarium-2as.onefd.edu.dz/login/index.php')}${createLinkButton('الثالثة ثانوي', 'http://scolarium-3as.onefd.edu.dz/login/index.php')}</div>`;
+    }
+    function buildEHomeworkPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-laptop-code"></i> الفرض الإلكتروني</h2><p>اختر المستوى:</p><button class="sub-page-btn" onclick="buildEHomeworkLevel('moyen')"><i class="fas fa-school"></i> المستوى المتوسط</button><button class="sub-page-btn" onclick="buildEHomeworkLevel('secondary')"><i class="fas fa-school"></i> المستوى الثانوي</button></div>`;
+    }
+    function buildEHomeworkLevel(level) {
+        let btns = '';
+        if(level === 'moyen') {
+            btns = createLinkButton('أولى متوسط', 'https://e-devoir-1am.onefd.edu.dz/') +
+                   createLinkButton('ثانية متوسط', 'https://e-devoir-2am.onefd.edu.dz/') +
+                   createLinkButton('ثالثة متوسط', 'https://e-devoir-3am.onefd.edu.dz/') +
+                   createLinkButton('الرابعة متوسط', 'https://e-devoir-4am.onefd.edu.dz/');
+        } else {
+            btns = createLinkButton('أولى ثانوي', 'https://e-devoir-1as.onefd.edu.dz/') +
+                   createLinkButton('الثانية ثانوي', 'https://e-devoir-2as.onefd.edu.dz/') +
+                   createLinkButton('الثالثة ثانوي', 'https://e-devoir-3as.onefd.edu.dz/');
         }
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="buildEHomeworkPage()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-laptop-code"></i> الفرض الإلكتروني - ${level === 'moyen' ? 'المتوسط' : 'الثانوي'}</h2>${btns}</div>`;
+    }
+    function buildExamRegistrationPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-certificate"></i> التسجيل في الشهادة</h2><p>التسجيلات الخاصة بشهادات التعليم المتوسط والبكالوريا عن طريق المراسلة.</p>${createLinkButton('التسجيل في شهادة التعليم المتوسط (BEM)', 'https://www.onefd.edu.dz/bem/')}${createLinkButton('التسجيل في شهادة البكالوريا', 'https://www.onefd.edu.dz/bac/')}</div>`;
+    }
+    function buildExamInfoPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-bullhorn"></i> معلومات الامتحانات</h2><p>جديد مواعيد ونتائج الامتحانات الرسمية.</p>${createLinkButton('نتائج التعليم المتوسط (BEM)', 'https://www.onefd.edu.dz/result_bem/')}${createLinkButton('نتائج البكالوريا', 'https://www.onefd.edu.dz/result_bac/')}</div>`;
+    }
+    function buildAboutPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-info-circle"></i> ما هي الدراسة بالمراسلة؟</h2><p>الدراسة بالمراسلة هي نظام تعليمي عن بعد يتيح للطلاب متابعة دراستهم دون الحاجة للحضور اليومي إلى المؤسسات التعليمية. يشرف عليها الديوان الوطني للتعليم والتكوين عن بعد (ONEFD) في الجزائر.</p><div class="info-section"><h3>مميزات النظام:</h3><ul><li>مرونة في الوقت والمكان</li><li>تكلفة أقل من التعليم العادي</li><li>مناسب للعاملين والطلاب في المناطق النائية</li><li>يدعمه منصات رقمية مثل Scolarium والفروض الإلكترونية</li></ul></div></div>`;
+    }
+    function buildCheckLevelPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-chart-line"></i> التحقق من القبول بالمستوى الأعلى</h2><p>للتحقق من قبولك في المستوى الأعلى، يرجى إدخال رقم التسجيل الخاص بك.</p><div class="info-section"><label>رقم التسجيل: <input type="text" id="matricule" placeholder="أدخل رقم التسجيل" style="padding:8px; margin:10px 0; width:100%; border-radius:8px; border:1px solid #ddd;"></label><button class="sub-page-btn" onclick="checkLevel()"><i class="fas fa-search"></i> تحقق</button><div id="levelResult"></div></div><p class="center-info">يمكنك التوجه إلى الرابط الرسمي للنتائج مباشرة:</p>${createLinkButton('الموقع الرسمي للنتائج', 'https://www.onefd.edu.dz/att_niv_2025/')}</div>`;
+    }
+    function checkLevel() {
+        const mat = document.getElementById('matricule').value;
+        const resultDiv = document.getElementById('levelResult');
+        if(mat) {
+            resultDiv.innerHTML = `<div class="result-message success"><i class="fas fa-check-circle"></i> جاري التحقق من الرقم: ${mat}... <br>يمكنك متابعة حالتك على الرابط الرسمي أعلاه.</div>`;
+        } else {
+            resultDiv.innerHTML = `<div class="result-message failure"><i class="fas fa-exclamation-triangle"></i> الرجاء إدخال رقم التسجيل</div>`;
+        }
+    }
+    function buildCentersPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-phone-alt"></i> الاتصال بالمراكز الولائية</h2><p>للتواصل مع مديريات التربية أو مراكز ONEFD في ولايتك، يرجى البحث عبر الرابط الرسمي:</p>${createLinkButton('الموقع الرسمي لـ ONEFD - جهات الاتصال', 'https://www.onefd.edu.dz/contact/')}<div class="center-info"><strong>ملاحظة:</strong> هذا الموقع تطوعي وغير رسمي، للتواصل الرسمي يرجى استخدام الروابط أعلاه.</div></div>`;
+    }
+    function buildDonationPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-heart"></i> دعم الموقع</h2><p>إذا كنت ترغب في دعم استمرارية هذا الموقع وتطويره، يمكنك التبرع عبر:</p><div class="donation-box"><p><i class="fab fa-paypal"></i> PayPal: <strong>paserayoucef@gmail.com</strong> <button class="copy-btn" onclick="copyToClipboard('paserayoucef@gmail.com')">نسخ</button></p><p><i class="fas fa-mobile-alt"></i> اليمن موبي كاش: <strong>776549078</strong> <button class="copy-btn" onclick="copyToClipboard('776549078')">نسخ</button></p><p><i class="fas fa-mobile-alt"></i> أوريدو موبي كاش: <strong>0559287983</strong> <button class="copy-btn" onclick="copyToClipboard('0559287983')">نسخ</button></p></div><p>شكراً لدعمك ❤️</p></div>`;
+    }
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text);
+        alert('تم نسخ: ' + text);
+    }
+    function buildPrivacyPolicyPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-shield-alt"></i> سياسة الخصوصية</h2><p>نحن في موقع "الدراسة بالمراسلة" نلتزم بحماية خصوصيتك. هذا الموقع لا يجمع أي بيانات شخصية من المستخدمين. جميع الروابط تؤدي إلى مواقع رسمية وحكومية. نستخدم ملفات تعريف الارتباط (Cookies) فقط لتحسين تجربة التصفح وعرض إعلانات Google AdSense. يمكنك التحكم في إعدادات الإعلانات من خلال إعدادات متصفحك.</p><h3>الإعلانات:</h3><p>يستخدم هذا الموقع Google AdSense لعرض الإعلانات. Google قد تستخدم ملفات تعريف الارتباط لتخصيص الإعلانات بناءً على زياراتك لمواقع أخرى.</p><p>للمزيد من المعلومات، يرجى زيارة <a href="https://policies.google.com/privacy" target="_blank">سياسة خصوصية Google</a>.</p></div>`;
+    }
+    function buildWhoWeArePage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-users"></i> من نحن</h2><p>موقع "الدراسة بالمراسلة" هو موقع تطوعي وغير رسمي، أُنشئ بهدف مساعدة طلاب الديوان الوطني للتعليم والتكوين عن بعد (ONEFD) في الجزائر. نحن لسنا تابعين لأي جهة حكومية، بل نسعى فقط لتجميع جميع الخدمات والروابط في مكان واحد لتسهيل الوصول إليها.</p><p>تم إنشاء الموقع بواسطة <strong>يوسف</strong>، ويهدف إلى تبسيط تجربة الطلاب في نظام التعليم عن بعد.</p><p>للتواصل: <a href="mailto:paserayoucef@gmail.com">paserayoucef@gmail.com</a></p></div>`;
+    }
+    function buildDeadlinesPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-calendar-alt"></i> مواعيد الفروض والامتحانات</h2><div class="card active"><h3>الفروض الذاتية رقم 01</h3><p>📅 من 20 أكتوبر إلى 30 نوفمبر</p><div class="status">✅ الحالة: مفتوح حاليًا</div></div><div class="card future"><h3>الفروض الذاتية رقم 02</h3><p>📅 من 15 ديسمبر إلى 15 يناير</p><div class="status">⏳ الحالة: سيُفتح قريبًا</div></div><div class="card future"><h3>الفرض الإلكتروني</h3><p>📅 سيتم الإعلان عن التواريخ لاحقًا على منصة الفرض الإلكتروني</p><div class="status">🔜 قادم</div></div><div class="card future"><h3>امتحانات المستوى (شهادة)</h3><p>📅 مايو - يونيو 2026</p></div><p class="center-info">📢 هذه التواريخ قابلة للتعديل من قبل ONEFD. تابع الموقع الرسمي دائمًا.</p></div>`;
+    }
+    function buildContactPage() {
+        pagesContainer.innerHTML = `<div class="sub-page"><button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i> رجوع</button><h2><i class="fas fa-envelope"></i> اتصل بنا</h2><p>للاستفسارات أو الاقتراحات أو الإبلاغ عن مشكلة، يمكنك التواصل عبر:</p><div class="info-section"><p><i class="fas fa-envelope"></i> البريد الإلكتروني: <strong>paserayoucef@gmail.com</strong> <button class="copy-btn" onclick="copyToClipboard('paserayoucef@gmail.com')">نسخ</button></p><p><i class="fab fa-telegram"></i> تيليجرام: <strong>@youcef_info_2</strong></p><p><i class="fab fa-whatsapp"></i> واتساب: <strong>213665074666+</strong></p></div><p>نرحب بملاحظاتك واقتراحاتك لتطوير الموقع 🌟</p></div>`;
+    }
+</script>
 
-        // أحداث
-        function init() {
-            buildCategorySidebar();
-            loadCategoriesSelect();
-            setupCaptcha();
-            let stored = localStorage.getItem('naama_currentUser');
-            if (stored) { let parsed = JSON.parse(stored); let found = users.find(u => u.id === parsed.id); if (found) currentUser = found; }
-            updateUI();
-            renderProducts('productsGrid');
-            document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
-            document.getElementById('closeSidebar').addEventListener('click', () => document.getElementById('sidebar').classList.remove('open'));
-            document.getElementById('addProductBtn').addEventListener('click', () => { if(currentUser) openModal('addProductModal'); else openModal('loginModal'); });
-            document.getElementById('userIcon').addEventListener('click', () => showPage('account'));
-            document.getElementById('loginBtn').addEventListener('click', login);
-            document.getElementById('signupBtn').addEventListener('click', register);
-            document.getElementById('submitProductBtn').addEventListener('click', addProduct);
-            document.getElementById('showSignupLink').addEventListener('click', (e) => { e.preventDefault(); closeModal('loginModal'); openModal('signupModal'); });
-            document.querySelectorAll('[data-page]').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); showPage(link.dataset.page); }));
-            document.getElementById('searchInput').addEventListener('input', (e) => renderProducts('productsGrid', null, e.target.value));
-            document.getElementById('darkModeToggle').addEventListener('click', () => { document.body.classList.toggle('dark'); localStorage.setItem('naama_dark', document.body.classList.contains('dark')); });
-            if (localStorage.getItem('naama_dark') === 'true') document.body.classList.add('dark');
-            document.getElementById('productImages').addEventListener('change', function(e) {
-                let preview = document.getElementById('imagePreview');
-                preview.innerHTML = '';
-                for(let f of e.target.files) {
-                    let reader = new FileReader();
-                    reader.onload = (ev) => { let img = document.createElement('img'); img.src = ev.target.result; preview.appendChild(img); };
-                    reader.readAsDataURL(f);
-                }
-            });
-        }
-        function showToast(msg) { let t = document.createElement('div'); t.style.cssText = 'position:fixed; bottom:20px; left:20px; background:#333; color:#fff; padding:12px 24px; border-radius:50px; z-index:9999;'; t.innerText = msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
-        init();
-    </script>
 </body>
 </html>
